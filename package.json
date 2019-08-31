@@ -1,0 +1,30 @@
+{
+  "name": "setup-graphql",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/lertumpai/setup-graphql.git",
+  "author": "ninew <new-sorawit@outlook.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon --exec babel-node ./src/domain/test.js --watch ./src"
+  },
+  "dependencies": {
+    "apollo-server-express": "^2.9.2",
+    "base64-url": "^2.3.2",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "graphql": "^14.5.4",
+    "lodash": "^4.17.15",
+    "moment": "^2.24.0",
+    "mongodb": "^3.3.2",
+    "mongoose": "^5.6.11"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-0": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "nodemon": "^1.19.1"
+  }
+}
