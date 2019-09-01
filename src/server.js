@@ -1,29 +1,17 @@
 import express from 'express'
 import bodyParser from 'body-parser'
-import { ApolloServer, gql } from 'apollo-server-express'
+import { ApolloServer} from 'apollo-server-express'
+import rootResolvers from './resolvers'
+import rootTypeDefs from './typedefs'
 
-// Construct a schema, using GraphQL schema language
-const typeDefs = gql`
-    type Query {
-        hello: String
-    }
-`
-
-// Provide resolver functions for your schema fields
-const resolvers = {
-  Query: {
-    hello: () => 'Hello world!',
-  },
-}
-
-const server = new ApolloServer({typeDefs, resolvers})
+const server = new ApolloServer({typeDefs: rootTypeDefs, resolvers: rootResolvers})
 
 const expressServer = express()
 const path = '/graphql'
 
 expressServer.use(
   path,
-  bodyParser.json({limit: 8}),
+  bodyParser.json({limit: '8mb'}),
   bodyParser.urlencoded(),
 )
 server.applyMiddleware({ app: expressServer, path })
