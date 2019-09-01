@@ -8,6 +8,9 @@ const rootTypeDefs = gql`
     },
     type Query {
         version: String!
+    },
+    type Mutation {
+        check: Boolean!
     }
 `
 

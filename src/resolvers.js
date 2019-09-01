@@ -7,6 +7,7 @@ const rootResolvers = {
   Query: {
     version: () => pkg.version,
   },
+  Mutation: {}
 }
 
 const autoResolvers = glob.sync(`${__dirname}/domain/*/resolvers.js`).map(path => require(path))
