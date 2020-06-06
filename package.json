@@ -9,7 +9,7 @@
     "dev": "nodemon --exec babel-node ./src/server.js --watch ./src"
   },
   "dependencies": {
-    "apollo-server-express": "^2.9.2",
+    "apollo-server-express": "^2.14.2",
     "base64-url": "^2.3.2",
     "body-parser": "^1.19.0",
     "connect": "^3.7.0",
