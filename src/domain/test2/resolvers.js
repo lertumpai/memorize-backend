@@ -5,7 +5,9 @@ const resolvers = {
     },
   },
   Mutation: {
-    multiple: ({x, y}) => x * y
+    multiple(obj, {x, y}) {
+      return x * y
+    }
   }
 }
 

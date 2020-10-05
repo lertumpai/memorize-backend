@@ -5,7 +5,7 @@ const typeDefs = gql`
         sum(x: Float, y: Float): Float
     },
     extend type Mutation {
-        multiple: Float
+        multiple(x: Float, y: Float): Float
     }
 `
 
