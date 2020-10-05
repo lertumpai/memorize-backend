@@ -1,15 +1,11 @@
 import _ from 'lodash'
 import glob from 'glob'
 
-import pkg from '../package'
-
-const rootResolvers = {
-  Query: {
-    version: () => pkg.version,
-  },
+const rootPostResolvers = {
+  Query: {},
   Mutation: {}
 }
 
-const autoResolvers = glob.sync(`${__dirname}/domain/*/postResolvers.js`).map(path => require(path))
+const autoPostResolvers = glob.sync(`${__dirname}/domain/*/postResolvers.js`).map(path => require(path))
 
-module.exports = _.merge({}, rootResolvers, ...autoResolvers)
+module.exports = _.merge({}, rootPostResolvers, ...autoPostResolvers)

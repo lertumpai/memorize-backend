@@ -5,6 +5,7 @@ import rootResolvers from './resolvers'
 import rootPostResolvers from './postResolvers'
 import rootTypeDefs from './typedefs'
 
+console.log([rootResolvers, rootPostResolvers])
 const server = new ApolloServer({typeDefs: rootTypeDefs, resolvers: rootResolvers})
 
 const expressServer = express()
