@@ -2,9 +2,10 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import { ApolloServer} from 'apollo-server-express'
 import rootResolvers from './resolvers'
+import rootPostResolvers from './postResolvers'
 import rootTypeDefs from './typedefs'
 
-const server = new ApolloServer({typeDefs: rootTypeDefs, resolvers: rootResolvers})
+const server = new ApolloServer({typeDefs: rootTypeDefs, resolvers: [rootResolvers, rootPostResolvers]})
 
 const expressServer = express()
 const path = '/graphql'

@@ -1,8 +1,8 @@
 const resolvers = {
   Query: {
     hello: () => {
-      console.log('resolvers')
-      return 'Hello world!'
+      console.log('post resolver')
+      return 'post Hello world!'
     },
   },
 }
