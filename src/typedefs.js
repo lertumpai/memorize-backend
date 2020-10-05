@@ -11,7 +11,6 @@ const rootTypeDefs = gql`
         version: String!
     },
     type Mutation {
-        check(c: Boolean): Boolean!
     }
 `
 
