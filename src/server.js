@@ -5,7 +5,7 @@ import rootResolvers from './resolvers'
 import rootPostResolvers from './postResolvers'
 import rootTypeDefs from './typedefs'
 
-const server = new ApolloServer({typeDefs: rootTypeDefs, resolvers: [rootResolvers, rootPostResolvers]})
+const server = new ApolloServer({typeDefs: rootTypeDefs, resolvers: rootResolvers})
 
 const expressServer = express()
 const path = '/graphql'
@@ -13,7 +13,7 @@ const path = '/graphql'
 expressServer.use(
   path,
   bodyParser.json({limit: '8mb'}),
-  bodyParser.urlencoded(),
+  bodyParser.urlencoded({ extended: true }),
 )
 server.applyMiddleware({ app: expressServer, path })
 

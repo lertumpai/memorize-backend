@@ -1,7 +1,6 @@
 const resolvers = {
   Query: {
-    sum: ({x, y}) => {
-      console.log(x + y + 1)
+    sum(obj, {x, y}) {
       return x + y + 1
     },
   },
