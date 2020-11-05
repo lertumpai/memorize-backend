@@ -5,7 +5,10 @@ import pkg from '../package'
 
 const rootResolvers = {
   Query: {
-    version: () => pkg.version,
+    version: () => {
+      console.log('resolve')
+      return pkg.version
+    },
   },
   Mutation: {
     check(obj, {c}) {
