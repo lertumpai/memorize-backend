@@ -4,8 +4,6 @@ const typeDefs = gql`
   extend type Query {
     "user"
     user(id: ID): User
-    "a"
-    a(id: ID): User
   },
   type User {
     "id"
