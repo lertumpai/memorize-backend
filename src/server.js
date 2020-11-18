@@ -1,11 +1,13 @@
 import express from 'express'
 import bodyParser from 'body-parser'
-import { ApolloServer} from 'apollo-server-express'
+import { ApolloServer } from 'apollo-server-express'
+
 import rootResolvers from './resolvers'
 import rootPostResolvers from './postResolvers'
 import rootPermission from './permission'
 import rootTypeDefs from './typedefs'
-import {prepareResolver} from './prepareResolver'
+import { prepareResolver } from './prepareResolver'
+import './database/mongo'
 
 const server = new ApolloServer({
   typeDefs: rootTypeDefs,

@@ -6,14 +6,14 @@
   "author": "ninew <new-sorawit@outlook.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon --exec babel-node ./src/server.js --watch ./src",
-    "server": ""
+    "dev": "env-cmd -f ./environment/.development nodemon --exec babel-node ./src/server.js --watch ./src"
   },
   "dependencies": {
     "apollo-server-express": "^2.9.2",
     "base64-url": "^2.3.2",
     "body-parser": "^1.19.0",
     "connect": "^3.7.0",
+    "env-cmd": "^10.1.0",
     "express": "^4.17.1",
     "glob": "^7.1.4",
     "graphql": "^14.5.4",
