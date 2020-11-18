@@ -8,6 +8,7 @@ import rootPermission from './permission'
 import rootTypeDefs from './typedefs'
 import { prepareResolver } from './prepareResolver'
 import './database/mongo'
+import { createUser } from "./domain/user/model/function/User";
 
 const server = new ApolloServer({
   typeDefs: rootTypeDefs,
