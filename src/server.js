@@ -7,12 +7,14 @@ import rootPostResolvers from './postResolvers'
 import rootPermission from './permission'
 import rootTypeDefs from './typedefs'
 import { prepareResolver } from './prepareResolver'
+
 import './database/mongo'
-import { createUser } from "./domain/user/model/function/User";
+import context from './context'
 
 const server = new ApolloServer({
   typeDefs: rootTypeDefs,
-  resolvers: prepareResolver(rootPermission, rootResolvers, rootPostResolvers)
+  resolvers: prepareResolver(rootPermission, rootResolvers, rootPostResolvers),
+  context,
 })
 
 const expressServer = express()
