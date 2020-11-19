@@ -28,5 +28,6 @@ expressServer.use(
 server.applyMiddleware({ app: expressServer, path })
 
 expressServer.listen({ port: 5000 }, () =>
+  // eslint-disable-next-line no-console
   console.log(`🚀 Server ready at http://localhost:5000${server.graphqlPath}`)
 )
