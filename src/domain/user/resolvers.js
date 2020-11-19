@@ -1,7 +1,6 @@
-export default {
+module.exports = {
   Query: {
     user(obj, { id }, context) {
-      console.log('resolver', id)
       return {
         id: 1,
         name: 'hi'
