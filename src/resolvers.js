@@ -11,7 +11,7 @@ const rootResolvers = {
     },
   },
   Mutation: {
-    check(obj, {c}) {
+    check(obj, { c }) {
       return c
     }
   }

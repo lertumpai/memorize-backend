@@ -7,18 +7,18 @@ export function findUserById(id) {
 }
 
 export function findUserByUsername(username) {
-  return User.findOne({username})
+  return User.findOne({ username })
 }
 
-export function createUser({username, password}) {
-  const newUser = new User({username, password})
+export function createUser({ username, password }) {
+  const newUser = new User({ username, password })
   return newUser.save()
 }
 
-export function createProfile(id, {name, birthday, status}) {
-  return User.findOneAndUpdate(id, {profile: {name, birthday: moment(birthday).utc(), status}}, {new: true})
+export function createProfile(id, { name, birthday, status }) {
+  return User.findOneAndUpdate(id, { profile: { name, birthday: moment(birthday).utc(), status } }, { new: true })
 }
 
 export function inActiveUser(id) {
-  return User.findOneAndUpdate(id, {active: false}, {new: true})
+  return User.findOneAndUpdate(id, { active: false }, { new: true })
 }

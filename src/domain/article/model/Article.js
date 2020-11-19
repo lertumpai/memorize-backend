@@ -8,6 +8,6 @@ const schemaArticle = new mongoose.Schema({
   created_time: Date,
 })
 
-schemaArticle.index({created_time: 1})
+schemaArticle.index({ created_time: 1 })
 
 export default mongoose.model('Article', schemaArticle)

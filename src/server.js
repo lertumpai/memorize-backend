@@ -22,7 +22,7 @@ const path = '/graphql'
 
 expressServer.use(
   path,
-  bodyParser.json({limit: '8mb'}),
+  bodyParser.json({ limit: '8mb' }),
   bodyParser.urlencoded({ extended: true }),
 )
 server.applyMiddleware({ app: expressServer, path })

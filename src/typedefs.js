@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import glob from 'glob'
-import {gql} from 'apollo-server-express'
+import { gql } from 'apollo-server-express'
 
 const rootTypeDefs = gql`
     schema {
@@ -17,4 +17,4 @@ const rootTypeDefs = gql`
 
 const autoTypeDefs = glob.sync(`${__dirname}/domain/*/typedefs.js`).map(path => require(path))
 
-module.exports = _.flatten([rootTypeDefs, ...autoTypeDefs])
+module.exports = _.flatten([ rootTypeDefs, ...autoTypeDefs ])

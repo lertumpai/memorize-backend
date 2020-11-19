@@ -1,6 +1,6 @@
 const permission = {
   Query: {
-    user(obj, {id}) {
+    user(obj, { id }) {
       console.log('permission', id)
     },
   }

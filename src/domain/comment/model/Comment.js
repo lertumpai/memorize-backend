@@ -9,6 +9,6 @@ const schemaComment = new mongoose.Schema({
   created_time: Date,
 })
 
-schemaComment.index({article: 1, created_time: 1})
+schemaComment.index({ article: 1, created_time: 1 })
 
 export default mongoose.model('Comment', schemaComment)
