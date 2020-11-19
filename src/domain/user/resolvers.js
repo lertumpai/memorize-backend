@@ -1,4 +1,4 @@
-const resolvers = {
+export default {
   Query: {
     user(obj, { id }, context) {
       console.log('resolver', id)
@@ -19,5 +19,3 @@ const resolvers = {
     }
   }
 }
-
-module.exports = resolvers

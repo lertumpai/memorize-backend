@@ -6,6 +6,6 @@ yarn or npm install
 # Setup env
 ```
 NODE_ENV=development
-MONGO_URI=mongodb://localhost:27017/farm_new
-PRIVATE_KEY=PRIVATE_KEY
+PRIVATE_KEY=n@e#w$f%a^r&m*m(e)m_o+r1i2z3e4567890
+MONGO_URI=mongodb://localhost:27017/memorize
 ```

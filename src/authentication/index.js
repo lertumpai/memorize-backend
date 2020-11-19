@@ -1,12 +1,9 @@
 import bcrypt from 'bcrypt'
 import _ from 'lodash'
 
-import db from '../domain/utils/db'
-const { User } = db
-
 import { token } from './token'
 
-export async function register(username, password) {
+export async function register({ username, password }, { User }) {
   const user = await User.findUserByUsername(username)
 
   if (user) {
@@ -18,7 +15,7 @@ export async function register(username, password) {
   return User.createUser({ username, password: hash, active: true })
 }
 
-export async function login(username, password) {
+export async function login({ username, password }, context) {
   const user = await User.findUserByUsername(username)
 
   if (_.isNil(user)) {

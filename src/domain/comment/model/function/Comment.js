@@ -27,7 +27,7 @@ export async function findComment({ article_id }, { after_time, limit = 10 }) {
         filter.created_time = { $lt: moment(after_time) }
     }
 
-    return Comment.find(filter, null, { limit, sort:{ created_time: -1 } })
+    return Comment.find(filter, null, { limit, sort: { created_time: -1 } })
 }
 
 export async function deleteCommentById(id) {
