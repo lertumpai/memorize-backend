@@ -7,7 +7,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "env-cmd -f ./environment/.development nodemon --exec babel-node ./src/server.js --watch ./src",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "lint-fix": "eslint --fix ."
   },
   "dependencies": {
     "apollo-server-express": "^2.9.2",
