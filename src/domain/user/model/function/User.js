@@ -2,15 +2,15 @@ import moment from 'moment'
 
 import User from '../User'
 
-export function findUserById(id) {
+export function findById(id) {
   return User.findById(id)
 }
 
-export function findUserByUsername(username) {
+export function findByUsername(username) {
   return User.findOne({ username })
 }
 
-export function createUser({ username, password }) {
+export function create({ username, password }) {
   const newUser = new User({ username, password })
   return newUser.save()
 }

@@ -18,6 +18,13 @@ export class NOT_FOUND_ERROR extends CustomError {
   }
 }
 
+export class REGISTER_FAIL_ERROR extends CustomError {
+  constructor(values) {
+    const message = values.reduce((result, value) => ({ ...result, [value]: `${value} is invalid` }), {})
+    super('REGISTER_FAIL_ERROR', message)
+  }
+}
+
 export class LOGIN_FAIL_ERROR extends CustomError {
   constructor(values) {
     const message = values.reduce((result, value) => ({ ...result, [value]: `${value} is invalid` }), {})

@@ -1,4 +1,5 @@
 import glob from 'glob'
+import { register, login } from './authentication'
 
 export async function context({ req }) {
   // get all models
@@ -7,6 +8,8 @@ export async function context({ req }) {
 
   return {
     ...model,
+    register,
+    login,
   }
 }
 
