@@ -3,6 +3,9 @@ module.exports = {
     async user(obj, { id, username }, { User }) {
       return id ? await User.findById(id) : await User.findByUsername(username)
     },
+    login(obj, { username, password }, { login, User }) {
+      return login({ username, password }, { User })
+    },
   },
   Mutation: {
     async register(_, { username, password }, context) {

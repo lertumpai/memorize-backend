@@ -23,10 +23,12 @@ export async function register({ username, password }, { User }) {
 export async function login({ username, password }, { User }) {
   const user = await User.findByUsername(username)
 
-  const checks = []
-  if (user) checks.push('Username')
-  if (!bcrypt.compareSync(password, user.password)) checks.push('Password')
-  if (checks.length !== 0) throw new LOGIN_FAIL_ERROR(checks)
+  if (!user) throw new LOGIN_FAIL_ERROR(['Username'])
+  if (!password || !bcrypt.compareSync(password, user.password)) throw new LOGIN_FAIL_ERROR(['Password'])
 
-  return token({ userId: user.id, username: user.username, profile: user.profile })
+  const loginUser = {
+    token: token({ userId: user.id, username: user.username, profile: user.profile }),
+    id: user.id
+  }
+  return loginUser
 }
