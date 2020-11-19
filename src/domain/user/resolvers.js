@@ -1,7 +1,6 @@
 const resolvers = {
   Query: {
     user(obj, {id}, context) {
-      console.log(context)
       console.log('resolver', id)
       return {
         id: 1,

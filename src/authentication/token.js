@@ -1,22 +1,12 @@
 import jwt from 'jsonwebtoken'
-import _ from 'lodash'
 
-export function token({userId, username, profile}) {
-  return jwt.sign({userId, username, profile}, PRIVATE_KEY)
+const key = process.env.PRIVATE_KEY
+
+// payload = { userId, username, profile }
+export function token(payload) {
+  return jwt.sign(payload, key)
 }
 
-export function verifyToken(req, res, next) {
-  if (_.isNil(req.headers)) {
-    return next(new Error(TOKEN_INVALID))
-  }
-
-  const {authorization} = req.headers
-  const token = authorization.replace('Memorize ', '')
-  try {
-    const extracedToken = jwt.verify(token, process.env.PRIVATE_KEY)
-    req.userId = extracedToken.userId
-    next()
-  } catch (err) {
-    next(err)
-  }
+export function verifyToken(token) {
+  return token ? jwt.verify(token.replace('Memorize ', ''), key) : null
 }
