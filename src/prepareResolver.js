@@ -8,7 +8,7 @@ export function prepareResolver(permissions, resolvers, postResolvers) {
           [quration]: Object.keys(resolvers[quration]).reduce((result, keyResolver) => {
             return {
               ...result,
-              [keyResolver]: prepareAndWrap(permissions[quration][keyResolver], resolvers[quration][keyResolver], postResolvers[quration][keyResolver])
+              [keyResolver]: prepareAndWrap(quration, keyResolver, permissions[quration][keyResolver], resolvers[quration][keyResolver], postResolvers)
             }
           }, {})
         }
@@ -22,7 +22,7 @@ export function prepareResolver(permissions, resolvers, postResolvers) {
   }, {})
 }
 
-export function prepareAndWrap(permission, resolver, postResolver) {
+export function prepareAndWrap(quration, keyResolver, permission, resolver, postResolvers) {
   return async (...args) => {
     if (permission && typeof permission === 'function') {
       await permission(...args)
@@ -30,9 +30,12 @@ export function prepareAndWrap(permission, resolver, postResolver) {
 
     const res = await resolver(...args)
 
-    if (postResolver && typeof postResolver === 'function') {
-      await postResolver(...args)
-    }
+    const preparePostResolvers = Object.values(postResolvers).map(postResolver => {
+      return postResolver[quration] && typeof postResolver[quration][keyResolver] === 'function'
+        ? postResolver[quration][keyResolver]
+        : null
+    }).filter(postResolver => postResolver)
+    await Promise.all(preparePostResolvers.map(async postResolver => await postResolver(...args)))
 
     return res
   }

@@ -6,6 +6,9 @@ const rootPostResolvers = {
   Mutation: {}
 }
 
-const autoPostResolvers = glob.sync(`${__dirname}/domain/*/postResolvers.js`).map(path => require(path))
+const autoPostResolvers = glob.sync(`${__dirname}/domain/*/postResolvers.js`).map(path => {
+  const domain = path.split('/')
+  return { [domain[domain.length - 2]]: require(path) }
+})
 
 module.exports = _.merge({}, rootPostResolvers, ...autoPostResolvers)
