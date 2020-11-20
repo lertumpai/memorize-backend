@@ -1,6 +1,8 @@
+
+
 module.exports = {
   Query: {
-    async user(obj, { id, username }, { User }) {
+    async user(obj, { id, username }) {
       return id ? await User.findById(id) : await User.findByUsername(username)
     },
     login(obj, { username, password }, { login: _login, User }) {
