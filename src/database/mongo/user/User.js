@@ -1,5 +1,4 @@
 import mongoose from 'mongoose'
-import moment from 'moment'
 
 import Dao from '../dao'
 import { NOT_FOUND_ERROR } from '../../../error'
@@ -7,7 +6,7 @@ import { NOT_FOUND_ERROR } from '../../../error'
 const ProfileSchema = new mongoose.Schema({
   name: String,
   birthday: Date,
-  status: String
+  status: String,
 }, { _id: false })
 
 const UserSchema = new mongoose.Schema({
@@ -16,7 +15,7 @@ const UserSchema = new mongoose.Schema({
   active: { type: Boolean, default: true },
   profile: {
     type: ProfileSchema,
-    default: {}
+    default: {},
   },
   created_time: Date,
   updated_time: Date,

@@ -1,23 +1,23 @@
 export function prepareResolver(permissions, resolvers, postResolvers) {
   return Object.keys(resolvers).reduce((result, quration) => {
     switch (quration) {
-      case 'Query':
-      case 'Mutation':
-        return {
-          ...result,
-          [quration]: Object.keys(resolvers[quration]).reduce((result, keyResolver) => {
-            return {
-              ...result,
-              [keyResolver]: prepareAndWrap(quration, keyResolver, permissions[quration][keyResolver], resolvers[quration][keyResolver], postResolvers)
-            }
-          }, {})
-        }
+    case 'Query':
+    case 'Mutation':
+      return {
+        ...result,
+        [quration]: Object.keys(resolvers[quration]).reduce((result, keyResolver) => {
+          return {
+            ...result,
+            [keyResolver]: prepareAndWrap(quration, keyResolver, permissions[quration][keyResolver], resolvers[quration][keyResolver], postResolvers),
+          }
+        }, {}),
+      }
 
-      default:
-        return {
-          ...result,
-          [quration]: resolvers[quration]
-        }
+    default:
+      return {
+        ...result,
+        [quration]: resolvers[quration],
+      }
     }
   }, {})
 }

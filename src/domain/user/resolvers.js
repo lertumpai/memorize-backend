@@ -19,9 +19,9 @@ module.exports = {
         name: profile.name,
         status: profile.status,
         birthday: profile.birthday,
-        date
+        date,
       })
-    }
+    },
   },
   User: {
     token(user) {

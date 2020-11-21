@@ -3,7 +3,7 @@ import glob from 'glob'
 
 const rootPostResolvers = {
   Query: {},
-  Mutation: {}
+  Mutation: {},
 }
 
 const autoPostResolvers = glob.sync(`${__dirname}/domain/*/postResolvers.js`).map(path => {

@@ -6,7 +6,7 @@ import { GraphQLScalarType } from 'graphql'
 import pkg from '../package'
 
 function DateType() {
-  const date = (value) => moment(value).utc().toDate()
+  const date = value => moment(value).utc().toDate()
   return {
     Date: new GraphQLScalarType({
       name: 'Date',
@@ -19,8 +19,8 @@ function DateType() {
       },
       parseLiteral({ value }) {
         return date(value)
-      }
-    })
+      },
+    }),
   }
 }
 
@@ -34,7 +34,7 @@ const rootResolvers = {
     version: () => {
       return pkg.version
     },
-  }
+  },
 }
 
 const autoResolvers = glob.sync(`${__dirname}/domain/*/resolvers.js`).map(path => require(path))

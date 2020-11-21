@@ -4,6 +4,6 @@ module.exports = {
   Mutation: {
     profile(_, { id }, { user }) {
       auth({ id, user })
-    }
-  }
+    },
+  },
 }

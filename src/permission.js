@@ -3,7 +3,7 @@ import glob from 'glob'
 
 const rootPermissions = {
   Query: {},
-  Mutation: {}
+  Mutation: {},
 }
 
 const autoPermissions = glob.sync(`${__dirname}/domain/*/permission.js`).map(path => require(path))
