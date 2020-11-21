@@ -17,4 +17,4 @@ const rootTypeDefs = gql`
 
 const autoTypeDefs = glob.sync(`${__dirname}/domain/*/typedefs.js`).map(path => require(path))
 
-module.exports = _.flatten([ rootTypeDefs, ...autoTypeDefs ])
+module.exports = _.flatten([rootTypeDefs, ...autoTypeDefs])

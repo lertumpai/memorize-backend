@@ -6,4 +6,8 @@ export default class Dao {
   findOneById(id) {
     return this.model.findById(id)
   }
+
+  deleteById(id) {
+    return this.model.findOneAndUpdate(id, { active: false }, { new: true })
+  }
 }

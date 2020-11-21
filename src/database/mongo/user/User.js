@@ -5,7 +5,7 @@ import moment from 'moment'
 const UserSchema = new mongoose.Schema({
   username: { type: String, unique: true },
   password: String,
-  active: Boolean,
+  active: { type: Boolean, default: true },
   profile: {
     type: {
       name: String,
@@ -13,7 +13,9 @@ const UserSchema = new mongoose.Schema({
       status: String
     },
     default: null
-  }
+  },
+  created_time: Date,
+  updated_time: Date,
 })
 
 const User = mongoose.model('User', UserSchema)
@@ -34,9 +36,5 @@ export default class UserClass extends Dao {
 
   createOrUpdateProfile(id, { name, birthday, status }) {
     return User.findOneAndUpdate(id, { profile: { name, birthday: moment(birthday).utc(), status } }, { new: true })
-  }
-
-  inActiveUser(id) {
-    return User.findOneAndUpdate(id, { active: false }, { new: true })
   }
 }

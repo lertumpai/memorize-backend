@@ -1,22 +1,17 @@
-import { User } from '../../database/mongo/user'
 import * as Authentication from '../../authentication'
 
 module.exports = {
   Query: {
-    async test(_, args, context) {
-      return 'Hello World'
-    },
-    async user(_, { id, username }) {
+    async user(_, { id, username }, { User }) {
       return id ? await User.findById(id) : await User.findByUsername(username)
     },
-    login(_, { username, password }) {
-      return Authentication.login({ username, password })
+    login(_, { username, password }, { User }) {
+      return Authentication.login({ username, password }, { User })
     },
   },
   Mutation: {
-    async register(_, { username, password }) {
-      const user = await Authentication.register({ username, password })
-      return user
+    async register(_, { username, password }, { User }) {
+      return Authentication.register({ username, password }, { User })
     }
   },
 }

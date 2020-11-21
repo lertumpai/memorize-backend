@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt'
 
-import {token} from './token'
-import {DUPLICATED_VALUE_ERROR, LOGIN_FAIL_ERROR, REGISTER_FAIL_ERROR} from '../error'
+import { token } from './token'
+import { DUPLICATED_VALUE_ERROR, LOGIN_FAIL_ERROR, REGISTER_FAIL_ERROR } from '../error'
 
 export async function register({ username, password }, { User }) {
   const checks = []

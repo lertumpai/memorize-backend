@@ -7,6 +7,8 @@ const CommentSchema = new mongoose.Schema({
   author: { type: mongoose.Types.ObjectId, ref: 'User' },
   content: String,
   created_time: Date,
+  updated_time: Date,
+  active: { type: Boolean, default: true },
 })
 
 const Comment = mongoose.model('Comment', CommentSchema)

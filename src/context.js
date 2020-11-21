@@ -1,9 +1,11 @@
 import glob from 'glob'
+import moment from 'moment'
 
 import { verifyToken } from './authentication/token'
 
-async function wrapMongoDBModel() {
-  return glob.sync(`${__dirname}/database/mongo/*/index.js`).reduce((result, path) => ({...result, ...require(path)}), {})
+
+function wrapMongoDBModel() {
+  return glob.sync(`${__dirname}/database/mongo/*/index.js`).reduce((result, path) => ({ ...result, ...require(path) }), {})
 }
 
 export async function context({ req }) {
@@ -12,6 +14,7 @@ export async function context({ req }) {
 
   return {
     user,
+    date: moment.utc(),
     ...models
   }
 }

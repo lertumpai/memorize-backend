@@ -6,7 +6,6 @@ import pkg from '../package'
 const rootResolvers = {
   Query: {
     version: () => {
-      console.log('resolve')
       return pkg.version
     },
   },
