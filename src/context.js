@@ -1,9 +1,11 @@
-import { verifyToken } from './authentication/token';
+import { verifyToken } from './authentication/token'
+import User from './database/mongo/user/User'
 
-export function context({ req }) {
+export async function context({ req }) {
   const user = verifyToken(req.headers.authentication)
   return {
     user,
+    User
   }
 }
 

@@ -3,6 +3,11 @@ import * as Authentication from '../../authentication'
 
 module.exports = {
   Query: {
+    test(_, args, context) {
+      const { a } = context
+      a.findOne()
+      return 'Hello World'
+    },
     async user(_, { id, username }) {
       return id ? await User.findById(id) : await User.findByUsername(username)
     },

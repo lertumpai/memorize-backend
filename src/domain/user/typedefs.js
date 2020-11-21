@@ -2,6 +2,7 @@ import { gql } from 'apollo-server-express'
 
 const typeDefs = gql`
   extend type Query {
+    test: String,
     user(id: ID, username: String): User,
     login(username: String, password: String) : User
   },
