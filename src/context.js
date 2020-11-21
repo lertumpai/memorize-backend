@@ -14,7 +14,7 @@ export async function context({ req }) {
   return {
     user: verifyToken(req.headers.authentication),
     date: moment.utc().toDate(),
-    ...models
+    ...models,
   }
 }
 
