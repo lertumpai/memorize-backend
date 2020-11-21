@@ -10,9 +10,9 @@ const rootResolvers = {
     },
   },
   Mutation: {
-    check(obj, { c }) {
-      return c
-    }
+    version: () => {
+      return pkg.version
+    },
   }
 }
 
