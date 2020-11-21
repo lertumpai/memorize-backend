@@ -8,7 +8,7 @@ import rootPermission from './permission'
 import rootTypeDefs from './typedefs'
 import { prepareResolver } from './prepareResolver'
 
-import './database/mongo/mongo'
+import './database/mongo/connection'
 import context from './context'
 
 const server = new ApolloServer({

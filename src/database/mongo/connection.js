@@ -5,7 +5,9 @@ mongoose
     process.env.MONGO_URI,
     { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: true }
   )
+  // eslint-disable-next-line no-console
   .then(() => console.log('Connect Mongo Success'))
+  // eslint-disable-next-line no-console
   .catch(() => console.log('Connect Mongo Error'))
 
 export default mongoose

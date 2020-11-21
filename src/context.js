@@ -1,11 +1,18 @@
+import glob from 'glob'
+
 import { verifyToken } from './authentication/token'
-import User from './database/mongo/user/User'
+
+async function wrapMongoDBModel() {
+  return glob.sync(`${__dirname}/database/mongo/*/index.js`).reduce((result, path) => ({...result, ...require(path)}), {})
+}
 
 export async function context({ req }) {
   const user = verifyToken(req.headers.authentication)
+  const models = wrapMongoDBModel()
+
   return {
     user,
-    User
+    ...models
   }
 }
 

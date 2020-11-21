@@ -3,9 +3,7 @@ import * as Authentication from '../../authentication'
 
 module.exports = {
   Query: {
-    test(_, args, context) {
-      const { a } = context
-      a.findOne()
+    async test(_, args, context) {
       return 'Hello World'
     },
     async user(_, { id, username }) {
