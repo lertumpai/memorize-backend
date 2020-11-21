@@ -3,16 +3,24 @@ import { token } from '../../authentication/token'
 
 module.exports = {
   Query: {
-    async user(_, { id, username }, { User }) {
-      return id ? await User.findById(id) : await User.findByUsername(username)
+    user(_, { id, username }, { User }) {
+      return id ? User.findById(id) : User.findByUsername(username)
     },
     login(_, { username, password }, { User }) {
       return Authentication.login({ username, password }, { User })
     },
   },
   Mutation: {
-    async register(_, { username, password }, { User }) {
+    register(_, { username, password }, { User }) {
       return Authentication.register({ username, password }, { User })
+    },
+    async profile(_, { id, profile }, { User, date }) {
+      return User.updateProfile(id, {
+        name: profile.name,
+        status: profile.status,
+        birthday: profile.birthday,
+        date
+      })
     }
   },
   User: {

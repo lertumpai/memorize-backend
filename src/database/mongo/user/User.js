@@ -1,6 +1,7 @@
 import mongoose from 'mongoose'
 import Dao from '../dao'
 import moment from 'moment'
+import { NOT_FOUND_ERROR } from '../../../error'
 
 const UserSchema = new mongoose.Schema({
   username: { type: String, unique: true },
@@ -12,7 +13,7 @@ const UserSchema = new mongoose.Schema({
       birthday: Date,
       status: String
     },
-    default: null
+    default: {}
   },
   created_time: Date,
   updated_time: Date,
@@ -29,12 +30,23 @@ export default class UserClass extends Dao {
     return User.findOne({ username })
   }
 
-  create({ username, password }) {
-    const newUser = new User({ username, password })
+  create({ username, password, date }) {
+    const newUser = new User({ username, password, created_time: date, updated_time: date })
     return newUser.save()
   }
 
-  createOrUpdateProfile(id, { name, birthday, status }) {
-    return User.findOneAndUpdate(id, { profile: { name, birthday: moment(birthday).utc(), status } }, { new: true })
+  async updateProfile(id, { name, birthday, status, date }) {
+    const user = await User.findById(id)
+
+    if (!user) {
+      throw new NOT_FOUND_ERROR('user')
+    }
+
+    user.profile.name = name || user.profile.name
+    user.profile.birthday = birthday || user.profile.birthday
+    user.profile.status = status || user.profile.status
+    user.updated_time = date
+
+    return user.save()
   }
 }

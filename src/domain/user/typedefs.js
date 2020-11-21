@@ -7,7 +7,7 @@ const typeDefs = gql`
   }
   extend type Mutation {
     register(username: String, password: String) : User
-    profile(profile: Profile) : User
+    profile(id: ID!, profile: Profile) : User
   }
   type User {
     id: ID,
