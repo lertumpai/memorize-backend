@@ -14,7 +14,7 @@ module.exports = {
     register(_, { username, password }, { User }) {
       return Authentication.register({ username, password }, { User })
     },
-    async profile(_, { id, profile }, { User, date }) {
+    profile(_, { id, profile }, { User, date }) {
       return User.updateProfile(id, {
         name: profile.name,
         status: profile.status,

@@ -6,6 +6,12 @@ class CustomError extends Error {
   }
 }
 
+export class UNAUTHORIZED_ERROR extends CustomError {
+  constructor() {
+    super('UNAUTHORIZED_ERROR', { user: `user is unauthorized` })
+  }
+}
+
 export class DUPLICATED_VALUE_ERROR extends CustomError {
   constructor(value) {
     super('DUPLICATED_VALUE_ERROR', { [value]: `${value} is duplicated` })
