@@ -3,7 +3,7 @@ export default class Dao {
     this.model = model
   }
 
-  findOneById(id) {
+  findById(id) {
     return this.model.findById(id)
   }
 

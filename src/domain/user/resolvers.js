@@ -1,4 +1,5 @@
 import * as Authentication from '../../authentication'
+import { token } from '../../authentication/token'
 
 module.exports = {
   Query: {
@@ -14,4 +15,9 @@ module.exports = {
       return Authentication.register({ username, password }, { User })
     }
   },
+  User: {
+    token(user) {
+      return user ? token({ userId: user.id, username: user.username, profile: user.profile }) : null
+    }
+  }
 }
