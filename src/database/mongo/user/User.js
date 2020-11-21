@@ -1,4 +1,6 @@
 import mongoose from 'mongoose'
+import moment from 'moment'
+
 import Dao from '../dao'
 import { NOT_FOUND_ERROR } from '../../../error'
 

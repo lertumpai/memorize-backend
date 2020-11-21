@@ -3,6 +3,7 @@ import glob from 'glob'
 import { gql } from 'apollo-server-express'
 
 const rootTypeDefs = gql`
+  scalar Date
   schema {
     query: Query
     mutation: Mutation

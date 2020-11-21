@@ -16,12 +16,12 @@ const typeDefs = gql`
   }
   type UserProfile {
     name: String
-    birthday: String
+    birthday: Date
     status: String
   }
   input ProfileInput {
     name: String
-    birthday: String
+    birthday: Date
     status: String
   }
 `
