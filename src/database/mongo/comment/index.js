@@ -1,4 +1,6 @@
-import * as Comment from './function/Comment'
+import CommentClass from './Comment'
+
+const Comment = new CommentClass()
 
 export {
   Comment,

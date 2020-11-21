@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 import Dao from '../dao'
 import moment from 'moment'
 
-const schemaUser = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
   username: { type: String, unique: true },
   password: String,
   active: Boolean,
@@ -16,7 +16,7 @@ const schemaUser = new mongoose.Schema({
   }
 })
 
-const User = mongoose.model('User', schemaUser)
+const User = mongoose.model('User', UserSchema)
 
 export default class UserClass extends Dao {
   constructor() {

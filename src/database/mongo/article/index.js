@@ -1,4 +1,6 @@
-import * as Article from './function/Article'
+import ArticleClass from './Article'
+
+const Article = new ArticleClass()
 
 export {
   Article,
