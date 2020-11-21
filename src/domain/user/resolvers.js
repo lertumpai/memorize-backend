@@ -26,6 +26,6 @@ module.exports = {
   User: {
     token(user) {
       return user ? token({ userId: user.id, username: user.username, profile: user.profile }) : null
-    }
-  }
+    },
+  },
 }

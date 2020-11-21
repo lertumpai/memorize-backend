@@ -1,18 +1,19 @@
 import mongoose from 'mongoose'
 import Dao from '../dao'
-import moment from 'moment'
 import { NOT_FOUND_ERROR } from '../../../error'
+
+const ProfileSchema = new mongoose.Schema({
+  name: String,
+  birthday: Date,
+  status: String
+}, { _id: false })
 
 const UserSchema = new mongoose.Schema({
   username: { type: String, unique: true },
   password: String,
   active: { type: Boolean, default: true },
   profile: {
-    type: {
-      name: String,
-      birthday: Date,
-      status: String
-    },
+    type: ProfileSchema,
     default: {}
   },
   created_time: Date,
