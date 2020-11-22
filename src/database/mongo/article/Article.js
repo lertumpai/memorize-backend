@@ -9,6 +9,8 @@ const ArticleSchema = new mongoose.Schema({
   active: { type: Boolean, default: true },
 })
 
+ArticleSchema.index({ active: 1, created_time: 1 })
+
 const Article = mongoose.model('Article', ArticleSchema)
 
 export default class ArticleClass extends Dao {
@@ -17,15 +19,10 @@ export default class ArticleClass extends Dao {
   }
 
   create({ author, content, date }) {
-    const newArticle = new Article({ author, content, created_time: date, updated_time: date })
-    return newArticle.save()
+    return Article.create({ author, content, created_time: date, updated_time: date })
   }
 
   update(id, { content }) {
     return Article.findOneAndUpdate(id, { content }, { new: true })
-  }
-
-  deleteArticle(id) {
-    return Article.findOneAndDelete(id)
   }
 }

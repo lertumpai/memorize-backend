@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import glob from 'glob'
 import { gql } from 'apollo-server-express'
 
