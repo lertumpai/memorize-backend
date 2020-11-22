@@ -1,10 +1,9 @@
 import mongoose from 'mongoose'
-import moment from 'moment'
 import Dao from '../dao'
 
 const ArticleSchema = new mongoose.Schema({
-  author: { type: mongoose.Types.ObjectId, ref: 'User' },
-  content: String,
+  author: { type: mongoose.Types.ObjectId, ref: 'User', require: true },
+  content: { type: String, require: true },
   created_time: Date,
   updated_time: Date,
   active: { type: Boolean, default: true },
@@ -17,8 +16,8 @@ export default class ArticleClass extends Dao {
     super(Article)
   }
 
-  create({ author, content }) {
-    const newArticle = new Article({ author, content, created_time: moment().utc() })
+  create({ author, content, date }) {
+    const newArticle = new Article({ author, content, created_time: date, updated_time: date })
     return newArticle.save()
   }
 

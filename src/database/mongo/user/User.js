@@ -33,8 +33,7 @@ export default class UserClass extends Dao {
   }
 
   create({ username, password, date }) {
-    const newUser = new User({ username, password, created_time: date, updated_time: date })
-    return newUser.save()
+    return User.create({ username, password, created_time: date, updated_time: date })
   }
 
   async updateProfile(id, { name, birthday, status, date }) {
