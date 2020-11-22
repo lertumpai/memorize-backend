@@ -36,6 +36,7 @@ export default class UserClass extends Dao {
     return User.create({ username, password, created_time: date, updated_time: date })
   }
 
+  // TODO: validate mongo object id
   async updateProfile(id, { name, birthday, status, date }) {
     const user = await User.findById(id)
 
