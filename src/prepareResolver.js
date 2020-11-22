@@ -1,3 +1,5 @@
+import { UNAUTHORIZED_ERROR } from './error'
+
 export function prepareResolver(permissions, resolvers, postResolvers) {
   return Object.keys(resolvers).reduce((result, quration) => {
     switch (quration) {
@@ -24,6 +26,10 @@ export function prepareResolver(permissions, resolvers, postResolvers) {
 
 export function prepareAndWrap(quration, keyResolver, permission, resolver, postResolvers) {
   return async (...args) => {
+    if (!args[2].user && !['login', 'register'].includes(keyResolver)) {
+      throw new UNAUTHORIZED_ERROR()
+    }
+
     if (permission && typeof permission === 'function') {
       await permission(...args)
     }
