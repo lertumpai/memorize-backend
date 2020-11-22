@@ -37,11 +37,13 @@ const rootResolvers = {
   },
 }
 
+const mongoTypeResolver = require(`${__dirname}/database/mongo/resolvers.js`)
 const autoResolvers = glob.sync(`${__dirname}/domain/*/resolvers.js`).map(path => require(path))
 
 module.exports = _.merge(
   {},
   rootResolvers,
+  mongoTypeResolver,
   ...autoResolvers,
   DateType(),
 )

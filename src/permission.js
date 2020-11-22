@@ -6,6 +6,7 @@ const rootPermissions = {
   Mutation: {},
 }
 
-const autoPermissions = glob.sync(`${__dirname}/domain/*/permission.js`).map(path => require(path))
+const mongoPermission = require(`${__dirname}/database/mongo/permissions.js`)
+const autoPermissions = glob.sync(`${__dirname}/domain/*/permissions.js`).map(path => require(path))
 
-module.exports = _.merge({}, rootPermissions, ...autoPermissions)
+module.exports = _.merge({}, rootPermissions, mongoPermission, ...autoPermissions)

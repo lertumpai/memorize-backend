@@ -26,7 +26,7 @@ export function prepareResolver(permissions, resolvers, postResolvers) {
 
 export function prepareAndWrap(quration, keyResolver, permission, resolver, postResolvers) {
   return async (...args) => {
-    if (!args[2].user && !['login', 'register'].includes(keyResolver)) {
+    if (!args[2].user && !['login', 'register', 'version'].includes(keyResolver)) {
       throw new UNAUTHORIZED_ERROR()
     }
 

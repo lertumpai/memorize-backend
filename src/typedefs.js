@@ -15,5 +15,7 @@ const rootTypeDefs = gql`
   }
 `
 
+const mongoTypeDef = require(`${__dirname}/database/mongo/typedefs.js`)
 const autoTypeDefs = glob.sync(`${__dirname}/domain/*/typedefs.js`).map(path => require(path))
-module.exports = [rootTypeDefs, ...autoTypeDefs]
+
+module.exports = [rootTypeDefs, mongoTypeDef, ...autoTypeDefs]
