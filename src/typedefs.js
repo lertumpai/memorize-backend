@@ -13,6 +13,11 @@ const rootTypeDefs = gql`
   type Mutation {
     version: String!
   }
+  input Pagination {
+    after: String,
+    before: String,
+    limit: Int = 10
+  }
 `
 
 const mongoTypeDef = require(`${__dirname}/database/mongo/typedefs.js`)

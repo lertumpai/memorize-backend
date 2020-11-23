@@ -17,8 +17,8 @@ const UserSchema = new mongoose.Schema({
     type: ProfileSchema,
     default: {},
   },
-  created_time: Date,
-  updated_time: Date,
+  createdAt: Date,
+  updatedAt: Date,
 })
 
 const User = mongoose.model('User', UserSchema)
@@ -33,10 +33,11 @@ export default class UserClass extends Dao {
   }
 
   create({ username, password, date }) {
-    return User.create({ username, password, created_time: date, updated_time: date })
+    return User.create({ username, password, createdAt: date, updatedAt: date })
   }
 
   // TODO: validate mongo object id
+  // TODO: user findOneAndUpdate instead of .save()
   async updateProfile(id, { name, birthday, status, date }) {
     const user = await User.findById(id)
 

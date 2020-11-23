@@ -4,12 +4,12 @@ import Dao from '../dao'
 const ArticleSchema = new mongoose.Schema({
   author: { type: mongoose.Types.ObjectId, ref: 'User', require: true },
   content: { type: String, require: true },
-  created_time: Date,
-  updated_time: Date,
+  createdAt: Date,
+  updatedAt: Date,
   active: { type: Boolean, default: true },
 })
 
-ArticleSchema.index({ active: 1, created_time: 1 })
+ArticleSchema.index({ active: 1, createdAt: 1 })
 
 const Article = mongoose.model('Article', ArticleSchema)
 
@@ -19,10 +19,10 @@ export default class ArticleClass extends Dao {
   }
 
   create({ author, content, date }) {
-    return Article.create({ author, content, created_time: date, updated_time: date })
+    return Article.create({ author, content, createdAt: date, updatedAt: date })
   }
 
-  update(id, { content }) {
-    return Article.findOneAndUpdate(id, { content }, { new: true })
+  update(id, { content, date }) {
+    return Article.findOneAndUpdate(id, { content, updatedAt: date }, { new: true })
   }
 }

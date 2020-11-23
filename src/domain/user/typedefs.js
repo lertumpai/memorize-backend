@@ -6,16 +6,16 @@ const typeDefs = gql`
     login(username: String, password: String) : User
   }
   extend type Mutation {
-    register(username: String, password: String) : User
-    profile(id: ID!, profile: ProfileInput) : User
+    user(username: String, password: String) : User
+    profile(id: ID!, input: ProfileInput) : User
   }
   type User {
-    id: ID
-    active: Boolean
-    token: String
-    profile: UserProfile
+    id: ID!
+    active: Boolean!
+    token: String!
+    profile: ProfileUser
   }
-  type UserProfile {
+  type ProfileUser {
     name: String
     birthday: Date
     status: String

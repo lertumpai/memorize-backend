@@ -11,14 +11,14 @@ module.exports = {
     },
   },
   Mutation: {
-    register(_, { username, password }, { User }) {
+    user(_, { username, password }, { User }) {
       return Authentication.register({ username, password }, { User })
     },
-    profile(_, { id, profile }, { User, date }) {
+    profile(_, { id, input }, { User, date }) {
       return User.updateProfile(id, {
-        name: profile.name,
-        status: profile.status,
-        birthday: profile.birthday,
+        name: input.name,
+        status: input.status,
+        birthday: input.birthday,
         date,
       })
     },

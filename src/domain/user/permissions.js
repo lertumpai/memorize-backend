@@ -2,8 +2,8 @@ import { auth } from './utils/auth'
 
 module.exports = {
   Mutation: {
-    profile(_, { id }, { user }) {
-      auth({ id, user })
+    async profile(_, { id }, { user }, { User }) {
+      await auth({ id, user }, { User })
     },
   },
 }
