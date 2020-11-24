@@ -1,9 +1,11 @@
 import moment from 'moment'
+import { isValidObjectId } from 'mongoose'
 import _ from 'lodash'
 import glob from 'glob'
 import { GraphQLScalarType } from 'graphql'
 
 import pkg from '../package'
+import { INVALID_MONGOID_ERROR } from './error'
 
 function DateType() {
   const date = value => moment(value).utc().toDate()
@@ -19,6 +21,25 @@ function DateType() {
       },
       parseLiteral({ value }) {
         return date(value)
+      },
+    }),
+  }
+}
+
+function MongoObjectId() {
+  const validateMongoId = value => { if (!isValidObjectId(value)) { throw new INVALID_MONGOID_ERROR() } return value }
+  return {
+    Date: new GraphQLScalarType({
+      name: 'MID',
+      description: 'Mongo object id',
+      parseValue(value) {
+        return validateMongoId(value)
+      },
+      serialize(value) {
+        return validateMongoId(value)
+      },
+      parseLiteral({ value }) {
+        return validateMongoId(value)
       },
     }),
   }
@@ -46,4 +67,5 @@ module.exports = _.merge(
   mongoTypeResolver,
   ...autoResolvers,
   DateType(),
+  MongoObjectId(),
 )

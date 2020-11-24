@@ -12,6 +12,12 @@ export class UNAUTHORIZED_ERROR extends CustomError {
   }
 }
 
+export class INVALID_MONGOID_ERROR extends CustomError {
+  constructor() {
+    super('INVALID_MONGOID_ERROR', { MID: `Mongo id is invalid` })
+  }
+}
+
 export class DUPLICATED_VALUE_ERROR extends CustomError {
   constructor(value) {
     super('DUPLICATED_VALUE_ERROR', { [value]: `${value} is duplicated` })
