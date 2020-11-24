@@ -29,7 +29,7 @@ function DateType() {
 function MongoObjectId() {
   const validateMongoId = value => { if (!isValidObjectId(value)) { throw new INVALID_MONGOID_ERROR() } return value }
   return {
-    Date: new GraphQLScalarType({
+    MID: new GraphQLScalarType({
       name: 'MID',
       description: 'Mongo object id',
       parseValue(value) {
