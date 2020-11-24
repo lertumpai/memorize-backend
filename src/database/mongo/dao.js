@@ -7,15 +7,20 @@ export default class Dao {
     return this.model.findById(id)
   }
 
-  queryAfterBeforeLimit(filer, { after, before, limit = 10, sortBy = '_id', order = 'DESC' }) {
-    let pagination
+  queryAfterBeforeLimit(filter, { after, before, limit = 10, sortBy = '_id', order = 'DESC' }) {
+    let prepareFilter = { ...filter }
+
     if (!!after && !!before) {
-      pagination = { $gte: after, $lte: before }
+      prepareFilter = { ...filter, [sortBy]: { $gte: after, $lte: before } }
     } else if (after) {
-      pagination = { $gt: after }
+      prepareFilter = { ...filter, [sortBy]: { $gt: after } }
     } else if (before) {
-      pagination = { $lt: before }
+      prepareFilter = { ...filter, [sortBy]: { $lt: before } }
     }
+
+    const sort = { [sortBy]: order === 'DESC' ? -1 : 1 }
+
+    return this.model.find(prepareFilter, null, { limit, sort })
   }
 
   deleteById(id, { date }) {

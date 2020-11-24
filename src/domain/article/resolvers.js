@@ -4,9 +4,7 @@ module.exports = {
       return Article.findById(id)
     },
     articles(_, { author, pagination }, { Article }) {
-      console.log(author)
-      console.log(pagination)
-      return null
+      return Article.findAll({ author }, pagination)
     },
   },
   Mutation: {

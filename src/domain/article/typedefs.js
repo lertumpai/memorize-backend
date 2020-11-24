@@ -3,7 +3,7 @@ import { gql } from 'apollo-server-express'
 const typeDefs = gql`
   extend type Query {
     article(id: MID!): Article
-    articles(author: MID, pagination: Pagination): [Article]
+    articles(author: MID, pagination: Pagination = {}): [Article]
   }
   extend type Mutation {
     article(id: MID, input: ArticleInput!): Article

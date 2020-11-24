@@ -10,7 +10,8 @@ const ArticleSchema = new mongoose.Schema({
   active: { type: Boolean, default: true },
 })
 
-ArticleSchema.index({ active: 1, createdAt: 1 })
+ArticleSchema.index({ active: 1, createdAt: -1 })
+ArticleSchema.index({ active: 1, author: 1, createdAt: -1 })
 
 const Article = mongoose.model('Article', ArticleSchema)
 
@@ -21,6 +22,16 @@ export default class ArticleClass extends Dao {
 
   create({ author, content, date }) {
     return Article.create({ author, content, createdAt: date, updatedAt: date })
+  }
+
+  findAll({ author }, { after, before, limit = 10 }) {
+    let filter = {}
+
+    if (author) {
+      filter = { ...filter, author }
+    }
+
+    return this.queryAfterBeforeLimit(filter, { after, before, limit, sortBy: 'createdAt' })
   }
 
   async update(id, { content, date }) {
