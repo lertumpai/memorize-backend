@@ -7,10 +7,10 @@ const typeDefs = gql`
   }
   extend type Mutation {
     user(username: String, password: String) : User
-    profile(id: ID!, input: ProfileInput) : User
+    profile(id: MID!, input: ProfileInput) : User
   }
   type User {
-    id: ID!
+    id: MID!
     active: Boolean!
     token: String!
     profile: ProfileUser

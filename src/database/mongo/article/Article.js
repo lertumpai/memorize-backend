@@ -6,6 +6,7 @@ const ArticleSchema = new mongoose.Schema({
   content: { type: String, require: true },
   createdAt: Date,
   updatedAt: Date,
+  deletedAt: Date,
   active: { type: Boolean, default: true },
 })
 
@@ -22,7 +23,7 @@ export default class ArticleClass extends Dao {
     return Article.create({ author, content, createdAt: date, updatedAt: date })
   }
 
-  update(id, { content, date }) {
-    return Article.findOneAndUpdate(id, { content, updatedAt: date }, { new: true })
+  async update(id, { content, date }) {
+    return Article.findOneAndUpdate({ _id: id }, { content, updatedAt: date }, { new: true })
   }
 }

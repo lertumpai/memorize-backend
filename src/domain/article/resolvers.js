@@ -3,6 +3,11 @@ module.exports = {
     article(_, { id }, { Article }) {
       return Article.findById(id)
     },
+    articles(_, { author, pagination }, { Article }) {
+      console.log(author)
+      console.log(pagination)
+      return null
+    },
   },
   Mutation: {
     article(_, { id, input }, { Article, user, date }) {
@@ -11,8 +16,13 @@ module.exports = {
         ? Article.update(id, { content, date })
         : Article.create({ author: user.userId, content, date })
     },
-    articleDelete(_, { id }, { Article }) {
-      return Article.deleteById(id)
+    articleDelete(_, { id }, { Article, date }) {
+      return Article.deleteById(id, { date })
+    },
+  },
+  Article: {
+    author({ author }, _, { User }) {
+      return User.findById(author)
     },
   },
 }
