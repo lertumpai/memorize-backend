@@ -10,6 +10,7 @@ const typeDefs = gql`
     articleDelete(id: ID!): Article
   }
   type Article {
+    id: ID!
     author: ID!
     content: String!
     active: Boolean!
