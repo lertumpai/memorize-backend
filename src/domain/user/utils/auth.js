@@ -1,6 +1,6 @@
 import { NOT_FOUND_ERROR, UNAUTHORIZED_ERROR } from '../../../error'
 
-export async function auth({ id, user }, { User }) {
+export async function auth({ id }, { User, user }) {
   const foundUser = await User.findById(id)
 
   if (!foundUser) {

@@ -1,7 +1,13 @@
 import { UNAUTHORIZED_ERROR } from '../../../error'
 
-export function auth({ id, author, user }) {
-  if (id !== user.userId) {
+export async function auth({ id }, { Article, user }) {
+  const article = await Article.findById(id)
+
+  if (!article) {
+    throw new UNAUTHORIZED_ERROR()
+  }
+
+  if (article.author.toString() !== user.userId.toString()) {
     throw new UNAUTHORIZED_ERROR()
   }
 }
