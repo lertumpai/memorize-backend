@@ -28,7 +28,7 @@
     "mongoose": "^5.10.15"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.7",
+    "@babel/core": "^7.12.9",
     "@babel/eslint-parser": "^7.12.1",
     "@babel/node": "^7.12.6",
     "@babel/preset-env": "^7.12.7",

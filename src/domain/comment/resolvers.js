@@ -20,8 +20,8 @@ module.exports = {
     author({ author }, _, { User }) {
       return User.findById(author)
     },
-    article({ article }, _, { Article }) {
-      return Article.findById(article)
+    article({ articleId }, _, { Article }) {
+      return Article.findById(articleId)
     },
   },
 }

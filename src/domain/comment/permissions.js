@@ -3,8 +3,7 @@ import { NOT_FOUND_ERROR } from '../../error'
 
 module.exports = {
   Mutation: {
-    // TODO: used directive to check id is have value
-    async comment(_, { id, articleId }, { Article, Comment, user }) {
+    async comment(_, { id, input: { articleId } }, { Article, Comment, user }) {
       const article = await Article.findById(articleId)
       if (!article) {
         throw new NOT_FOUND_ERROR('article')
