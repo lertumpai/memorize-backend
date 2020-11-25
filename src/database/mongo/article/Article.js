@@ -24,8 +24,8 @@ export default class ArticleClass extends Dao {
     return Article.create({ author, content, createdAt: date, updatedAt: date })
   }
 
-  findAll({ author }, { after, before, limit = 10 }) {
-    let filter = {}
+  findAll({ author, active = true }, { after, before, limit = 10 }) {
+    let filter = { active }
 
     if (author) {
       filter = { ...filter, author }

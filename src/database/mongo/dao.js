@@ -7,8 +7,9 @@ export default class Dao {
     return this.model.findById(id)
   }
 
-  queryAfterBeforeLimit(filter, { after, before, limit = 10, sortBy = '_id', order = 'DESC' }) {
+  async queryAfterBeforeLimit(filter, { after, before, limit = 10, sortBy = '_id', order = 'ASC' }) {
     let prepareFilter = { ...filter }
+    let prepareOrder = order
 
     if (!!after && !!before) {
       prepareFilter = { ...filter, [sortBy]: { $gte: after, $lte: before } }
@@ -16,9 +17,10 @@ export default class Dao {
       prepareFilter = { ...filter, [sortBy]: { $gt: after } }
     } else if (before) {
       prepareFilter = { ...filter, [sortBy]: { $lt: before } }
+      prepareOrder = 'DESC'
     }
 
-    const sort = { [sortBy]: order === 'DESC' ? -1 : 1 }
+    const sort = { [sortBy]: prepareOrder === 'DESC' ? -1 : 1 }
 
     return this.model.find(prepareFilter, null, { limit, sort })
   }

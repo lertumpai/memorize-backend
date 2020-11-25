@@ -10,9 +10,7 @@ module.exports = {
   Mutation: {
     article(_, { id, input }, { Article, user, date }) {
       const { content } = input
-      return id
-        ? Article.update(id, { content, date })
-        : Article.create({ author: user.userId, content, date })
+      return id ? Article.update(id, { content, date }) : Article.create({ author: user.userId, content, date })
     },
     articleDelete(_, { id }, { Article, date }) {
       return Article.deleteById(id, { date })
