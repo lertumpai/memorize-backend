@@ -1,10 +1,18 @@
+import DataLoader from 'dataloader'
+
 export default class Dao {
   constructor(model) {
     this.model = model
+    this.loader = new DataLoader(keys => this.findByBatchIds(keys, this.model))
   }
 
   findById(id) {
-    return this.model.findById(id)
+    return this.loader.load(id)
+  }
+
+  async findByBatchIds(keys, model) {
+    const results = await model.find({ _id: { $in: keys } })
+    return keys.map(key => results.find(({ _id }) => _id.toString() === key.toString()))
   }
 
   async queryAfterBeforeLimit(filter, { after, before, limit = 10, sortBy = '_id', order = 'ASC' }) {
