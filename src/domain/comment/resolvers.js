@@ -3,14 +3,14 @@ module.exports = {
     comment(_, { id }, { Comment }) {
       return Comment.findById(id)
     },
-    comments(_, { article, pagination }, { Comment }) {
-      return Comment.findAll({ article }, pagination)
+    comments(_, { articleId, pagination }, { Comment }) {
+      return Comment.findAll({ articleId }, pagination)
     },
   },
   Mutation: {
     comment(_, { id, input }, { Comment, user, date }) {
-      const { content, article } = input
-      return id ? Comment.update(id, { content, date }) : Comment.create({ article, author: user.userId, content, date })
+      const { content, articleId } = input
+      return id ? Comment.update(id, { content, date }) : Comment.create({ articleId, author: user.userId, content, date })
     },
     commentDelete(_, { id }, { Comment, date }) {
       return Comment.deleteById(id, { date })

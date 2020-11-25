@@ -3,7 +3,7 @@ import { gql } from 'apollo-server-express'
 const typeDefs = gql`
   extend type Query {
     comment(id: MID!): Comment
-    comments(article: MID!, pagination: Pagination = {}): [Comment]
+    comments(articleId: MID!, pagination: Pagination = {}): [Comment]
   }
   extend type Mutation {
     comment(id: MID, input: CommentInput!): Comment
@@ -21,7 +21,7 @@ const typeDefs = gql`
   }
   input CommentInput {
     content: String!
-    article: MID!
+    articleId: MID!
   }
 `
 

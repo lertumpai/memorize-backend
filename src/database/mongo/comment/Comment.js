@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 import Dao from '../dao'
 
 const CommentSchema = new mongoose.Schema({
-  article: { type: mongoose.Types.ObjectId, ref: 'Article' },
+  articleId: { type: mongoose.Types.ObjectId, ref: 'Article' },
   author: { type: mongoose.Types.ObjectId, ref: 'User' },
   content: { type: String, require: true },
   createdAt: Date,
@@ -11,7 +11,7 @@ const CommentSchema = new mongoose.Schema({
   active: { type: Boolean, default: true },
 })
 
-CommentSchema.index({ active: 1, article: 1, createdAt: -1 })
+CommentSchema.index({ active: 1, articleId: 1, createdAt: -1 })
 
 const Comment = mongoose.model('Comment', CommentSchema)
 
@@ -20,15 +20,15 @@ export default class CommentClass extends Dao {
     super(Comment)
   }
 
-  create({ author, article, content, date }) {
-    return Comment.create({ author, article, content, createdAt: date, updatedAt: date })
+  create({ author, articleId, content, date }) {
+    return Comment.create({ author, articleId, content, createdAt: date, updatedAt: date })
   }
 
-  findAll({ article, active = true }, { after, before, limit = 10 }) {
+  findAll({ articleId, active = true }, { after, before, limit = 10 }) {
     let filter = { active }
 
-    if (article) {
-      filter = { ...filter, article }
+    if (articleId) {
+      filter = { ...filter, articleId }
     }
 
     return this.queryAfterBeforeLimit(filter, { after, before, limit, sortBy: 'createdAt' })
@@ -38,7 +38,7 @@ export default class CommentClass extends Dao {
     return Comment.findOneAndUpdate({ _id: id }, { content, updatedAt: date }, { new: true })
   }
 
-  deleteByArticle(article) {
-    return Comment.findOneAndUpdate({ article }, { active: false }, { new: true })
+  deleteByArticle(articleId) {
+    return Comment.findOneAndUpdate({ articleId }, { active: false }, { new: true })
   }
 }
