@@ -120,9 +120,9 @@ async function main() {
     await new Promise(resolve => setTimeout(resolve, 1000))
   }
 
-  const users = await generateUsers(10)
-  const articles = await generateArticles(100, users)
-  await generateComments(100, users, articles)
+  const users = await generateUsers(process.env.GENERATE_USERS)
+  const articles = await generateArticles(process.env.GENERATE_ARTICLES, users)
+  await generateComments(process.env.GENERATE_COMMENTS, users, articles)
 }
 
 main()
