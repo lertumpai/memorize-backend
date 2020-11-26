@@ -66,52 +66,73 @@ async function generateUsers(n) {
   return results
 }
 
-async function generateArticles(n, users) {
-  console.log('--- Start create articles ---')
+function generateDocArticles(batch, users) {
   const articles = []
-  const start = 0
-  const end = start + n
-  for (let i = start; i < end; i++) {
+  for (let i = 0; i < batch; i++) {
     const user = randomDocument(users)
     const content = generateString(15)
     articles.push({
       author: user.id,
-      content: `content:${content}:${i}`,
+      content: `article:content:${content}:${i}`,
       date: randomDate(),
     })
   }
+  return articles
+}
+
+async function generateArticles(n, users) {
+  console.log('--- Start create articles ---')
+  const batch = 100
+  let created = 0
+  const results = []
 
   console.log('--- creating articles ---')
-  const results = await Promise.all(articles.map(article => Article.create(article)))
+  while (created < n) {
+    const articles = generateDocArticles(batch, users)
+    const createdArticles = await Promise.all(articles.map(article => Article.create(article)))
+    created += createdArticles.length
+    results.push(createdArticles)
+    console.log(`Created article: ${created}`)
+  }
 
   console.log('--- Finish create articles ---')
-  return results
+  return results.flat().map(article => article.id)
+}
+
+function generateDocComments(batch, users, article) {
+  const comments = []
+  for (let i = 0; i < batch; i++) {
+    const user = randomDocument(users)
+    const content = generateString(15)
+    comments.push({
+      author: user.id,
+      articleId: article,
+      content: `comment:content:${content}:${i}`,
+      date: randomDate(),
+    })
+  }
+  return comments
 }
 
 async function generateComments(n, users, articles) {
   console.log('--- Start create comments ---')
-  const comments = []
-  const start = 0
-  const end = start + n
-
-  articles.forEach(article => {
-    for (let i = start; i < end; i++) {
-      const user = randomDocument(users)
-      const content = generateString(15)
-      comments.push({
-        author: user.id,
-        articleId: article.id,
-        content: `content:${content}:${i}`,
-        date: randomDate(),
-      })
-    }
-  })
+  const batch = 100
+  let articleN = 0
 
   console.log('--- creating comments ---')
-  const results = await Promise.all(comments.map(comment => Comment.create(comment)))
+  for(const article of articles) {
+    let created = 0
+    while (created < n) {
+      const comments = generateDocComments(batch, users, article)
+      const createdComments = await Promise.all(comments.map(comment => Comment.create(comment)))
+      created += createdComments.length
+      console.log(`Created article: ${articleN} comments: ${created}`)
+    }
+
+    articleN++
+  }
 
   console.log('--- Finish create comments ---')
-  return results
 }
 
 async function main() {
