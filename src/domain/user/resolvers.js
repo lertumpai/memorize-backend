@@ -11,8 +11,8 @@ module.exports = {
     },
   },
   Mutation: {
-    user(_, { username, password }, { User }) {
-      return Authentication.register({ username, password }, { User })
+    user(_, { username, password }, { User, date }) {
+      return Authentication.register({ username, password }, { User, date })
     },
     profile(_, { id, input }, { User, date }) {
       return User.updateProfile(id, {

@@ -33,11 +33,11 @@ export default class UserClass extends Dao {
     return User.findOne({ username })
   }
 
-  create({ username, password, date }) {
+  create({ username, password, date = new Date() }) {
     return User.create({ username, password, createdAt: date, updatedAt: date })
   }
 
-  async updateProfile(id, { name, birthday, status, date }) {
+  async updateProfile(id, { name, birthday, status, date = new Date() }) {
     const user = await User.findById(id)
 
     if (!user) {

@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt'
 
 import { DUPLICATED_VALUE_ERROR, LOGIN_FAIL_ERROR, REGISTER_FAIL_ERROR } from '../error'
 
-export async function register({ username, password }, { User }) {
+export async function register({ username, password }, { User, date }) {
   const checks = []
   if (!username) checks.push('Username')
   if (!password) checks.push('Password')
@@ -15,7 +15,7 @@ export async function register({ username, password }, { User }) {
   }
 
   const hash = bcrypt.hashSync(password, 10)
-  return User.create({ username, password: hash, active: true })
+  return User.create({ username, password: hash, active: true, date })
 }
 
 export async function login({ username, password }, { User }) {
