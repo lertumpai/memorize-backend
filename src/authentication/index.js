@@ -11,7 +11,7 @@ export async function register({ username, password }, { User, date }) {
   const user = await User.findByUsername(username)
 
   if (user) {
-    throw new DUPLICATED_VALUE_ERROR('User')
+    throw new DUPLICATED_VALUE_ERROR('username')
   }
 
   const hash = bcrypt.hashSync(password, 10)
@@ -21,8 +21,8 @@ export async function register({ username, password }, { User, date }) {
 export async function login({ username, password }, { User }) {
   const user = await User.findByUsername(username)
 
-  if (!user) throw new LOGIN_FAIL_ERROR(['Username'])
-  if (!password || !bcrypt.compareSync(password, user.password)) throw new LOGIN_FAIL_ERROR(['Password'])
+  if (!user) throw new LOGIN_FAIL_ERROR(['username'])
+  if (!password || !bcrypt.compareSync(password, user.password)) throw new LOGIN_FAIL_ERROR(['password'])
 
   return user
 }
