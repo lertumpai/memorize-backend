@@ -4,8 +4,8 @@ import { DUPLICATED_VALUE_ERROR, LOGIN_FAIL_ERROR, REGISTER_FAIL_ERROR } from '.
 
 export async function register({ username, password }, { User, date }) {
   const checks = []
-  if (!username) checks.push('Username')
-  if (!password) checks.push('Password')
+  if (!username) checks.push('username')
+  if (!password) checks.push('password')
   if (checks.length !== 0) throw new REGISTER_FAIL_ERROR(checks)
 
   const user = await User.findByUsername(username)
