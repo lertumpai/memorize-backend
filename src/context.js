@@ -10,10 +10,11 @@ function wrapMongoDBModel() {
 
 export async function context({ req }) {
   const models = wrapMongoDBModel()
+  const date = moment.utc().toDate()
 
   return {
-    user: verifyToken(req.headers.authorization),
-    date: moment.utc().toDate(),
+    user: verifyToken(req.headers.authorization, date),
+    date,
     ...models,
   }
 }
