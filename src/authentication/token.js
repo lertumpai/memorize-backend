@@ -5,8 +5,8 @@ const key = process.env.PRIVATE_KEY
 // payload = { userId, username, profile }
 export function token(user) {
   const payload = { userId: user.id, username: user.username, profile: user.profile }
-  // TODO: return user ? jwt.sign(payload, key, { expiresIn: '1h' }) : null
-  return user ? jwt.sign(payload, key) : null
+  return user ? jwt.sign(payload, key, { expiresIn: '1h' }) : null
+  // return user ? jwt.sign(payload, key) : null
 }
 
 export function verifyToken(token) {
