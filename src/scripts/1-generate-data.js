@@ -88,7 +88,8 @@ async function generateArticles(n, users) {
 
   console.log('--- creating articles ---')
   while (created < n) {
-    const articles = generateDocArticles(batch, users)
+    const toBeCreate = n - created
+    const articles = generateDocArticles(batch > toBeCreate ? toBeCreate : batch, users)
     const createdArticles = await Promise.all(articles.map(article => Article.create(article)))
     created += createdArticles.length
     results.push(createdArticles)
@@ -117,13 +118,14 @@ function generateDocComments(batch, users, article) {
 async function generateComments(n, users, articles) {
   console.log('--- Start create comments ---')
   const batch = 100
-  let articleN = 0
+  let articleN = 1
 
   console.log('--- creating comments ---')
   for(const article of articles) {
     let created = 0
     while (created < n) {
-      const comments = generateDocComments(batch, users, article)
+      const toBeCreate = n - created
+      const comments = generateDocComments(batch > toBeCreate ? toBeCreate : batch, users, article)
       const createdComments = await Promise.all(comments.map(comment => Comment.create(comment)))
       created += createdComments.length
       console.log(`Created article: ${articleN} comments: ${created}`)
