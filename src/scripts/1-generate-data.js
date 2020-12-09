@@ -104,7 +104,7 @@ function generateDocComments(batch, users, article) {
   const comments = []
   for (let i = 0; i < batch; i++) {
     const user = randomDocument(users)
-    const content = generateString(15)
+    const content = generateString(Math.random() * 150)
     comments.push({
       author: user.id,
       articleId: article,
