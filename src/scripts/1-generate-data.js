@@ -70,7 +70,7 @@ function generateDocArticles(batch, users) {
   const articles = []
   for (let i = 0; i < batch; i++) {
     const user = randomDocument(users)
-    const content = generateString(15)
+    const content = generateString(Math.random() * 300)
     articles.push({
       author: user.id,
       content: `article:content:${content}:${i}`,
@@ -144,6 +144,8 @@ async function main() {
   const users = await generateUsers(process.env.GENERATE_USERS)
   const articles = await generateArticles(process.env.GENERATE_ARTICLES, users)
   await generateComments(process.env.GENERATE_COMMENTS, users, articles)
+
+  process.exit()
 }
 
 main()
