@@ -11,7 +11,7 @@ function randomDocument(doc) {
 }
 
 function randomDate() {
-  const year = 1980 + Math.floor(Math.random() * 30)
+  const year = new Date().getFullYear()
   const month = Math.floor(Math.random() * 12)
   const day = Math.floor(Math.random() * 30) + 1
   const hours = Math.floor(Math.random() * 24)
@@ -35,7 +35,7 @@ async function generateUsers(n) {
   const users = []
   const start = 0
   const end = start + n
-  const name = generateString(7)
+  const name = 'user'
   const status = generateString(20)
   const pw = '123'
   for (let i = start; i < end; i++) {

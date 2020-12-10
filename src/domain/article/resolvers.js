@@ -3,7 +3,7 @@ module.exports = {
     article(_, { id }, { Article }) {
       return Article.findById(id)
     },
-    articles(_, { author, pagination }, { Article }) {
+    async articles(_, { author, pagination }, { Article }) {
       return Article.findAll({ author }, pagination)
     },
   },
