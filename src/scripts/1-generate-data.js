@@ -11,7 +11,7 @@ function randomDocument(doc) {
 }
 
 function randomDate() {
-  const year = new Date().getFullYear()
+  const year = new Date().getFullYear() - 1
   const month = Math.floor(Math.random() * 12)
   const day = Math.floor(Math.random() * 30) + 1
   const hours = Math.floor(Math.random() * 24)
