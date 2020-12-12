@@ -20,5 +20,8 @@ module.exports = {
     author({ author }, _, { User }) {
       return User.findById(author)
     },
+    comment({ id }, _, { Comment }) {
+      return Comment.count({ articleId: id })
+    },
   },
 }
