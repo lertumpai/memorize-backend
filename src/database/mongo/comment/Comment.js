@@ -41,7 +41,7 @@ export default class CommentClass extends Dao {
       filter = { ...filter, articleId }
     }
 
-    return Comment.count(filter)
+    return Comment.countDocuments(filter)
   }
 
   update(id, { content, date }) {
