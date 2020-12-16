@@ -21,7 +21,7 @@ const typeDefs = gql`
   }
   input CommentInput {
     content: String!
-    articleId: MID!
+    articleId: MID
   }
 `
 
