@@ -58,7 +58,7 @@ export function prepareAndWrap(quration, keyResolver, permission, resolver, post
         ? postResolver[quration][keyResolver]
         : null
     }).filter(postResolver => postResolver)
-    await Promise.all(preparePostResolvers.map(async postResolver => await postResolver(...args)))
+    await Promise.all(preparePostResolvers.map(postResolver => postResolver(...args)))
 
     return res
   }
