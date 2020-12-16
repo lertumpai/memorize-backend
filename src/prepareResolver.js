@@ -25,20 +25,22 @@ export function prepareResolver(permissions, resolvers, postResolvers) {
 }
 
 function userPermission(user, quration, keyResolver) {
-  if (!user) {
-    if (quration === 'Query') {
-      if (['login', 'version'].includes(keyResolver)) {
-        return true
-      }
-    }
-    else if (quration === 'Mutation') {
-      if (['user'].includes(keyResolver)) {
-        return true
-      }
-    }
-
-    throw new UNAUTHORIZED_ERROR()
+  if (user) {
+    return true
   }
+
+  if (quration === 'Query') {
+    if (['login', 'version'].includes(keyResolver)) {
+      return true
+    }
+  }
+  else if (quration === 'Mutation') {
+    if (['user'].includes(keyResolver)) {
+      return true
+    }
+  }
+
+  throw new UNAUTHORIZED_ERROR()
 }
 
 export function prepareAndWrap(quration, keyResolver, permission, resolver, postResolvers) {
