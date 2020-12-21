@@ -26,5 +26,9 @@ module.exports = {
       const commentCount = await Comment.count({ articleId: id })
       return nFormatter(commentCount)
     },
+    async like({ id }, _, { ArticleAction }) {
+      const articleCount = await ArticleAction.count({ articleId: id })
+      return nFormatter(articleCount)
+    },
   },
 }
