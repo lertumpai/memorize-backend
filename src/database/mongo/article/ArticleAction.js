@@ -16,6 +16,10 @@ export default class ArticleActionClass extends Dao {
     super(ArticleAction)
   }
 
+  findOneByArticleAuthor({ articleId, author }) {
+    return ArticleAction.findOne({ articleId, author })
+  }
+
   async update({ author, articleId, action }) {
     const filter = { author, articleId }
 
