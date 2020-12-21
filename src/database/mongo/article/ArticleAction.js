@@ -3,11 +3,11 @@ import Dao from '../dao'
 
 const ArticleActionSchema = new mongoose.Schema({
   articleId: { type: mongoose.Types.ObjectId, ref: 'Article', require: true },
-  author: { type: mongoose.Types.ObjectId, ref: 'User', require: true },
+  authorId: { type: mongoose.Types.ObjectId, ref: 'User', require: true },
   action: { type: String, enum: ['like'], require: true },
 })
 
-ArticleActionSchema.index({ articleId: 1, author: 1 }, { unique: true })
+ArticleActionSchema.index({ articleId: 1, authorId: 1 }, { unique: true })
 
 const ArticleAction = mongoose.model('ArticleAction', ArticleActionSchema)
 
@@ -16,12 +16,12 @@ export default class ArticleActionClass extends Dao {
     super(ArticleAction)
   }
 
-  findOneByArticleAuthor({ articleId, author }) {
-    return ArticleAction.findOne({ articleId, author })
+  findOneByArticleAuthor({ articleId, authorId }) {
+    return ArticleAction.findOne({ articleId, authorId })
   }
 
-  async update({ author, articleId, action }) {
-    const filter = { author, articleId }
+  async update({ authorId, articleId, action }) {
+    const filter = { authorId, articleId }
 
     if (action === 'unlike') {
       await ArticleAction.findOneAndDelete(filter)
@@ -32,11 +32,11 @@ export default class ArticleActionClass extends Dao {
     return ArticleAction.findOneAndUpdate(filter, update, { upsert: true, new: true })
   }
 
-  count({ author, articleId }) {
+  count({ authorId, articleId }) {
     let filter = { articleId, action: { $ne: 'unlike' } }
 
-    if (author) {
-      filter = { ...filter, author }
+    if (authorId) {
+      filter = { ...filter, authorId }
     }
 
     return ArticleAction.countDocuments(filter)

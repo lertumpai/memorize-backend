@@ -12,7 +12,7 @@ module.exports = {
   Mutation: {
     article(_, { id, input }, { Article, user, date }) {
       const { content } = input
-      return id ? Article.update(id, { content, date }) : Article.create({ author: user.userId, content, date })
+      return id ? Article.update(id, { content, date }) : Article.create({ author: user.id, content, date })
     },
     articleDelete(_, { id }, { Article, date }) {
       return Article.deleteById(id, { date })
@@ -26,9 +26,12 @@ module.exports = {
       const commentCount = await Comment.count({ articleId: id })
       return nFormatter(commentCount)
     },
-    async like({ id }, _, { ArticleAction }) {
-      const articleCount = await ArticleAction.count({ articleId: id })
-      return nFormatter(articleCount)
+    async action({ id }, _, { ArticleAction }) {
+      const articleActionCount = await ArticleAction.count({ articleId: id })
+      return nFormatter(articleActionCount)
+    },
+    userAction({ id }, _, { ArticleAction, user }) {
+      return ArticleAction.findOneByArticleAuthor({ articleId: id, authorId: user.id })
     },
   },
 }

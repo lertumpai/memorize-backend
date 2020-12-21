@@ -10,7 +10,7 @@ module.exports = {
   Mutation: {
     comment(_, { id, input }, { Comment, user, date }) {
       const { content, articleId } = input
-      return id ? Comment.update(id, { content, date }) : Comment.create({ articleId, author: user.userId, content, date })
+      return id ? Comment.update(id, { content, date }) : Comment.create({ articleId, author: user.id, content, date })
     },
     commentDelete(_, { id }, { Comment, date }) {
       return Comment.deleteById(id, { date })

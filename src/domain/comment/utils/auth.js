@@ -7,7 +7,7 @@ export async function auth({ id }, { Comment, user }) {
     throw new NOT_FOUND_ERROR('comment')
   }
 
-  if (comment.author.toString() !== user.userId.toString()) {
+  if (comment.author.toString() !== user.id.toString()) {
     throw new UNAUTHORIZED_ERROR()
   }
 }

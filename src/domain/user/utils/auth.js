@@ -7,7 +7,7 @@ export async function auth({ id }, { User, user }) {
     throw new NOT_FOUND_ERROR('user')
   }
 
-  if (id.toString() !== user.userId.toString()) {
+  if (id.toString() !== user.id.toString()) {
     throw new UNAUTHORIZED_ERROR()
   }
 }

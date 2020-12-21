@@ -14,7 +14,8 @@ const typeDefs = gql`
     author: User!
     content: String!
     active: Boolean!
-    like: String!
+    userAction: ArticleAction
+    action: String!
     comment: String!
     canMutate: Boolean!
     createdAt: Date
