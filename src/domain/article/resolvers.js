@@ -1,3 +1,5 @@
+import nFormatter from '../../utils/nFormatter'
+
 module.exports = {
   Query: {
     article(_, { id }, { Article }) {
@@ -19,6 +21,10 @@ module.exports = {
   Article: {
     author({ author }, _, { User }) {
       return User.findById(author)
+    },
+    async comment({ id }, _, { Comment }) {
+      const commentCount = await Comment.count({ articleId: id })
+      return nFormatter(commentCount)
     },
   },
 }

@@ -34,11 +34,21 @@ export default class CommentClass extends Dao {
     return this.queryAfterBeforeLimit(filter, { after, before, limit, sortBy: 'createdAt' })
   }
 
+  count({ articleId, active = true }) {
+    let filter = { active }
+
+    if (articleId) {
+      filter = { ...filter, articleId }
+    }
+
+    return Comment.countDocuments(filter)
+  }
+
   update(id, { content, date }) {
     return Comment.findOneAndUpdate({ _id: id }, { content, updatedAt: date }, { new: true })
   }
 
   deleteByArticle(articleId) {
-    return Comment.findOneAndUpdate({ articleId }, { active: false }, { new: true })
+    return Comment.updateMany({ articleId }, { active: false }, { new: true })
   }
 }
