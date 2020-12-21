@@ -4,10 +4,10 @@ import Dao from '../dao'
 const ArticleActionSchema = new mongoose.Schema({
   articleId: { type: mongoose.Types.ObjectId, ref: 'Article', require: true },
   author: { type: mongoose.Types.ObjectId, ref: 'User', require: true },
-  action: { type: String, enum: ['like', 'unlike'], require: true },
-}, { _id: false })
+  action: { type: String, enum: ['like'], require: true },
+})
 
-ArticleActionSchema.index({ articleId: 1, author: 1, action: 1 }, { unique: true })
+ArticleActionSchema.index({ articleId: 1, author: 1 }, { unique: true })
 
 const ArticleAction = mongoose.model('ArticleAction', ArticleActionSchema)
 
@@ -16,8 +16,14 @@ export default class ArticleActionClass extends Dao {
     super(ArticleAction)
   }
 
-  update({ author, articleId, action }) {
+  async update({ author, articleId, action }) {
     const filter = { author, articleId }
+
+    if (action === 'unlike') {
+      await ArticleAction.findOneAndDelete(filter)
+      return null
+    }
+
     const update = { ...filter, action }
     return ArticleAction.findOneAndUpdate(filter, update, { upsert: true, new: true })
   }

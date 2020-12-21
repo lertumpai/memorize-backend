@@ -5,8 +5,8 @@ const typeDefs = gql`
     articleAction(articleId: MID!, action: ArticleActionEnum!): ArticleAction
   }
   type ArticleAction {
-    article: Article!
-    author: User!
+    articleId: MID!
+    author: MID!
     action: ArticleActionEnum!
   }
   enum ArticleActionEnum {
