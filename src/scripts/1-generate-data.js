@@ -123,8 +123,9 @@ async function generateComments(n, users, articles) {
   console.log('--- creating comments ---')
   for(const article of articles) {
     let created = 0
-    while (created < n) {
-      const toBeCreate = n - created
+    const randomN = Math.random() * n
+    while (created < randomN) {
+      const toBeCreate = randomN - created
       const comments = generateDocComments(batch > toBeCreate ? toBeCreate : batch, users, article)
       const createdComments = await Promise.all(comments.map(comment => Comment.create(comment)))
       created += createdComments.length
