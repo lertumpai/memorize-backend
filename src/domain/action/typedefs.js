@@ -9,12 +9,12 @@ const typeDefs = gql`
     authorId: MID!
     action: ActionEnum!
   }
-  type ArticleAction {
+  type ArticleAction implements Action {
     articleId: MID!
     authorId: MID!
     action: ActionEnum!
   }
-  type CommentAction {
+  type CommentAction implements Action  {
     commentId: MID!
     authorId: MID!
     action: ActionEnum!

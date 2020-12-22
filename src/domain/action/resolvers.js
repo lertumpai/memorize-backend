@@ -7,4 +7,16 @@ module.exports = {
       return CommentAction.update({ authorId: user.id, commentId, action })
     },
   },
+  Action: {
+    __resolveType({ articleId, commentId }){
+      if (articleId) {
+        return 'ArticleAction'
+      }
+      if (commentId) {
+        return 'CommentAction'
+      }
+
+      return null
+    },
+  },
 }
