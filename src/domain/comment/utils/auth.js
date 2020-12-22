@@ -10,4 +10,6 @@ export async function auth({ id }, { Comment, user }) {
   if (comment.author.toString() !== user.id.toString()) {
     throw new UNAUTHORIZED_ERROR()
   }
+
+  return true
 }

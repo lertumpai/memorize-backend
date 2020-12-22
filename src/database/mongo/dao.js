@@ -10,8 +10,9 @@ export default class Dao {
     return this.loader.load(id.toString())
   }
 
-  findByBatchIds(keys, model) {
-    return model.find({ _id: { $in: keys } })
+  async findByBatchIds(keys, model) {
+    const results = await model.find({ _id: { $in: keys } })
+    return keys.map(key => results.find(result => result.id === key))
   }
 
   async queryAfterBeforeLimit(filter, { after, before, limit = 10, sortBy = '_id', order = 'DESC' }) {

@@ -26,6 +26,9 @@ module.exports = {
       const commentCount = await Comment.count({ articleId: id })
       return nFormatter(commentCount)
     },
+    canMutate({ author }, _, { user }) {
+      return author.toString() === user.id.toString()
+    },
     async action({ id }, _, { ArticleAction }) {
       const articleActionCount = await ArticleAction.count({ articleId: id })
       return nFormatter(articleActionCount)
