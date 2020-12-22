@@ -33,7 +33,7 @@ export default class ArticleActionClass extends Dao {
   }
 
   count({ authorId, articleId }) {
-    let filter = { articleId, action: { $ne: 'unlike' } }
+    let filter = { articleId }
 
     if (authorId) {
       filter = { ...filter, authorId }
