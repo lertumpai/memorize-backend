@@ -6,7 +6,7 @@ module.exports = {
     },
     async commentAction(_, { commentId, action }, { CommentAction, Comment, user }) {
       await CommentAction.update({ authorId: user.id, commentId, action })
-      return Comment.findById(Comment)
+      return Comment.findById(commentId)
     },
   },
   Action: {
