@@ -1,10 +1,12 @@
 module.exports = {
   Mutation: {
-    articleAction(_, { articleId, action }, { ArticleAction, user }) {
-      return ArticleAction.update({ authorId: user.id, articleId, action })
+    async articleAction(_, { articleId, action }, { ArticleAction, Article, user }) {
+      await ArticleAction.update({ authorId: user.id, articleId, action })
+      return Article.findById(articleId)
     },
-    commentAction(_, { commentId, action }, { CommentAction, user }) {
-      return CommentAction.update({ authorId: user.id, commentId, action })
+    async commentAction(_, { commentId, action }, { CommentAction, Comment, user }) {
+      await CommentAction.update({ authorId: user.id, commentId, action })
+      return Comment.findById(Comment)
     },
   },
   Action: {

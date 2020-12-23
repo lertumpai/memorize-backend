@@ -2,7 +2,7 @@ import { gql } from 'apollo-server-express'
 
 const typeDefs = gql`
   extend type Mutation {
-    articleAction(articleId: MID!, action: ActionEnum!): Action
+    articleAction(articleId: MID!, action: ActionEnum!): Article!
     commentAction(commentId: MID!, action: ActionEnum!): Action
   }
   interface Action {
