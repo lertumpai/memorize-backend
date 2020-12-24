@@ -35,6 +35,7 @@ export default class ArticleClass extends Dao {
   }
 
   async update(id, { content, date }) {
+    await this.clear(id)
     return Article.findOneAndUpdate({ _id: id }, { content, updatedAt: date }, { new: true })
   }
 }

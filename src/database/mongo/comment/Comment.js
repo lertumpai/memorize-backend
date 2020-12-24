@@ -44,7 +44,8 @@ export default class CommentClass extends Dao {
     return Comment.countDocuments(filter)
   }
 
-  update(id, { content, date }) {
+  async update(id, { content, date }) {
+    await this.clear(id)
     return Comment.findOneAndUpdate({ _id: id }, { content, updatedAt: date }, { new: true })
   }
 
