@@ -35,7 +35,12 @@ export default class Dao {
 
     const sort = { [sortBy]: prepareOrder === 'DESC' ? -1 : 1 }
 
-    return this.model.find(prepareFilter, null, { limit, sort })
+    const data = await this.model.find(prepareFilter, null, { limit: limit + 1, sort })
+
+    return {
+      data: data.slice(0, limit),
+      hasMore: data.length > limit,
+    }
   }
 
   deleteById(id, { date }) {

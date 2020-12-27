@@ -3,11 +3,15 @@ import { gql } from 'apollo-server-express'
 const typeDefs = gql`
   extend type Query {
     article(id: MID!): Article
-    articles(author: MID, pagination: Pagination = {}): [Article]
+    articles(author: MID, pagination: Pagination = {}): FeedArticle!
   }
   extend type Mutation {
     article(id: MID, input: ArticleInput!): Article
     articleDelete(id: MID!): Article
+  }
+  type FeedArticle {
+    data: [Article]
+    hasMore: Boolean!
   }
   type Article {
     id: MID!
@@ -18,6 +22,7 @@ const typeDefs = gql`
     action: String!
     comment: String!
     canMutate: Boolean!
+    hasMore: Boolean!
     createdAt: Date
     updatedAt: Date
     deletedAt: Date
