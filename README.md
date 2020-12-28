@@ -26,7 +26,7 @@ db.comments.deleteMany({})
 docker build --no-cache -t lertumpai/memorize-backend .
 
 # run application
-docker run --name memorize -p 3000:5000 lertumpai/memorize-backend
+docker run --name memorize-backend -p 5000:5000 lertumpai/memorize-backend
 
 # Push docker
 docker commit memorize lertumpai/memorize-backend
