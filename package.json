@@ -6,6 +6,7 @@
   "author": "ninew <new-sorawit@outlook.com>",
   "license": "MIT",
   "scripts": {
+    "start": "env-cmd -f ./environment/.production babel-node ./src/server.js",
     "dev": "env-cmd -f ./environment/.development nodemon --exec babel-node ./src/server.js --watch ./src",
     "lint": "eslint .",
     "lint-fix": "eslint --fix .",
