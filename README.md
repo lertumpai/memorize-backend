@@ -27,4 +27,9 @@ docker build --no-cache -t lertumpai/memorize-backend .
 
 # run application
 docker run --rm --name memorize -p 3000:3000 lertumpai/memorize-backend
+
+# Push docker
+docker commit memorize lertumpai/memorize-backend
+docker push lertumpai/memorize-backend
+docker tag memorize lertumpai/memorize-backend
 ```
