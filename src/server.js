@@ -1,4 +1,5 @@
 import express from 'express'
+import cors from 'cors'
 import bodyParser from 'body-parser'
 import { ApolloServer } from 'apollo-server-express'
 
@@ -25,6 +26,7 @@ expressServer.use(
   bodyParser.json({ limit: '8mb' }),
   bodyParser.urlencoded({ extended: true }),
 )
+expressServer.use(cors())
 server.applyMiddleware({ app: expressServer, path })
 
 expressServer.listen({ port: 5000 }, () =>
