@@ -1,0 +1,28 @@
+version: "3.1"
+services:
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_DATABASE: memorize
+      MONGO_INITDB_ROOT_USERNAME: memorize
+      MONGO_INITDB_ROOT_PASSWORD: memorize-new-farm
+    container_name: memorize_mongodb
+    ports:
+      - 27017:27017
+    volumes:
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+      - database-data:/data/mongo/
+  memorize_backend:
+    image: lertumpai/memorize-backend
+    env_file:
+      - ./environment/.compose
+    command: npm run start
+    depends_on:
+      - mongo
+    ports:
+      - 5000:5000
+
+volumes:
+  database-data:
+    driver: local

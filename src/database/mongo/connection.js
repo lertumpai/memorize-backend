@@ -13,6 +13,6 @@ mongoose
   // eslint-disable-next-line no-console
   .then(() => console.log('Connect Mongo Success'))
   // eslint-disable-next-line no-console
-  .catch(() => console.log('Connect Mongo Error'))
+  .catch(e => console.log('Connect Mongo Error', e))
 
 export default mongoose
