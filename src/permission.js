@@ -1,8 +1,16 @@
 import _ from 'lodash'
 import glob from 'glob'
+import bcrypt from 'bcrypt'
+import { UNAUTHORIZED_ERROR } from './error'
 
 const rootPermissions = {
-  Query: {},
+  Query: {
+    env: (_, { key }) => {
+      if (!bcrypt.compareSync(key, process.env.PRIVATE_HASH_KEY)) {
+        throw new UNAUTHORIZED_ERROR()
+      }
+    },
+  },
   Mutation: {},
 }
 

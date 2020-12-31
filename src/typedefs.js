@@ -10,6 +10,7 @@ const rootTypeDefs = gql`
   },
   type Query {
     version: String!
+    env(key: String!): [String]
   },
   type Mutation {
     version: String!
