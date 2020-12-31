@@ -49,6 +49,7 @@ export default class UserClass extends Dao {
     user.profile.status = status || user.profile.status
     user.updated_time = date
 
+    await this.clear(id)
     return user.save()
   }
 }
