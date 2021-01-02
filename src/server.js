@@ -1,7 +1,9 @@
 import express from 'express'
+import { createServer } from 'http'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 import { ApolloServer } from 'apollo-server-express'
+import { Server } from 'socket.io'
 
 import rootResolvers from './resolvers'
 import rootPostResolvers from './postResolvers'
@@ -12,7 +14,7 @@ import { prepareResolver } from './prepareResolver'
 import './database/mongo/connection'
 import context from './context'
 
-const server = new ApolloServer({
+const serverGraphql = new ApolloServer({
   typeDefs: rootTypeDefs,
   resolvers: prepareResolver(rootPermission, rootResolvers, rootPostResolvers),
   context,
@@ -25,11 +27,21 @@ expressServer.use(
   path,
   bodyParser.json({ limit: '8mb' }),
   bodyParser.urlencoded({ extended: true }),
+  cors(),
 )
-expressServer.use(cors())
-server.applyMiddleware({ app: expressServer, path })
 
-expressServer.listen({ port: 5000 }, () =>
+const server = createServer(expressServer)
+
+const io = new Server(server, { path: '/graphql' })
+// Add socket.io
+expressServer.use((req, res, next) => {
+  req.io = io
+  next()
+})
+
+serverGraphql.applyMiddleware({ app: expressServer, path })
+
+server.listen({ port: 5000 }, () =>
   // eslint-disable-next-line no-console
-  console.log(`🚀 Server ready at http://localhost:5000${server.graphqlPath}`)
+  console.log(`🚀 Server ready at http://localhost:5000${serverGraphql.graphqlPath}`)
 )

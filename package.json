@@ -34,7 +34,8 @@
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "mongodb": "^3.6.3",
-    "mongoose": "^5.11.8"
+    "mongoose": "^5.11.8",
+    "socket.io": "^3.0.4"
   },
   "devDependencies": {
     "nodemon": "^2.0.6"
