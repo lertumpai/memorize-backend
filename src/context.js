@@ -16,6 +16,7 @@ export async function context({ req }) {
     user: verifyToken(req.headers.authorization, date),
     date,
     ...models,
+    io: req.io,
   }
 }
 
