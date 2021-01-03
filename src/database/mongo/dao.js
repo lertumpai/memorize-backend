@@ -43,7 +43,8 @@ export default class Dao {
     }
   }
 
-  deleteById(id, { date }) {
+  async deleteById(id, { date }) {
+    await this.clear(id)
     return this.model.findOneAndUpdate({ _id: id }, { active: false, updatedAt: date, deletedAt: date }, { new: true })
   }
 }

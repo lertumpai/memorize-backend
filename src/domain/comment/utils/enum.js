@@ -1,0 +1,1 @@
+export const COMMENT_UPDATED = 'COMMENT_UPDATED'
