@@ -33,13 +33,7 @@ expressServer.use(
 const server = createServer(expressServer)
 
 const io = new Server(server, { path: '/graphql' })
-io.on('connection', socket => {
-  console.log('connection', io.engine.clientsCount)
 
-  socket.on('disconnect', () => {
-    console.log('user disconnected', io.engine.clientsCount)
-  })
-})
 // Add socket.io
 expressServer.use((req, res, next) => {
   req.io = io
