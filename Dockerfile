@@ -1,10 +1,5 @@
 FROM node:lts
 
-ENV NODE_ENV=$NODE_ENV
-ENV PRIVATE_KEY=$PRIVATE_KEY
-ENV PRIVATE_HASH_KEY=$PRIVATE_HASH_KEY
-ENV MONGO_URI=$MONGO_URI
-
 # set a directory for the app
 WORKDIR /usr/src/memorize-backend
 
