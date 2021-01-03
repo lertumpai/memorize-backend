@@ -3,16 +3,16 @@ import { COMMENT_UPDATED } from './utils/enum'
 
 module.exports = {
   Mutation: {
-    comment(_, { id }, { io }, info, res) {
+    comment(_, args, { io }, info, res) {
       return Promise.all([
         io.emit(ARTICLE_UPDATED, res.articleId),
-        io.emit(COMMENT_UPDATED, id),
+        io.emit(COMMENT_UPDATED, res.id),
       ])
     },
-    commentDelete(_, { id }, { io }, info, res) {
+    commentDelete(_, args, { io }, info, res) {
       return Promise.all([
         io.emit(ARTICLE_UPDATED, res.articleId),
-        io.emit(COMMENT_UPDATED, id),
+        io.emit(COMMENT_UPDATED, res.id),
       ])
     },
     articleDelete(_, { id }, { Comment }) {
