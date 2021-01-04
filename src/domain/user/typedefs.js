@@ -25,7 +25,12 @@ const typeDefs = gql`
     name: String
     birthday: Date
     status: String
-    image: String
+    image: ImageInput
+  }
+  input ImageInput {
+    destination: String
+    fileName: String
+    uploadPath: String
   }
 `
 

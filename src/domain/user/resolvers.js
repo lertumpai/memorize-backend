@@ -1,5 +1,6 @@
 import * as Authentication from '../../authentication'
 import { token } from '../../authentication/token'
+import { acknowledge } from '../upload/utils/acknowledge'
 
 module.exports = {
   Query: {
@@ -17,7 +18,16 @@ module.exports = {
     async profile(_, { id, input }, { User, UploadProfile, date, user }) {
       const { name, status, birthday, image } = input
 
-      const uploadedImage = image ? await UploadProfile.create({ author: user.id, image, date }) : null
+      let uploadedImage
+      if (image) {
+        const res = await acknowledge(image)
+        const acknowledged = await res.json()
+        uploadedImage = await UploadProfile.create({
+          ...acknowledged,
+          author: user.id,
+          date,
+        })
+      }
 
       return User.updateProfile(id, {
         name: name,
@@ -36,7 +46,7 @@ module.exports = {
   ProfileUser: {
     async image({ image }, args, { UploadProfile }) {
       const imageProfile = await UploadProfile.findById(image)
-      return imageProfile ? imageProfile.image : null
+      return imageProfile ? imageProfile.urlImage : null
     },
   },
 }

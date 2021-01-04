@@ -3,8 +3,10 @@ import mongoose from 'mongoose'
 import Dao from '../dao'
 
 const UploadProfileSchema = new mongoose.Schema({
-  image: { type: String, unique: true },
+  urlImage: { type: String, unique: true },
   author: { type: mongoose.Types.ObjectId, ref: 'User', require: true },
+  fileName: String,
+  destination: String,
   createdAt: Date,
   updatedAt: Date,
   deletedAt: Date,
@@ -17,7 +19,14 @@ export default class UploadProfileClass extends Dao {
     super(UploadProfile)
   }
 
-  create({ author, image, date }) {
-    return UploadProfile.create({ author, image, createdAt: date, updatedAt: date })
+  create({ author, urlImage, date, fileName, destination }) {
+    return UploadProfile.create({
+      author,
+      urlImage,
+      fileName,
+      destination,
+      createdAt: date,
+      updatedAt: date,
+    })
   }
 }
