@@ -7,11 +7,11 @@ export default class Dao {
   }
 
   findById(id) {
-    return this.loader.load(id.toString())
+    return id ? this.loader.load(id.toString()) : null
   }
 
   clear(id) {
-    return this.loader.clear(id.toString())
+    return id ? this.loader.clear(id.toString()) : null
   }
 
   async findByBatchIds(keys, model) {
