@@ -30,6 +30,8 @@ expressServer.use(
   cors(),
 )
 
+expressServer.use(express.static('public'))
+
 const server = createServer(expressServer)
 
 const io = new Server(server, { path: '/graphql' })
