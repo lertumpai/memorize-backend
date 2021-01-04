@@ -1,7 +1,7 @@
-import UserClass from './User'
+import UploadProfileClass from './UploadProfile'
 
-const User = new UserClass()
+const UploadProfile = new UploadProfileClass()
 
 export {
-  User,
+  UploadProfile,
 }

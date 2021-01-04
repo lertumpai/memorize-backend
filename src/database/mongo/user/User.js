@@ -7,6 +7,7 @@ const ProfileSchema = new mongoose.Schema({
   name: String,
   birthday: Date,
   status: String,
+  image: { type: mongoose.Types.ObjectId, ref: 'UploadProfile' },
 }, { _id: false })
 
 const UserSchema = new mongoose.Schema({
@@ -37,7 +38,7 @@ export default class UserClass extends Dao {
     return User.create({ username, password, createdAt: date, updatedAt: date })
   }
 
-  async updateProfile(id, { name, birthday, status, date = new Date() }) {
+  async updateProfile(id, { name, birthday, status, image, date = new Date() }) {
     const user = await User.findById(id)
 
     if (!user) {
@@ -47,6 +48,7 @@ export default class UserClass extends Dao {
     user.profile.name = name || user.profile.name
     user.profile.birthday = birthday || user.profile.birthday
     user.profile.status = status || user.profile.status
+    user.profile.image = image ? image.id : user.profile.image
     user.updated_time = date
 
     await this.clear(id)

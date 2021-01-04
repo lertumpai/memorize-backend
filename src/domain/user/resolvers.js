@@ -14,11 +14,16 @@ module.exports = {
     user(_, { username, password }, { User, date }) {
       return Authentication.register({ username, password }, { User, date })
     },
-    profile(_, { id, input }, { User, date }) {
+    async profile(_, { id, input }, { User, UploadProfile, date, user }) {
+      const { name, status, birthday, image } = input
+
+      const uploadedImage = image ? await UploadProfile.create({ author: user.id, image, date }) : null
+
       return User.updateProfile(id, {
-        name: input.name,
-        status: input.status,
-        birthday: input.birthday,
+        name: name,
+        status: status,
+        birthday: birthday,
+        image: uploadedImage,
         date,
       })
     },
@@ -26,6 +31,12 @@ module.exports = {
   User: {
     token(user) {
       return token(user)
+    },
+  },
+  ProfileUser: {
+    async image({ image }, args, { UploadProfile }) {
+      const imageProfile = await UploadProfile.findById(image)
+      return imageProfile.image
     },
   },
 }

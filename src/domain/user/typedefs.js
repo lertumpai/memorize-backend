@@ -19,10 +19,13 @@ const typeDefs = gql`
     name: String
     birthday: Date
     status: String
-  } input ProfileInput {
+    image: String
+  }
+  input ProfileInput {
     name: String
     birthday: Date
     status: String
+    image: String
   }
 `
 
