@@ -36,7 +36,7 @@ module.exports = {
   ProfileUser: {
     async image({ image }, args, { UploadProfile }) {
       const imageProfile = await UploadProfile.findById(image)
-      return imageProfile.image
+      return imageProfile ? imageProfile.image : null
     },
   },
 }
