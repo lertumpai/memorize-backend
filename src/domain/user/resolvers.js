@@ -39,8 +39,8 @@ module.exports = {
     },
   },
   User: {
-    token(user) {
-      return token(user)
+    token(user, args, { UploadProfile }) {
+      return token(user, { UploadProfile })
     },
   },
   ProfileUser: {
