@@ -12,7 +12,7 @@ const typeDefs = gql`
   type User {
     id: MID!
     active: Boolean!
-    token: String!
+    token: String
     profile: ProfileUser
   }
   type ProfileUser {

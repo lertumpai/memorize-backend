@@ -39,8 +39,8 @@ module.exports = {
     },
   },
   User: {
-    token(user, args, { UploadProfile }) {
-      return token(user, { UploadProfile })
+    token(user, args, { UploadProfile, user: currentUser }) {
+      return !currentUser || currentUser.id.toString() === user.id.toString() ? token(user, { UploadProfile }) : null
     },
   },
   ProfileUser: {
