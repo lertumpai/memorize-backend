@@ -4,6 +4,7 @@ import Dao from '../dao'
 const ArticleSchema = new mongoose.Schema({
   author: { type: mongoose.Types.ObjectId, ref: 'User', require: true },
   content: { type: String, require: true },
+  image: { type: mongoose.Types.ObjectId, ref: 'UploadArticle' },
   createdAt: Date,
   updatedAt: Date,
   deletedAt: Date,
@@ -20,8 +21,8 @@ export default class ArticleClass extends Dao {
     super(Article)
   }
 
-  create({ author, content, date }) {
-    return Article.create({ author, content, createdAt: date, updatedAt: date })
+  create({ author, content, image, date }) {
+    return Article.create({ author, content, image, createdAt: date, updatedAt: date })
   }
 
   findAll({ author, active = true }, { after, before, limit = 10 }) {
@@ -34,8 +35,15 @@ export default class ArticleClass extends Dao {
     return this.queryAfterBeforeLimit(filter, { after, before, limit, sortBy: 'createdAt' })
   }
 
-  async update(id, { content, date }) {
+  async update(id, { content, image, date }) {
     await this.clear(id)
-    return Article.findOneAndUpdate({ _id: id }, { content, updatedAt: date }, { new: true })
+
+    const article = await Article.findById(id)
+
+    article.content = content || article.content
+    article.image = image || article.image
+    article.updatedAt = date
+
+    return article.save()
   }
 }

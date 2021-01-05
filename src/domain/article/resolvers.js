@@ -1,4 +1,5 @@
 import nFormatter from '../../utils/nFormatter'
+import { acknowledge } from '../upload/utils/acknowledge'
 
 module.exports = {
   Query: {
@@ -10,9 +11,23 @@ module.exports = {
     },
   },
   Mutation: {
-    article(_, { id, input }, { Article, user, date }) {
-      const { content } = input
-      return id ? Article.update(id, { content, date }) : Article.create({ author: user.id, content, date })
+    async article(_, { id, input }, { Article, UploadArticle, user, date }) {
+      const { content, image } = input
+
+      let uploadedImage
+      if (image) {
+        const res = await acknowledge(image)
+        const acknowledged = await res.json()
+        uploadedImage = await UploadArticle.create({
+          ...acknowledged,
+          author: user.id,
+          date,
+        })
+      }
+
+      return id
+        ? Article.update(id, { content, image: uploadedImage.id, date })
+        : Article.create({ author: user.id, content, image: uploadedImage.id, date })
     },
     articleDelete(_, { id }, { Article, date }) {
       return Article.deleteById(id, { date })
@@ -35,6 +50,9 @@ module.exports = {
     },
     userAction({ id }, _, { ArticleAction, user }) {
       return ArticleAction.findOneByArticleAuthor({ articleId: id, authorId: user.id })
+    },
+    async image({ image }, _, { UploadArticle }) {
+      return UploadArticle.getUrlImageById(image)
     },
   },
 }

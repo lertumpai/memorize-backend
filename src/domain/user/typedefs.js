@@ -27,11 +27,6 @@ const typeDefs = gql`
     status: String
     image: ImageInput
   }
-  input ImageInput {
-    destination: String
-    fileName: String
-    uploadPath: String
-  }
 `
 
 module.exports = typeDefs

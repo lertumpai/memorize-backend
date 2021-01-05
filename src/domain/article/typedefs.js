@@ -17,6 +17,7 @@ const typeDefs = gql`
     id: MID!
     author: User!
     content: String!
+    image: String
     active: Boolean!
     userAction: Action
     action: String!
@@ -29,6 +30,7 @@ const typeDefs = gql`
   }
   input ArticleInput {
     content: String!
+    image: ImageInput
   }
 `
 
