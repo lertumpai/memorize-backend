@@ -29,4 +29,9 @@ export default class UploadProfileClass extends Dao {
       updatedAt: date,
     })
   }
+
+  async getUrlImageById(id) {
+    const image = await this.findById(id)
+    return image ? image.urlImage : null
+  }
 }

@@ -6,8 +6,7 @@ const key = process.env.PRIVATE_KEY
 export async function token(user, { UploadProfile }) {
   const { id, username, profile } = user
 
-  const imageProfile = await UploadProfile.findById(profile.image)
-  const urlImage = imageProfile ? imageProfile.urlImage : null
+  const urlImage = await UploadProfile.getUrlImageById(profile.image)
 
   const payload = {
     id,
