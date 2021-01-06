@@ -26,8 +26,8 @@ module.exports = {
       }
 
       return id
-        ? Article.update(id, { content, image: uploadedImage.id, date })
-        : Article.create({ author: user.id, content, image: uploadedImage.id, date })
+        ? Article.update(id, { content, image: uploadedImage?.id, date })
+        : Article.create({ author: user.id, content, image: uploadedImage?.id, date })
     },
     articleDelete(_, { id }, { Article, date }) {
       return Article.deleteById(id, { date })
