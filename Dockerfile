@@ -10,8 +10,12 @@ RUN npm install
 
 COPY . /usr/src/memorize-backend
 
+# build file (transpile to nodejs current version)
 RUN npm run build
 RUN npm prune --production
+
+# remove floder src
+RUN rm -rf src
 
 # tell the port number the container should expose
 EXPOSE 5000
