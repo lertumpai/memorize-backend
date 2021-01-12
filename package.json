@@ -1,23 +1,20 @@
 {
   "name": "setup-graphql",
   "version": "1.0.1",
-  "main": "index.js",
+  "main": "server.js",
   "repository": "https://github.com/lertumpai/setup-graphql.git",
   "author": "ninew <new-sorawit@outlook.com>",
   "license": "MIT",
   "scripts": {
-    "start": "babel-node ./src/server.js",
+    "build": "babel src --out-dir build",
+    "start:prod": "node ./build/server.js",
+    "start:dev": "env-cmd -f ./environment/.development node ./build/server.js",
     "dev": "env-cmd -f ./environment/.development nodemon --exec babel-node ./src/server.js --watch ./src",
     "lint": "eslint .",
     "lint-fix": "eslint --fix .",
     "generate-data": "env-cmd -f ./environment/.development babel-node ./src/scripts/1-generate-data.js"
   },
   "dependencies": {
-    "@babel/core": "^7.12.10",
-    "@babel/eslint-parser": "^7.12.1",
-    "@babel/node": "^7.12.10",
-    "@babel/preset-env": "^7.12.11",
-    "@babel/register": "^7.12.10",
     "apollo-server-express": "^2.19.1",
     "base64-url": "^2.3.2",
     "bcrypt": "^5.0.0",
@@ -39,6 +36,12 @@
     "socket.io": "^3.0.4"
   },
   "devDependencies": {
+    "@babel/cli": "^7.12.10",
+    "@babel/core": "^7.12.10",
+    "@babel/eslint-parser": "^7.12.1",
+    "@babel/node": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "@babel/register": "^7.12.10",
     "nodemon": "^2.0.6"
   }
 }
