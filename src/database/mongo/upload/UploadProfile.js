@@ -32,6 +32,6 @@ export default class UploadProfileClass extends Dao {
 
   async getUrlImageById(id) {
     const image = await this.findById(id)
-    return image ? image.urlImage : null
+    return image ? `${process.env.SERVER_UPLOAD_URL}${image.urlImage}` : null
   }
 }

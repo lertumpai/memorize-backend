@@ -44,7 +44,7 @@ module.exports = {
     },
   },
   ProfileUser: {
-    async image({ image }, args, { UploadProfile }) {
+    image({ image }, args, { UploadProfile }) {
       return UploadProfile.getUrlImageById(image)
     },
   },
