@@ -34,7 +34,7 @@ expressServer.use(express.static('public'))
 
 const server = createServer(expressServer)
 
-const io = new Server(server, { path: '/graphql' })
+const io = new Server(server, { path })
 
 // Add socket.io
 expressServer.use((req, res, next) => {
