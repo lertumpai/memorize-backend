@@ -3,6 +3,7 @@ import { createServer } from 'http'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 import { ApolloServer } from 'apollo-server-express'
+import redisAdapter from 'socket.io-redis'
 import { Server } from 'socket.io'
 
 import rootResolvers from './resolvers'
@@ -35,6 +36,10 @@ expressServer.use(express.static('public'))
 const server = createServer(expressServer)
 
 const io = new Server(server, { path })
+io.adapter(redisAdapter({
+  host: process.env.REDIS_HOST || 'localhost',
+  port: process.env.REDIS_PORT || 6379,
+}))
 
 // Add socket.io
 expressServer.use((req, res, next) => {
