@@ -29,6 +29,6 @@ build-to-gcp-registry:
     - base64 -d $GCP_SA_KEY | docker login -u _json_key --password-stdin https://gcr.io
   script:
     - export VERSION=$(cat package.json | grep version | head -1 | sed 's/[version,",:]//g' | tr -d [:space:])
-    - docker build --cache-from --tag asia.gcr.io/$PROJECT_ID/$IMAGE_PATH/$IMAGE_NAME:$VERSION --tag asia.gcr.io/$PROJECT_ID/$IMAGE_PATH/$IMAGE_NAME:latest .
+    - docker build --no-cache --tag asia.gcr.io/$PROJECT_ID/$IMAGE_PATH/$IMAGE_NAME:$VERSION --tag asia.gcr.io/$PROJECT_ID/$IMAGE_PATH/$IMAGE_NAME:latest .
     - docker push $CI_REGISTRY_IMAGE:$VERSION
     - docker push $CI_REGISTRY_IMAGE:latest
