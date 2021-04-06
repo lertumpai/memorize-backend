@@ -1,13 +1,13 @@
-image: docker:19.03.13
-
-services:
-  - docker:19.03.13-dind
+image: node:12.18
 
 stages:
-  - build
+  - build-to-docker-hub
 
-build:
-  stage: build
+build-to-docker-hub:
+  services:
+    - name: docker:19.03.13-dind
+  image: docker:19.03.13
+  stage: build-to-docker-hub
   before_script:
     - echo $CI_REGISTRY_PASSWORD | docker login --username $CI_REGISTRY_USER --password-stdin
   script:
