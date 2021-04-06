@@ -1,8 +1,8 @@
 image: node:12.18
 
 stages:
-  - build-to-docker-hub
   - build-to-gcp-registry
+  - build-to-docker-hub
 
 build-to-docker-hub:
   services:
@@ -23,9 +23,12 @@ build-to-gcp-registry:
   image: docker:19.03.13
   stage: build-to-gcp-registry
   before_script:
+    - echo $PROJECT_ID
+    - echo $IMAGE_PATH
+    - echo $IMAGE_NAME
     - base64 -d $GCP_SA_KEY | docker login -u _json_key --password-stdin https://gcr.io
   script:
     - export VERSION=$(cat package.json | grep version | head -1 | sed 's/[version,",:]//g' | tr -d [:space:])
-    - docker build --cache-from -t asia.gcr.io/$PROJECT_ID/$IMAGE_PATH/$IMAGE_NAME:$VERSION -t asia.gcr.io/$PROJECT_ID/$IMAGE_PATH/$IMAGE_NAME:latest .
+    - docker build --cache-from --tag asia.gcr.io/$PROJECT_ID/$IMAGE_PATH/$IMAGE_NAME:$VERSION --tag asia.gcr.io/$PROJECT_ID/$IMAGE_PATH/$IMAGE_NAME:latest .
     - docker push $CI_REGISTRY_IMAGE:$VERSION
     - docker push $CI_REGISTRY_IMAGE:latest
