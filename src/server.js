@@ -24,11 +24,21 @@ const serverGraphql = new ApolloServer({
 const expressServer = express()
 const path = '/graphql'
 
+const corsOptions = {
+  credentials: true,
+  origin: function(origin, callback){
+    // allow requests with no origin
+    // (like mobile apps or curl requests)
+    if(!origin) return callback(null, true);
+    return callback(null, true);
+  }
+}
+
 expressServer.use(
   path,
+  cors(corsOptions),
   bodyParser.json({ limit: '8mb' }),
   bodyParser.urlencoded({ extended: true }),
-  cors(),
 )
 
 expressServer.use(express.static('public'))
