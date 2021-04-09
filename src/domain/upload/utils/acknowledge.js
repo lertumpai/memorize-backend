@@ -5,6 +5,9 @@ export function acknowledge(image) {
   return fetch(url, {
     method: 'post',
     body: JSON.stringify(image),
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+    },
   })
 }
