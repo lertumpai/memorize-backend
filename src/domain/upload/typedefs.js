@@ -6,6 +6,16 @@ const typeDefs = gql`
     fileName: String
     uploadPath: String
   }
+
+  extend type Mutation {
+    uploadImage(file: Upload!, path: String!): String
+  }
+
+  type File {
+    filename: String!
+    mimetype: String!
+    encoding: String!
+  }
 `
 
 module.exports = typeDefs
