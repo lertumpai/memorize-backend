@@ -54,7 +54,7 @@ export async function uploadImage(file, { destination }) {
         const result = {
           destination,
           fileName: targetFileNameWithTimestamp,
-          imageUrl: imageUrl[0],
+          imageUrl: imageUrl,
         }
         resolve(result)
       })
