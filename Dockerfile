@@ -13,6 +13,7 @@ RUN npm install
 
 COPY . /usr/src/memorize-backend
 
+RUN echo $GCP_SA_KEY
 RUN base64 -d $GCP_SA_KEY > key.json
 
 # build file (transpile to nodejs current version)
