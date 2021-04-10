@@ -9,6 +9,9 @@ build-to-docker-hub:
   services:
     - name: docker:19.03.13-dind
   image: docker:19.03.13
+  only:
+    refs:
+      - main
   stage: build-to-docker-hub
   before_script:
     - echo $CI_REGISTRY_PASSWORD | docker login --username $CI_REGISTRY_USER --password-stdin
@@ -22,6 +25,9 @@ build-to-gcp-registry:
   services:
     - name: docker:19.03.13-dind
   image: docker:19.03.13
+  only:
+    refs:
+      - main
   stage: build-to-gcp-registry
   before_script:
     - base64 -d $GCP_SA_KEY | docker login -u _json_key --password-stdin https://asia.gcr.io
@@ -35,6 +41,9 @@ deploy-to-gke-cluster:
   services:
     - name: docker:19.03.13-dind
   image: google/cloud-sdk
+  only:
+    refs:
+      - main
   stage: deploy-to-gke-cluster
   before_script:
     - base64 -d $GCP_SA_KEY > ${HOME}/gcloud-service-key.json
