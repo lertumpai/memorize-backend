@@ -6,7 +6,7 @@ import { ApolloServer } from 'apollo-server-express'
 import redisAdapter from 'socket.io-redis'
 import { Server } from 'socket.io'
 
-import Upload from '../src/domain/upload'
+import Upload from './domain/upload'
 
 import rootResolvers from './resolvers'
 import rootPostResolvers from './postResolvers'
