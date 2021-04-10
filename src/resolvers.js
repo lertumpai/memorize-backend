@@ -56,7 +56,6 @@ const rootResolvers = {
         `PRIVATE_KEY = ${process.env.PRIVATE_KEY}`,
         `PRIVATE_HASH_KEY = ${process.env.PRIVATE_HASH_KEY}`,
         `MONGO_URI = ${process.env.MONGO_URI}`,
-        `SERVER_UPLOAD_URL = ${process.env.SERVER_UPLOAD_URL}`,
       ]
     },
   },
