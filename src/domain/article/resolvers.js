@@ -50,6 +50,9 @@ module.exports = {
       return ArticleAction.findOneByArticleAuthor({ articleId: id, authorId: user.id })
     },
     async image({ image }, _, { UploadArticle }) {
+      if (!image) {
+        return null
+      }
       const articleImage = await UploadArticle.findById(image)
       const { fileName, destination } = articleImage
       return getImageUrl(fileName, destination)

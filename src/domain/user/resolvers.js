@@ -43,6 +43,9 @@ module.exports = {
   },
   ProfileUser: {
     async image({ image }, args, { UploadProfile }) {
+      if (!image) {
+        return null
+      }
       const profileImage = await UploadProfile.findById(image)
       const { fileName, destination } = profileImage
       return getImageUrl(fileName, destination)
