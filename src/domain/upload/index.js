@@ -9,12 +9,18 @@ router.get('/check', (req, res) => {
   res.json({ message: '/upload is available' })
 })
 
-const upload = multer()
-router.post('/', upload.single('image'), async (req, res) => {
-  const { file, body } = req
-  const { destination } = body
-  const uploaded = await uploadImage(file, { destination })
-  res.json(uploaded)
+const upload = multer().single('image')
+router.post('/', async (req, res) => {
+  upload(req, res, async err => {
+    if (err) {
+      throw err
+    }
+
+    const { file, body } = req
+    const { destination } = body
+    const uploaded = await uploadImage(file, { destination })
+    res.json(uploaded)
+  })
 })
 
 module.exports = router
