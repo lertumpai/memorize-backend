@@ -16,6 +16,8 @@ build-to-docker-hub:
   before_script:
     - echo $CI_REGISTRY_PASSWORD | docker login --username $CI_REGISTRY_USER --password-stdin
     - export VERSION=$(cat package.json | grep version | head -1 | sed 's/[version,",:]//g' | tr -d [:space:])
+    - ls
+    - base64 -d $GCP_SA_KEY > key.json
   script:
     - docker build --no-cache
       --tag $CI_REGISTRY_IMAGE:$VERSION
@@ -34,12 +36,12 @@ build-to-gcp-registry:
   before_script:
     - base64 -d $GCP_SA_KEY | docker login -u _json_key --password-stdin https://asia.gcr.io
     - export VERSION=$(cat package.json | grep version | head -1 | sed 's/[version,",:]//g' | tr -d [:space:])
-    - base64 -d $GCP_SA_KEY > ${HOME}/key.json
+    - base64 -d $GCP_SA_KEY > key.json
+    - ls
   script:
     - docker build --no-cache
       --tag asia.gcr.io/$PROJECT_ID/$IMAGE_NAME:$VERSION
       --tag asia.gcr.io/$PROJECT_ID/$IMAGE_NAME:latest
-      --build-arg KEY_JSON_PATH=${HOME}/key.json .
     - docker push asia.gcr.io/$PROJECT_ID/$IMAGE_NAME:$VERSION
     - docker push asia.gcr.io/$PROJECT_ID/$IMAGE_NAME:latest
 
