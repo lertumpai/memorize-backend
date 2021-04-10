@@ -1,5 +1,8 @@
 FROM node:lts
 
+ARG GCP_SA_KEY
+ENV GCP_SA_KEY=$GCP_SA_KEY
+
 # set a directory for the app
 WORKDIR /usr/src/memorize-backend
 
@@ -9,6 +12,8 @@ COPY package.json /usr/src/memorize-backend
 RUN npm install
 
 COPY . /usr/src/memorize-backend
+
+RUN base64 -d $GCP_SA_KEY > key.json
 
 # build file (transpile to nodejs current version)
 RUN npm run build
