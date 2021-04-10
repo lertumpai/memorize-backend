@@ -17,10 +17,7 @@ build-to-docker-hub:
     - echo $CI_REGISTRY_PASSWORD | docker login --username $CI_REGISTRY_USER --password-stdin
   script:
     - export VERSION=$(cat package.json | grep version | head -1 | sed 's/[version,",:]//g' | tr -d [:space:])
-    - docker build --no-cache
-      --tag $CI_REGISTRY_IMAGE:$VERSION
-      --tag $CI_REGISTRY_IMAGE:latest
-      --build-arg GCP_SA_KEY=$GCP_SA_KEY .
+    - docker build --no-cache --tag $CI_REGISTRY_IMAGE:$VERSION --tag $CI_REGISTRY_IMAGE:latest --build-arg GCP_SA_KEY=$GCP_SA_KEY .
     - docker push $CI_REGISTRY_IMAGE:$VERSION
     - docker push $CI_REGISTRY_IMAGE:latest
 
@@ -38,10 +35,7 @@ build-to-gcp-registry:
     - export GCP_SA_KEY_DECODE=$(base64 -d $GCP_SA_KEY)
     - echo $GCP_SA_KEY_DECODE
     - export VERSION=$(cat package.json | grep version | head -1 | sed 's/[version,",:]//g' | tr -d [:space:])
-    - docker build --no-cache
-      --tag asia.gcr.io/$PROJECT_ID/$IMAGE_NAME:$VERSION
-      --tag asia.gcr.io/$PROJECT_ID/$IMAGE_NAME:latest
-      --build-arg GCP_SA_KEY=$GCP_SA_KEY_DECODE .
+    - docker build --no-cache --tag asia.gcr.io/$PROJECT_ID/$IMAGE_NAME:$VERSION --tag asia.gcr.io/$PROJECT_ID/$IMAGE_NAME:latest --build-arg GCP_SA_KEY=$GCP_SA_KEY_DECODE .
     - docker push asia.gcr.io/$PROJECT_ID/$IMAGE_NAME:$VERSION
     - docker push asia.gcr.io/$PROJECT_ID/$IMAGE_NAME:latest
 
