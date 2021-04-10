@@ -26,19 +26,22 @@ const serverGraphql = new ApolloServer({
 const expressServer = express()
 const path = '/graphql'
 
-// const corsOptions = {
-//   credentials: true,
-//   origin: (origin, callback) => {
-//     return callback(null, true)
-//   },
-// }
+const corsOptions = {
+  credentials: true,
+}
 
-expressServer.options('*', cors())
 expressServer.use(
-  cors(),
+  cors(corsOptions),
   bodyParser.json({ limit: '15mb' }),
   bodyParser.urlencoded({ extended: true }),
 )
+
+expressServer.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE')
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+  next()
+})
 
 expressServer.use('/upload', Upload)
 
