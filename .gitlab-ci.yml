@@ -38,7 +38,7 @@ deploy-to-gke-cluster:
   stage: deploy-to-gke-cluster
   before_script:
     - base64 -d $GCP_SA_KEY > ${HOME}/gcloud-service-key.json
-    - gcloud auth activate-service-account ${HOME}/gcloud-service-key.json
+    - gcloud auth activate-service-account --key-file ${HOME}/gcloud-service-key.json
     - gcloud container clusters get-credentials memorize-cluster --zone australia-southeast1-a --project wide-strength-304907
     - export VERSION=$(cat package.json | grep version | head -1 | sed 's/[version,",:]//g' | tr -d [:space:])
   script:
