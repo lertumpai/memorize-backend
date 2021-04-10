@@ -41,7 +41,7 @@ build-to-gcp-registry:
     - docker build --no-cache
       --tag asia.gcr.io/$PROJECT_ID/$IMAGE_NAME:$VERSION
       --tag asia.gcr.io/$PROJECT_ID/$IMAGE_NAME:latest
-      --build-arg $GCP_SA_KEY_DECODE=($$GCP_SA_KEY_DECODE) .
+      --build-arg $GCP_SA_KEY_DECODE="$GCP_SA_KEY_DECODE" .
     - docker push asia.gcr.io/$PROJECT_ID/$IMAGE_NAME:$VERSION
     - docker push asia.gcr.io/$PROJECT_ID/$IMAGE_NAME:latest
 
