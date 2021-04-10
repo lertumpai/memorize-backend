@@ -33,6 +33,7 @@ const corsOptions = {
   },
 }
 
+expressServer.options('*', cors())
 expressServer.use(
   cors(corsOptions),
   bodyParser.json({ limit: '15mb' }),
