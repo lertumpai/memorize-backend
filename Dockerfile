@@ -1,8 +1,5 @@
 FROM node:lts
 
-ARG $GCP_SA_KEY_DECODE
-ENV $GCP_SA_KEY_DECODE=$$GCP_SA_KEY_DECODE
-
 # set a directory for the app
 WORKDIR /usr/src/memorize-backend
 
@@ -12,9 +9,6 @@ COPY package.json /usr/src/memorize-backend
 RUN npm install
 
 COPY . /usr/src/memorize-backend
-
-RUN echo $$GCP_SA_KEY_DECODE
-RUN echo $$GCP_SA_KEY_DECODE > key.json
 
 # build file (transpile to nodejs current version)
 RUN npm run build
