@@ -1,8 +1,8 @@
 image: node:12.18
 
 stages:
-  - deploy-to-gke-cluster
   - build-to-gcp-registry
+  - deploy-to-gke-cluster
   - build-to-docker-hub
 
 build-to-docker-hub:
