@@ -3,7 +3,6 @@ import mongoose from 'mongoose'
 import Dao from '../dao'
 
 const UploadArticleSchema = new mongoose.Schema({
-  urlImage: { type: String, unique: true },
   author: { type: mongoose.Types.ObjectId, ref: 'User', require: true },
   fileName: String,
   destination: String,
@@ -19,19 +18,13 @@ export default class UploadArticleClass extends Dao {
     super(UploadArticle)
   }
 
-  create({ author, urlImage, date, fileName, destination }) {
+  create({ author, date, fileName, destination }) {
     return UploadArticle.create({
       author,
-      urlImage,
       fileName,
       destination,
       createdAt: date,
       updatedAt: date,
     })
-  }
-
-  async getUrlImageById(id) {
-    const image = await this.findById(id)
-    return image ? `${process.env.SERVER_UPLOAD_URL}${image.urlImage}` : null
   }
 }

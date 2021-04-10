@@ -1,5 +1,5 @@
 import nFormatter from '../../utils/nFormatter'
-import { acknowledge } from '../upload/utils/acknowledge'
+import { getImageUrl } from '../upload/utils/upload'
 
 module.exports = {
   Query: {
@@ -16,18 +16,16 @@ module.exports = {
 
       let uploadedImage
       if (image) {
-        const res = await acknowledge(image)
-        const acknowledged = await res.json()
         uploadedImage = await UploadArticle.create({
-          ...acknowledged,
+          ...image,
           author: user.id,
           date,
         })
       }
 
       return id
-        ? Article.update(id, { content, image: uploadedImage?.id, date })
-        : Article.create({ author: user.id, content, image: uploadedImage?.id, date })
+        ? Article.update(id, { content, image: uploadedImage, date })
+        : Article.create({ author: user.id, content, image: uploadedImage, date })
     },
     articleDelete(_, { id }, { Article, date }) {
       return Article.deleteById(id, { date })
@@ -52,7 +50,9 @@ module.exports = {
       return ArticleAction.findOneByArticleAuthor({ articleId: id, authorId: user.id })
     },
     async image({ image }, _, { UploadArticle }) {
-      return UploadArticle.getUrlImageById(image)
+      const articleImage = await UploadArticle.findById(image)
+      const { fileName, destination } = articleImage
+      return getImageUrl(fileName, destination)
     },
   },
 }

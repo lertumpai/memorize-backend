@@ -12,8 +12,8 @@ router.get('/check', (req, res) => {
 const upload = multer()
 router.post('/', upload.single('image'), async (req, res) => {
   const { file, body } = req
-  const { path } = body
-  const uploaded = await uploadImage(file, { path })
+  const { destination } = body
+  const uploaded = await uploadImage(file, { destination })
   res.json(uploaded)
 })
 

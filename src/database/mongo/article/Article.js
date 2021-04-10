@@ -41,7 +41,7 @@ export default class ArticleClass extends Dao {
     const article = await Article.findById(id)
 
     article.content = content || article.content
-    article.image = image || article.image
+    article.image = image ? image.id : article.image
     article.updatedAt = date
 
     return article.save()

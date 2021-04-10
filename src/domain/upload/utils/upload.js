@@ -18,7 +18,17 @@ function getBucket() {
   return storage.bucket(process.env.BUCKET_NAME)
 }
 
-export async function uploadImage(file, { path }) {
+export async function getImageUrl(fileName, destination) {
+  const bucket = getBucket()
+  const targetFile = bucket.file(`${destination}/${fileName}`)
+  const signedUrl = await targetFile.getSignedUrl({
+    action: 'read',
+    expires: moment().add(1, 'h').toDate(),
+  })
+  return signedUrl[0]
+}
+
+export async function uploadImage(file, { destination }) {
   const { mimetype, buffer } = file
   const ext = mimetype.split('/')[1]
 
@@ -28,7 +38,7 @@ export async function uploadImage(file, { path }) {
   const targetFileName = generateString(20)
   const timestamp = new Date().valueOf()
   const targetFileNameWithTimestamp = `${targetFileName}-${timestamp}.${ext}`
-  const targetFile = bucket.file(`${path}/${targetFileNameWithTimestamp}`)
+  const targetFile = bucket.file(`${destination}/${targetFileNameWithTimestamp}`)
 
   const rotateResizer = sharp().rotate().resize(1000)
 
@@ -40,12 +50,9 @@ export async function uploadImage(file, { path }) {
         throw err
       })
       .on('finish', async () => {
-        const imageUrl = await targetFile.getSignedUrl({
-          action: 'read',
-          expires: moment().add(1, 'h').toDate(),
-        })
+        const imageUrl = await getImageUrl(targetFileNameWithTimestamp, destination)
         const result = {
-          path,
+          destination,
           fileName: targetFileNameWithTimestamp,
           imageUrl: imageUrl[0],
         }
@@ -53,3 +60,4 @@ export async function uploadImage(file, { path }) {
       })
   })
 }
+

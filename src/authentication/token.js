@@ -1,12 +1,16 @@
 import jwt from 'jsonwebtoken'
 
+import { getImageUrl } from '../domain/upload/utils/upload'
+
 const key = process.env.PRIVATE_KEY
 
 // payload = { userId, username, profile }
 export async function token(user, { UploadProfile }) {
   const { id, username, profile } = user
 
-  const urlImage = await UploadProfile.getUrlImageById(profile.image)
+  const image = await UploadProfile.findById(profile.image)
+  const { fileName, destination } = image
+  const urlImage = await getImageUrl(fileName, destination)
 
   const payload = {
     id,
