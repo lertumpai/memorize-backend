@@ -1,4 +1,7 @@
 import { Storage } from '@google-cloud/storage'
+import sharp from 'sharp'
+import { Readable } from 'stream'
+import moment from 'moment'
 
 function generateString(n) {
   let result = ''
@@ -10,7 +13,43 @@ function generateString(n) {
   return result
 }
 
-function uploadFile() {
+function getBucket() {
   const storage = new Storage({ keyFilename: 'key.json' })
-  const bucket = storage.bucket(process.env.BUCKET_NAME)
+  return storage.bucket(process.env.BUCKET_NAME)
+}
+
+export async function uploadImage(file, { path }) {
+  const { mimetype, buffer } = file
+  const ext = mimetype.split('/')[1]
+
+  const fileStream = Readable.from(buffer)
+
+  const bucket = getBucket()
+  const targetFileName = generateString(20)
+  const timestamp = new Date().valueOf()
+  const targetFileNameWithTimestamp = `${targetFileName}-${timestamp}.${ext}`
+  const targetFile = bucket.file(`${path}/${targetFileNameWithTimestamp}`)
+
+  const rotateResizer = sharp().rotate().resize(1000)
+
+  return new Promise(resolve => {
+    fileStream
+      .pipe(rotateResizer)
+      .pipe(targetFile.createWriteStream({ resumable: false }))
+      .on('error', err => {
+        throw err
+      })
+      .on('finish', async () => {
+        const imageUrl = await targetFile.getSignedUrl({
+          action: 'read',
+          expires: moment().add(1, 'h').toDate(),
+        })
+        const result = {
+          path,
+          fileName: targetFileNameWithTimestamp,
+          imageUrl: imageUrl[0],
+        }
+        resolve(result)
+      })
+  })
 }

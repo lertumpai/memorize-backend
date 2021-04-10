@@ -6,6 +6,8 @@ import { ApolloServer } from 'apollo-server-express'
 import redisAdapter from 'socket.io-redis'
 import { Server } from 'socket.io'
 
+import Upload from '../src/domain/upload'
+
 import rootResolvers from './resolvers'
 import rootPostResolvers from './postResolvers'
 import rootPermission from './permission'
@@ -26,22 +28,21 @@ const path = '/graphql'
 
 const corsOptions = {
   credentials: true,
-  origin: function(origin, callback){
+  origin: (origin, callback) => {
     // allow requests with no origin
     // (like mobile apps or curl requests)
-    if(!origin) return callback(null, true);
-    return callback(null, true);
-  }
+    if(!origin) return callback(null, true)
+    return callback(null, true)
+  },
 }
 
 expressServer.use(
-  path,
   cors(corsOptions),
-  bodyParser.json({ limit: '8mb' }),
+  bodyParser.json({ limit: '15mb' }),
   bodyParser.urlencoded({ extended: true }),
 )
 
-expressServer.use(express.static('public'))
+expressServer.use('/upload', Upload)
 
 const server = createServer(expressServer)
 
