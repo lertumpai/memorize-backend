@@ -9,8 +9,12 @@ router.get('/check', (req, res) => {
   res.json({ message: '/upload is available' })
 })
 
+router.post('/', (req, res) => {
+  res.json('Hi')
+})
+
 const upload = multer()
-router.post('/', upload.single('image'), async (req, res) => {
+router.post('/image', upload.single('image'), async (req, res) => {
   const { file, body } = req
   const { destination } = body
   const uploaded = await uploadImage(file, { destination })
