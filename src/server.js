@@ -6,7 +6,7 @@ import { ApolloServer } from 'apollo-server-express'
 import redisAdapter from 'socket.io-redis'
 import { Server } from 'socket.io'
 
-import Upload from './domain/upload'
+// import Upload from './domain/upload'
 
 import rootResolvers from './resolvers'
 import rootPostResolvers from './postResolvers'
@@ -36,14 +36,8 @@ expressServer.use(
   bodyParser.urlencoded({ extended: true }),
 )
 
-expressServer.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*')
-  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE')
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-  next()
-})
-
-expressServer.use('/upload', Upload)
+// TODO: revise if it's can implement in graphql server
+// expressServer.use('/upload', Upload)
 
 const server = createServer(expressServer)
 
