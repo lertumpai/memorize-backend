@@ -36,14 +36,13 @@ export default class ArticleClass extends Dao {
   }
 
   async update(id, { content, image, date }) {
-    await this.clear(id)
-
     const article = await Article.findById(id)
 
     article.content = content || article.content
     article.image = image ? image.id : article.image
     article.updatedAt = date
 
+    await this.clear(id)
     return article.save()
   }
 }
