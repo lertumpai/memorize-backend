@@ -3,7 +3,8 @@ import { getImageUrl } from '../upload/utils/upload'
 
 module.exports = {
   Query: {
-    article(_, { id }, { Article }) {
+    async article(_, { id }, { Article }) {
+      console.log('Article', await Article.findById(id))
       return Article.findById(id)
     },
     async articles(_, { author, pagination }, { Article }) {
