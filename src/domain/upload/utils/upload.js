@@ -21,6 +21,7 @@ function getBucket() {
 export async function getImageUrl(fileName, destination) {
   const bucket = getBucket()
   const targetFile = bucket.file(`${destination}/${fileName}`)
+  await targetFile.makePublic()
   return targetFile.publicUrl()
 }
 
