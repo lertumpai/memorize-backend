@@ -52,7 +52,6 @@ export function prepareAndWrap(quration, keyResolver, permission, resolver, post
     }
 
     const res = await resolver(...args)
-    console.log('res', res)
 
     const preparePostResolvers = Object.values(postResolvers).map(postResolver => {
       return postResolver[quration] && typeof postResolver[quration][keyResolver] === 'function'

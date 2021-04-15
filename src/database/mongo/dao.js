@@ -3,7 +3,7 @@ import DataLoader from 'dataloader'
 export default class Dao {
   constructor(model) {
     this.model = model
-    this.loader = new DataLoader(keys => this.findByBatchIds(keys, this.model))
+    this.loader = new DataLoader(keys => this.findByBatchIds(keys, this.model), { cache: false })
   }
 
   findById(id) {
