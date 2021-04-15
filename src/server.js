@@ -27,7 +27,7 @@ const expressServer = express()
 const path = '/graphql'
 
 const corsOptions = {
-  credentials: true,
+  // credentials: true,
 }
 
 expressServer.use(
