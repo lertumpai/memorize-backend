@@ -43,6 +43,8 @@ export default class ArticleClass extends Dao {
     article.updatedAt = date
 
     await this.clear(id)
-    return article.save()
+    const articlee = await article.save()
+    console.log(articlee)
+    return articlee
   }
 }
