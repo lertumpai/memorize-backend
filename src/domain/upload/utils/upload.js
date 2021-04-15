@@ -15,18 +15,13 @@ function generateString(n) {
 
 function getBucket() {
   const storage = new Storage({ keyFilename: 'key.json' })
-  // const storage = new Storage()
   return storage.bucket(process.env.BUCKET_NAME)
 }
 
 export async function getImageUrl(fileName, destination) {
   const bucket = getBucket()
   const targetFile = bucket.file(`${destination}/${fileName}`)
-  const signedUrl = await targetFile.getSignedUrl({
-    action: 'read',
-    expires: moment().add(1, 'h').toDate(),
-  })
-  return signedUrl[0]
+  return targetFile.publicUrl()
 }
 
 export async function uploadImage(file, { destination }) {
