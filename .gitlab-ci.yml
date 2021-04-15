@@ -1,8 +1,8 @@
 image: node:lts
 
 stages:
-#  - build-to-gcp-registry
-#  - deploy-to-gke-cluster
+  - build-to-gcp-registry
+  - deploy-to-gke-cluster
   - build-to-docker-hub
 
 build-to-docker-hub:
@@ -18,7 +18,6 @@ build-to-docker-hub:
     - export VERSION=$(cat package.json | grep version | head -1 | sed 's/[version,",:]//g' | tr -d [:space:])
     - base64 -d $GCP_SA_KEY > key.json
     - export REGISTRY_IMAGE=$(echo $DOCKER_HUB_REGISTRY_USER/$IMAGE_NAME)
-    - echo $REGISTRY_IMAGE
   script:
     - docker build --no-cache
       --tag $REGISTRY_IMAGE:$VERSION
@@ -26,37 +25,37 @@ build-to-docker-hub:
     - docker push $REGISTRY_IMAGE:$VERSION
     - docker push $REGISTRY_IMAGE:latest
 
-#build-to-gcp-registry:
-#  services:
-#    - name: docker:19.03.13-dind
-#  image: docker:19.03.13
-#  only:
-#    refs:
-#      - main
-#  stage: build-to-gcp-registry
-#  before_script:
-#    - base64 -d $GCP_SA_KEY | docker login -u _json_key --password-stdin https://asia.gcr.io
-#    - export VERSION=$(cat package.json | grep version | head -1 | sed 's/[version,",:]//g' | tr -d [:space:])
-#    - base64 -d $GCP_SA_KEY > key.json
-#  script:
-#    - docker build --no-cache
-#      --tag asia.gcr.io/$GCP_PROJECT_ID/$IMAGE_NAME:$VERSION
-#      --tag asia.gcr.io/$GCP_PROJECT_ID/$IMAGE_NAME:latest .
-#    - docker push asia.gcr.io/$GCP_PROJECT_ID/$IMAGE_NAME:$VERSION
-#    - docker push asia.gcr.io/$GCP_PROJECT_ID/$IMAGE_NAME:latest
-#
-#deploy-to-gke-cluster:
-#  services:
-#    - name: docker:19.03.13-dind
-#  image: google/cloud-sdk
-#  only:
-#    refs:
-#      - main
-#  stage: deploy-to-gke-cluster
-#  before_script:
-#    - base64 -d $GCP_SA_KEY > ${HOME}/gcloud-service-key.json
-#    - gcloud auth activate-service-account --key-file ${HOME}/gcloud-service-key.json
-#    - gcloud container clusters get-credentials $GCP_CLUSTER_NAME --zone $GCP_CLUSTER_ZONE --project $GCP_PROJECT_ID
-#    - export VERSION=$(cat package.json | grep version | head -1 | sed 's/[version,",:]//g' | tr -d [:space:])
-#  script:
-#    - kubectl set image deployment/$DEPLOYMENT_NAME $DEPLOYMENT_NAME=asia.gcr.io/$GCP_PROJECT_ID/$IMAGE_NAME:$VERSION --record
+build-to-gcp-registry:
+  services:
+    - name: docker:19.03.13-dind
+  image: docker:19.03.13
+  only:
+    refs:
+      - main
+  stage: build-to-gcp-registry
+  before_script:
+    - base64 -d $GCP_SA_KEY | docker login -u _json_key --password-stdin https://asia.gcr.io
+    - export VERSION=$(cat package.json | grep version | head -1 | sed 's/[version,",:]//g' | tr -d [:space:])
+    - base64 -d $GCP_SA_KEY > key.json
+  script:
+    - docker build --no-cache
+      --tag asia.gcr.io/$GCP_PROJECT_ID/$IMAGE_NAME:$VERSION
+      --tag asia.gcr.io/$GCP_PROJECT_ID/$IMAGE_NAME:latest .
+    - docker push asia.gcr.io/$GCP_PROJECT_ID/$IMAGE_NAME:$VERSION
+    - docker push asia.gcr.io/$GCP_PROJECT_ID/$IMAGE_NAME:latest
+
+deploy-to-gke-cluster:
+  services:
+    - name: docker:19.03.13-dind
+  image: google/cloud-sdk
+  only:
+    refs:
+      - main
+  stage: deploy-to-gke-cluster
+  before_script:
+    - base64 -d $GCP_SA_KEY > ${HOME}/gcloud-service-key.json
+    - gcloud auth activate-service-account --key-file ${HOME}/gcloud-service-key.json
+    - gcloud container clusters get-credentials $GCP_CLUSTER_NAME --zone $GCP_CLUSTER_ZONE --project $GCP_PROJECT_ID
+    - export VERSION=$(cat package.json | grep version | head -1 | sed 's/[version,",:]//g' | tr -d [:space:])
+  script:
+    - kubectl set image deployment/$DEPLOYMENT_NAME $DEPLOYMENT_NAME=asia.gcr.io/$GCP_PROJECT_ID/$IMAGE_NAME:$VERSION --record
