@@ -1,14 +1,14 @@
 FROM node:lts
 
 # set a directory for the app
-WORKDIR .
+WORKDIR memorize-backend
 
 # copy all the files to the container
-COPY package.json .
+COPY package.json memorize-backend
 
 RUN npm install
 
-COPY . .
+COPY . memorize-backend
 
 # build file (transpile to nodejs current version)
 RUN npm run build
