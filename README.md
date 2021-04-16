@@ -34,6 +34,8 @@ db.commentactions.deleteMany({})
 db.articles.deleteMany({})
 db.users.deleteMany({})
 db.comments.deleteMany({})
+db.uploadarticles.deleteMany({})
+db.uploadprofiles.deleteMany({})
 ```
 
 # Docker
