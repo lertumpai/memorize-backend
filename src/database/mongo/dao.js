@@ -14,6 +14,10 @@ export default class Dao {
     return id ? this.loader.clear(id.toString()) : null
   }
 
+  clearAll() {
+    return this.loader.clearAll()
+  }
+
   async findByBatchIds(keys, model) {
     const results = await model.find({ _id: { $in: keys } })
     return keys.map(key => results.find(result => result.id === key))

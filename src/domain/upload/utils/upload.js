@@ -1,7 +1,6 @@
 import { Storage } from '@google-cloud/storage'
 import sharp from 'sharp'
 import { Readable } from 'stream'
-import moment from 'moment'
 
 function generateString(n) {
   let result = ''

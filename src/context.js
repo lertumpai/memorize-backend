@@ -1,15 +1,10 @@
-import glob from 'glob'
 import moment from 'moment'
 
 import { verifyToken } from './authentication/token'
-
-
-function wrapMongoDBModel() {
-  return glob.sync(`${__dirname}/database/mongo/*/index.js`).reduce((result, path) => ({ ...result, ...require(path) }), {})
-}
+import { wrapMongoDBModel } from './database/mongo'
 
 export async function context({ req }) {
-  const models = wrapMongoDBModel()
+  const models = await wrapMongoDBModel()
   const date = moment.utc().toDate()
 
   return {
