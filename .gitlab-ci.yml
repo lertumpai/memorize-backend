@@ -12,7 +12,7 @@ build-to-docker-hub:
   image: docker:19.03.13
   only:
     refs:
-      - main
+      - production
   stage: build-to-docker-hub
   before_script:
     - echo $DOCKER_HUB_REGISTRY_PASSWORD | docker login --username $DOCKER_HUB_REGISTRY_USER --password-stdin
@@ -31,7 +31,8 @@ build-to-gcp-registry-production:
   image: docker:19.03.13
   only:
     refs:
-      - main
+      - production
+      - build
   stage: build-to-gcp-registry-production
   before_script:
     - base64 -d $GCP_SA_KEY | docker login -u _json_key --password-stdin https://asia.gcr.io
@@ -49,7 +50,7 @@ deploy-to-gke-cluster-production:
   image: google/cloud-sdk
   only:
     refs:
-      - main
+      - production
   stage: deploy-to-gke-cluster-production
   before_script:
     - base64 -d $GCP_SA_KEY > ${HOME}/gcloud-service-key.json
@@ -65,7 +66,7 @@ build-to-gcp-registry-staging:
   image: docker:19.03.13
   only:
     refs:
-      - main
+      - production
   stage: build-to-gcp-registry-staging
   before_script:
     - base64 -d $GCP_SA_KEY | docker login -u _json_key --password-stdin https://asia.gcr.io
