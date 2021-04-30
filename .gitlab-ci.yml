@@ -1,9 +1,9 @@
 image: node:lts
 
 stages:
-  - build-to-gcp-registry-staging
   - build-to-gcp-registry-production
   - deploy-to-gke-cluster-production
+  - build-to-gcp-registry-staging
   - build-to-docker-hub
 
 build-to-docker-hub:
