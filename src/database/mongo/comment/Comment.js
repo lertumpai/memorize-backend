@@ -20,8 +20,21 @@ export default class CommentClass extends Dao {
     super(Comment)
   }
 
+  serializer(data) {
+    return {
+      id: data.id,
+      articleId: data.articleId,
+      author: data.author,
+      content: data.content,
+      createdAt: data.createdAt,
+      updatedAt: data.updatedAt,
+      deletedAt: data.deletedAt,
+      active: data.active,
+    }
+  }
+
   create({ author, articleId, content, date }) {
-    return Comment.create({ author, articleId, content, createdAt: date, updatedAt: date })
+    return Comment.create({ author, articleId, content, createdAt: date, updatedAt: date }).then(this.serializer)
   }
 
   findAll({ articleId, active = true }, { after, before, limit = 10 }) {
@@ -41,15 +54,16 @@ export default class CommentClass extends Dao {
       filter = { ...filter, articleId }
     }
 
-    return Comment.countDocuments(filter)
+    return Comment.countDocuments(filter).then(this.serializer)
   }
 
   async update(id, { content, date }) {
     await this.clear(id)
-    return Comment.findOneAndUpdate({ _id: id }, { content, updatedAt: date }, { new: true })
+    return Comment.findOneAndUpdate({ _id: id }, { content, updatedAt: date }, { new: true }).then(this.serializer)
   }
 
-  deleteByArticle(articleId) {
-    return Comment.updateMany({ articleId }, { active: false }, { new: true })
+  async deleteByArticle(articleId) {
+    const deletedComments = await Comment.updateMany({ articleId }, { active: false }, { new: true })
+    return deletedComments.map(this.serializer())
   }
 }

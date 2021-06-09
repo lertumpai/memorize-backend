@@ -16,8 +16,17 @@ export default class ArticleActionClass extends Dao {
     super(ArticleAction)
   }
 
+  serializer(data) {
+    return {
+      id: data.id,
+      articleId: data.articleId,
+      authorId: data.authorId,
+      action: data.action,
+    }
+  }
+
   findOneByArticleAuthor({ articleId, authorId }) {
-    return ArticleAction.findOne({ articleId, authorId })
+    return ArticleAction.findOne({ articleId, authorId }).then(this.serializer)
   }
 
   async update({ authorId, articleId, action }) {
@@ -29,7 +38,7 @@ export default class ArticleActionClass extends Dao {
     }
 
     const update = { ...filter, action }
-    return ArticleAction.findOneAndUpdate(filter, update, { upsert: true, new: true })
+    return ArticleAction.findOneAndUpdate(filter, update, { upsert: true, new: true }).then(this.serializer)
   }
 
   count({ authorId, articleId }) {

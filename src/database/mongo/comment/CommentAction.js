@@ -16,8 +16,17 @@ export default class CommentActionClass extends Dao {
     super(CommentAction)
   }
 
+  serializer(data) {
+    return {
+      id: data.id,
+      commentId: data.commentId,
+      authorId: data.authorId,
+      action: data.action,
+    }
+  }
+
   findOneByCommentAuthor({ commentId, authorId }) {
-    return CommentAction.findOne({ commentId, authorId })
+    return CommentAction.findOne({ commentId, authorId }).then(this.serializer)
   }
 
   async update({ authorId, commentId, action }) {
@@ -29,7 +38,7 @@ export default class CommentActionClass extends Dao {
     }
 
     const update = { ...filter, action }
-    return CommentAction.findOneAndUpdate(filter, update, { upsert: true, new: true })
+    return CommentAction.findOneAndUpdate(filter, update, { upsert: true, new: true }).then(this.serializer)
   }
 
   count({ authorId, commentId }) {

@@ -21,8 +21,21 @@ export default class ArticleClass extends Dao {
     super(Article)
   }
 
+  serializer(data) {
+    return {
+      id: data.id,
+      author: data.author,
+      content: data.content,
+      image: data.image,
+      createdAt: data.createdAt,
+      updatedAt: data.updatedAt,
+      deletedAt: data.deletedAt,
+      active: data.active,
+    }
+  }
+
   create({ author, content, image, date }) {
-    return Article.create({ author, content, image, createdAt: date, updatedAt: date })
+    return Article.create({ author, content, image, createdAt: date, updatedAt: date }).then(this.serializer)
   }
 
   findAll({ author, active = true }, { after, before, limit = 10 }) {
@@ -43,6 +56,6 @@ export default class ArticleClass extends Dao {
     article.updatedAt = date
 
     await this.clear(id)
-    return article.save()
+    return article.save().then(this.serializer)
   }
 }
