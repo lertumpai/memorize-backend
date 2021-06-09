@@ -19,15 +19,15 @@ export default class UploadArticleClass extends Dao {
   }
 
   serializer(data) {
-    return {
-      id: data?.id,
-      author: data?.author,
-      fileName: data?.fileName,
-      destination: data?.destination,
-      createdAt: data?.createdAt,
-      updatedAt: data?.updatedAt,
-      deletedAt: data?.deletedAt,
-    }
+    return data ? {
+      id: data.id,
+      author: data.author,
+      fileName: data.fileName,
+      destination: data.destination,
+      createdAt: data.createdAt,
+      updatedAt: data.updatedAt,
+      deletedAt: data.deletedAt,
+    } : null
   }
 
   create({ author, date, fileName, destination }) {

@@ -18,10 +18,10 @@ export default class ArticleActionClass extends Dao {
 
   serializer(data) {
     return data ? {
-      id: data?.id,
-      articleId: data?.articleId,
-      authorId: data?.authorId,
-      action: data?.action,
+      id: data.id,
+      articleId: data.articleId,
+      authorId: data.authorId,
+      action: data.action,
     } : null
   }
 
