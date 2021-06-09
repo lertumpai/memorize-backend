@@ -1,9 +1,11 @@
-import moment from 'moment'
+import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
+dayjs.extend(utc)
 
 import { verifyToken } from './authentication/token'
 
 export async function context({ req }) {
-  const date = moment.utc().toDate()
+  const date = dayjs.utc().toDate()
 
   return {
     user: verifyToken(req.headers.authorization, date),
