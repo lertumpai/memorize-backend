@@ -1,17 +1,25 @@
 import nFormatter from '../../utils/nFormatter'
 import { getImageUrl } from '../upload/utils/upload'
 
+import {
+  Article,
+  UploadArticle,
+  Comment,
+  User,
+  ArticleAction,
+} from '../../database/mongo'
+
 module.exports = {
   Query: {
-    async article(_, { id }, { Article }) {
+    async article(_, { id }) {
       return Article.findById(id)
     },
-    async articles(_, { author, pagination }, { Article }) {
+    async articles(_, { author, pagination }) {
       return Article.findAll({ author }, pagination)
     },
   },
   Mutation: {
-    async article(_, { id, input }, { Article, UploadArticle, user, date }) {
+    async article(_, { id, input }, { user, date }) {
       const { content, image } = input
 
       let uploadedImage
@@ -27,29 +35,29 @@ module.exports = {
         ? Article.update(id, { content, image: uploadedImage, date })
         : Article.create({ author: user.id, content, image: uploadedImage, date })
     },
-    articleDelete(_, { id }, { Article, date }) {
+    articleDelete(_, { id }, { date }) {
       return Article.deleteById(id, { date })
     },
   },
   Article: {
-    author({ author }, _, { User }) {
+    author({ author }) {
       return User.findById(author)
     },
-    async comment({ id }, _, { Comment }) {
+    async comment({ id }) {
       const commentCount = await Comment.count({ articleId: id })
       return nFormatter(commentCount)
     },
     canMutate({ author }, _, { user }) {
       return author.toString() === user.id.toString()
     },
-    async action({ id }, _, { ArticleAction }) {
+    async action({ id }) {
       const articleActionCount = await ArticleAction.count({ articleId: id })
       return nFormatter(articleActionCount)
     },
-    userAction({ id }, _, { ArticleAction, user }) {
+    userAction({ id }, _, { user }) {
       return ArticleAction.findOneByArticleAuthor({ articleId: id, authorId: user.id })
     },
-    async image({ image }, _, { UploadArticle }) {
+    async image({ image }) {
       if (!image) {
         return null
       }

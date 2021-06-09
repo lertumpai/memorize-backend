@@ -1,6 +1,10 @@
 import { ARTICLE_UPDATED } from '../article/utils/enum'
 import { COMMENT_UPDATED } from './utils/enum'
 
+import {
+  Comment,
+} from '../../database/mongo'
+
 module.exports = {
   Mutation: {
     comment(_, args, { io }, info, res) {
@@ -15,7 +19,7 @@ module.exports = {
         io.emit(COMMENT_UPDATED, res.id),
       ])
     },
-    articleDelete(_, { id }, { Comment }) {
+    articleDelete(_, { id }) {
       return Comment.deleteByArticle(id)
     },
   },

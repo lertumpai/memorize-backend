@@ -1,7 +1,30 @@
-import glob from 'glob'
+import ArticleClass from './article/Article'
+const Article = new ArticleClass()
 
-export async function wrapMongoDBModel() {
-  const models = glob.sync(`${__dirname}/*/index.js`).reduce((result, path) => ({ ...result, ...require(path) }), {})
-  await Promise.all(Object.values(models).map(model => model.clearAll()))
-  return models
+import ArticleActionClass from './article/ArticleAction'
+const ArticleAction = new ArticleActionClass()
+
+import CommentClass from './comment/Comment'
+const Comment = new CommentClass()
+
+import CommentActionClass from './comment/CommentAction'
+const CommentAction = new CommentActionClass()
+
+import UploadProfileClass from './upload/UploadProfile'
+const UploadProfile = new UploadProfileClass()
+
+import UploadArticleClass from './upload/UploadArticle'
+const UploadArticle = new UploadArticleClass()
+
+import UserClass from './user/User'
+const User = new UserClass()
+
+export {
+  Article,
+  ArticleAction,
+  Comment,
+  CommentAction,
+  UploadArticle,
+  UploadProfile,
+  User,
 }

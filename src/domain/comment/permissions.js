@@ -1,11 +1,15 @@
-import { auth } from './utils/auth'
+import { authComment } from './utils/auth'
 import { NOT_FOUND_ERROR } from '../../error'
+
+import {
+  Article,
+} from '../../database/mongo'
 
 module.exports = {
   Mutation: {
-    async comment(_, { id, input: { articleId } }, { Article, Comment, user }) {
+    async comment(_, { id, input: { articleId } }, { user }) {
       if (id) {
-        return auth({ id }, { Comment, user })
+        return authComment(id, user)
       }
 
       const article = await Article.findById(articleId)
@@ -13,8 +17,8 @@ module.exports = {
         throw new NOT_FOUND_ERROR('article')
       }
     },
-    commentDelete(_, { id }, { Comment, user }) {
-      return auth({ id }, { Comment, user })
+    commentDelete(_, { id }, { user }) {
+      return authComment(id, user)
     },
   },
 }

@@ -1,14 +1,14 @@
-import { auth } from './utils/auth'
+import { authArticle } from './utils/auth'
 
 module.exports = {
   Mutation: {
-    article(_, { id }, { Article, user }) {
+    article(_, { id }, { user }) {
       if (id) {
-        return auth({ id }, { Article, user })
+        return authArticle(id, user)
       }
     },
-    articleDelete(_, { id }, { Article, user }) {
-      return auth({ id }, { Article, user })
+    articleDelete(_, { id }, { user }) {
+      return authArticle(id, user)
     },
   },
 }
