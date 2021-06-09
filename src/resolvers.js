@@ -1,4 +1,7 @@
-import moment from 'moment'
+import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
+dayjs.extend(utc)
+
 import { isValidObjectId } from 'mongoose'
 import _ from 'lodash'
 import glob from 'glob'
@@ -8,7 +11,7 @@ import pkg from '../package'
 import { INVALID_MONGOID_ERROR } from './error'
 
 function DateType() {
-  const date = value => moment(value).utc().toDate()
+  const date = value => dayjs(value).utc().toDate()
   return {
     Date: new GraphQLScalarType({
       name: 'Date',
