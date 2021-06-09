@@ -21,16 +21,16 @@ export default class CommentClass extends Dao {
   }
 
   serializer(data) {
-    return {
-      id: data?.id,
-      articleId: data?.articleId,
-      author: data?.author,
-      content: data?.content,
-      createdAt: data?.createdAt,
-      updatedAt: data?.updatedAt,
-      deletedAt: data?.deletedAt,
-      active: data?.active,
-    }
+    return data ? {
+      id: data.id,
+      articleId: data.articleId,
+      author: data.author,
+      content: data.content,
+      createdAt: data.createdAt,
+      updatedAt: data.updatedAt,
+      deletedAt: data.deletedAt,
+      active: data.active,
+    } : null
   }
 
   create({ author, articleId, content, date }) {

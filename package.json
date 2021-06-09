@@ -1,6 +1,6 @@
 {
   "name": "memorize-backend",
-  "version": "1.4.4",
+  "version": "1.4.6",
   "main": "server.js",
   "repository": "https://github.com/lertumpai/memorize-backend.git",
   "author": "ninew <new-sorawit@outlook.com>",
@@ -23,6 +23,7 @@
     "connect": "^3.7.0",
     "cors": "^2.8.5",
     "dataloader": "^2.0.0",
+    "dayjs": "^1.10.5",
     "env-cmd": "^10.1.0",
     "eslint": "^7.24.0",
     "express": "^4.17.1",
@@ -30,7 +31,6 @@
     "graphql": "^15.4.0",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
-    "moment": "^2.24.0",
     "mongodb": "^3.6.6",
     "mongoose": "^5.12.3",
     "multer": "^1.4.2",

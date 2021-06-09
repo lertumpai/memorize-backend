@@ -31,21 +31,21 @@ export default class UserClass extends Dao {
   }
 
   serializer(data) {
-    return {
-      id: data?.id,
-      username: data?.username,
-      password: data?.password,
-      active: data?.active,
+    return data ? {
+      id: data.id,
+      username: data.username,
+      password: data.password,
+      active: data.active,
       profile: {
-        name: data?.profile?.name,
-        birthday: data?.profile?.birthday,
-        status: data?.profile?.status,
-        image: data?.profile?.image,
+        name: data.profile.name,
+        birthday: data.profile.birthday,
+        status: data.profile.status,
+        image: data.profile.image,
       },
-      createdAt: data?.createdAt,
-      updatedAt: data?.updatedAt,
-      deletedAt: data?.deletedAt,
-    }
+      createdAt: data.createdAt,
+      updatedAt: data.updatedAt,
+      deletedAt: data.deletedAt,
+    } : null
   }
 
   findByUsername(username) {

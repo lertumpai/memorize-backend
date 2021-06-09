@@ -18,10 +18,10 @@ export default class CommentActionClass extends Dao {
 
   serializer(data) {
     return data ? {
-      id: data?.id,
-      commentId: data?.commentId,
-      authorId: data?.authorId,
-      action: data?.action,
+      id: data.id,
+      commentId: data.commentId,
+      authorId: data.authorId,
+      action: data.action,
     } : null
   }
 
