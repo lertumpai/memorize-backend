@@ -17,12 +17,12 @@ export default class CommentActionClass extends Dao {
   }
 
   serializer(data) {
-    return {
-      id: data.id,
-      commentId: data.commentId,
-      authorId: data.authorId,
-      action: data.action,
-    }
+    return data ? {
+      id: data?.id,
+      commentId: data?.commentId,
+      authorId: data?.authorId,
+      action: data?.action,
+    } : null
   }
 
   findOneByCommentAuthor({ commentId, authorId }) {

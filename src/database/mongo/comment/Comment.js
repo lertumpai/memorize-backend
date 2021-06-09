@@ -22,14 +22,14 @@ export default class CommentClass extends Dao {
 
   serializer(data) {
     return {
-      id: data.id,
-      articleId: data.articleId,
-      author: data.author,
-      content: data.content,
-      createdAt: data.createdAt,
-      updatedAt: data.updatedAt,
-      deletedAt: data.deletedAt,
-      active: data.active,
+      id: data?.id,
+      articleId: data?.articleId,
+      author: data?.author,
+      content: data?.content,
+      createdAt: data?.createdAt,
+      updatedAt: data?.updatedAt,
+      deletedAt: data?.deletedAt,
+      active: data?.active,
     }
   }
 
@@ -54,7 +54,7 @@ export default class CommentClass extends Dao {
       filter = { ...filter, articleId }
     }
 
-    return Comment.countDocuments(filter).then(this.serializer)
+    return Comment.countDocuments(filter)
   }
 
   async update(id, { content, date }) {

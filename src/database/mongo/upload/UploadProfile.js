@@ -20,13 +20,13 @@ export default class UploadProfileClass extends Dao {
 
   serializer(data) {
     return {
-      id: data.id,
-      author: data.author,
-      fileName: data.fileName,
-      destination: data.destination,
-      createdAt: data.createdAt,
-      updatedAt: data.updatedAt,
-      deletedAt: data.deletedAt,
+      id: data?.id,
+      author: data?.author,
+      fileName: data?.fileName,
+      destination: data?.destination,
+      createdAt: data?.createdAt,
+      updatedAt: data?.updatedAt,
+      deletedAt: data?.deletedAt,
     }
   }
 

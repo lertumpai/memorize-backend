@@ -17,12 +17,12 @@ export default class ArticleActionClass extends Dao {
   }
 
   serializer(data) {
-    return {
-      id: data.id,
-      articleId: data.articleId,
-      authorId: data.authorId,
-      action: data.action,
-    }
+    return data ? {
+      id: data?.id,
+      articleId: data?.articleId,
+      authorId: data?.authorId,
+      action: data?.action,
+    } : null
   }
 
   findOneByArticleAuthor({ articleId, authorId }) {

@@ -23,14 +23,14 @@ export default class ArticleClass extends Dao {
 
   serializer(data) {
     return {
-      id: data.id,
-      author: data.author,
-      content: data.content,
-      image: data.image,
-      createdAt: data.createdAt,
-      updatedAt: data.updatedAt,
-      deletedAt: data.deletedAt,
-      active: data.active,
+      id: data?.id,
+      author: data?.author,
+      content: data?.content,
+      image: data?.image,
+      createdAt: data?.createdAt,
+      updatedAt: data?.updatedAt,
+      deletedAt: data?.deletedAt,
+      active: data?.active,
     }
   }
 
