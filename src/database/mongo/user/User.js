@@ -30,12 +30,30 @@ export default class UserClass extends Dao {
     super(User)
   }
 
+  serializer(data) {
+    return {
+      id: data?.id,
+      username: data?.username,
+      password: data?.password,
+      active: data?.active,
+      profile: {
+        name: data?.profile?.name,
+        birthday: data?.profile?.birthday,
+        status: data?.profile?.status,
+        image: data?.profile?.image,
+      },
+      createdAt: data?.createdAt,
+      updatedAt: data?.updatedAt,
+      deletedAt: data?.deletedAt,
+    }
+  }
+
   findByUsername(username) {
-    return User.findOne({ username })
+    return User.findOne({ username }).then(this.serializer)
   }
 
   create({ username, password, date = new Date() }) {
-    return User.create({ username, password, createdAt: date, updatedAt: date })
+    return User.create({ username, password, createdAt: date, updatedAt: date }).then(this.serializer)
   }
 
   async updateProfile(id, { name, birthday, status, image, date = new Date() }) {
@@ -52,6 +70,6 @@ export default class UserClass extends Dao {
     user.updated_time = date
 
     await this.clear(id)
-    return user.save()
+    return user.save().then(this.serializer)
   }
 }

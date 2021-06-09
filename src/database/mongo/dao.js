@@ -1,9 +1,16 @@
 import DataLoader from 'dataloader'
 
+import { INVALID_SERIALIZER_ERROR } from '../../error'
+
 export default class Dao {
   constructor(model) {
     this.model = model
     this.loader = new DataLoader(keys => this.findByBatchIds(keys, this.model), { cache: true })
+  }
+
+  // eslint-disable-next-line no-unused-vars
+  serializer(data) {
+    throw new INVALID_SERIALIZER_ERROR()
   }
 
   findById(id) {
@@ -20,7 +27,7 @@ export default class Dao {
 
   async findByBatchIds(keys, model) {
     const results = await model.find({ _id: { $in: keys } })
-    return keys.map(key => results.find(result => result.id === key))
+    return keys.map(key => results.find(result => result.id === key)).map(this.serializer)
   }
 
   async queryAfterBeforeLimit(filter, { after, before, limit = 10, sortBy = '_id', order = 'DESC' }) {
@@ -42,13 +49,13 @@ export default class Dao {
     const data = await this.model.find(prepareFilter, null, { limit: limit + 1, sort })
 
     return {
-      data: data.slice(0, limit),
+      data: data.slice(0, limit).map(this.serializer),
       hasMore: data.length > limit,
     }
   }
 
   async deleteById(id, { date }) {
     await this.clear(id)
-    return this.model.findOneAndUpdate({ _id: id }, { active: false, updatedAt: date, deletedAt: date }, { new: true })
+    return this.model.findOneAndUpdate({ _id: id }, { active: false, updatedAt: date, deletedAt: date }, { new: true }).then(this.serializer)
   }
 }

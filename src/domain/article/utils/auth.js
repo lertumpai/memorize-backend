@@ -1,6 +1,10 @@
 import { UNAUTHORIZED_ERROR, NOT_FOUND_ERROR } from '../../../error'
 
-export async function auth({ id }, { Article, user }) {
+import {
+  Article,
+} from '../../../database/mongo'
+
+export async function authArticle(id, user) {
   const article = await Article.findById(id)
 
   if (!article) {

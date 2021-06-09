@@ -2,20 +2,25 @@ import * as Authentication from '../../authentication'
 import { token } from '../../authentication/token'
 import { getImageUrl } from '../upload/utils/upload'
 
+import {
+  User,
+  UploadProfile,
+} from '../../database/mongo'
+
 module.exports = {
   Query: {
-    user(_, { id, username }, { User }) {
+    user(_, { id, username }) {
       return id ? User.findById(id) : User.findByUsername(username)
     },
-    login(_, { username, password }, { User }) {
+    login(_, { username, password }) {
       return Authentication.login({ username, password }, { User })
     },
   },
   Mutation: {
-    user(_, { username, password }, { User, date }) {
+    user(_, { username, password }, { date }) {
       return Authentication.register({ username, password }, { User, date })
     },
-    async profile(_, { id, input }, { User, UploadProfile, date, user }) {
+    async profile(_, { id, input }, { date, user }) {
       const { name, status, birthday, image } = input
 
       let uploadedImage
@@ -42,7 +47,7 @@ module.exports = {
     },
   },
   ProfileUser: {
-    async image({ image }, args, { UploadProfile }) {
+    async image({ image }) {
       if (!image) {
         return null
       }

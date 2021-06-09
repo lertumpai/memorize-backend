@@ -18,6 +18,18 @@ export default class UploadArticleClass extends Dao {
     super(UploadArticle)
   }
 
+  serializer(data) {
+    return {
+      id: data?.id,
+      author: data?.author,
+      fileName: data?.fileName,
+      destination: data?.destination,
+      createdAt: data?.createdAt,
+      updatedAt: data?.updatedAt,
+      deletedAt: data?.deletedAt,
+    }
+  }
+
   create({ author, date, fileName, destination }) {
     return UploadArticle.create({
       author,
@@ -25,6 +37,6 @@ export default class UploadArticleClass extends Dao {
       destination,
       createdAt: date,
       updatedAt: date,
-    })
+    }).then(this.serializer)
   }
 }
