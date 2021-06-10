@@ -4,7 +4,10 @@
     "es6": true,
     "node": true
   },
-  "extends": "eslint:recommended",
+  "extends": [
+    "eslint:recommended",
+    "plugin:mocha/recommended"
+  ],
   "parser": "@babel/eslint-parser",
   "parserOptions": {
     "ecmaVersion": 6,
@@ -22,6 +25,10 @@
     "comma-spacing": ["error", { "before": false, "after": true }],
     "no-return-await": "error",
     "indent": ["error", 2],
-    "arrow-parens": ["error", "as-needed"]
+    "arrow-parens": ["error", "as-needed"],
+    "mocha/no-hooks-for-single-case": 0,
+    "mocha/no-mocha-arrows": 0,
+    "mocha/no-top-level-hooks": 0,
+    "mocha/no-exports": 0
   }
 }
