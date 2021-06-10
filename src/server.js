@@ -14,7 +14,9 @@ import rootPermission from './permission'
 import rootTypeDefs from './typedefs'
 import { prepareResolver } from './prepareResolver'
 
-import './database/mongo/connection'
+import { ConnectMongo } from './database/mongo/connection'
+ConnectMongo()
+
 import context from './context'
 
 const serverGraphql = new ApolloServer({

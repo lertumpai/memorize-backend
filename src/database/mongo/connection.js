@@ -1,18 +1,21 @@
+/* eslint no-console: "off" */
+
 import mongoose from 'mongoose'
 
-mongoose
-  .connect(
-    process.env.MONGO_URI,
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useFindAndModify: false,
-      useCreateIndex: true,
-    }
-  )
-  // eslint-disable-next-line no-console
-  .then(() => console.log('Connect Mongo Success'))
-  // eslint-disable-next-line no-console
-  .catch(e => console.log('Connect Mongo Error', e))
-
-export default mongoose
+export async function ConnectMongo() {
+  try {
+    await mongoose
+      .connect(
+        process.env.MONGO_URI,
+        {
+          useNewUrlParser: true,
+          useUnifiedTopology: true,
+          useFindAndModify: false,
+          useCreateIndex: true,
+        }
+      )
+    console.log('Connect Mongo Success')
+  } catch(e) {
+    console.log('Connect Mongo Error', e)
+  }
+}

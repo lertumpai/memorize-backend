@@ -12,6 +12,7 @@
     "dev": "env-cmd -f ./environment/.development nodemon --exec babel-node ./src/server.js --watch ./src",
     "lint": "eslint .",
     "lint-fix": "eslint --fix .",
+    "test": "env-cmd -f ./environment/.test mocha",
     "generate-data": "env-cmd -f ./environment/.development babel-node ./src/scripts/1-generate-data.js"
   },
   "dependencies": {
@@ -53,11 +54,10 @@
     "sinon": "^11.1.1"
   },
   "mocha": {
-    "parallel": true,
     "recursive": true,
     "require": [
       "@babel/register",
-      "./test/tests/global.test.js"
+      "./test/global.test.js"
     ]
   }
 }

@@ -1,21 +1,19 @@
 /* eslint no-console: "off" */
 
-// import mongoose from 'mongoose'
-//
-// import { connectMongo } from '../../src/databases/mongo/connection'
-// import { utils } from '../utils/api'
+import mongoose from 'mongoose'
+import { ConnectMongo } from '../src/database/mongo/connection'
 
 export async function mochaGlobalSetup() {
   console.log('=== Setup before start test ===')
-  // await connectMongo()
-  // await utils.mongo.clearAll()
+  await ConnectMongo()
   console.log('=== Finish setup ===')
   console.log()
 }
 
 export async function mochaGlobalTeardown() {
   console.log('=== Teardown after finish test ===')
-  // await mongoose.disconnect()
+  await mongoose.disconnect()
+  process.exit()
   console.log('Disconnect Mongo')
   console.log('=== Finish teardown ===')
 }
