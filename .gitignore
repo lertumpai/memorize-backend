@@ -2,3 +2,4 @@
 /environment
 /build
 key.json
+.nyc_output
