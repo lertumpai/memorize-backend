@@ -3,7 +3,7 @@ import { expect } from 'chai'
 import { register, login } from '../../src/authentication'
 import { utils } from '../utils/api'
 
-describe('index', () => {
+describe('authentication/index.js', () => {
   beforeEach(async () => {
     await utils.mongo.clearAll()
   })
@@ -107,6 +107,18 @@ describe('index', () => {
       } catch(e) {
         expect(e.name).equal('NOT_FOUND_ERROR')
         expect(e.message.username).equal('username is not found')
+      }
+    })
+
+    it('should throw LOGIN_FAIL_ERROR when password is wrong', async () => {
+      try {
+        await login({
+          username: utils.users.users.userA.username,
+          password: 'wrong password',
+        })
+      } catch(e) {
+        expect(e.name).equal('LOGIN_FAIL_ERROR')
+        expect(e.message.password).equal('password is invalid')
       }
     })
   })

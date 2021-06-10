@@ -9,6 +9,10 @@ const key = process.env.PRIVATE_KEY
 
 // payload = { userId, username, profile }
 export async function token(user) {
+  if (!user) {
+    return null
+  }
+
   const { id, username, profile } = user
 
   let urlImage
@@ -28,8 +32,7 @@ export async function token(user) {
       image: urlImage,
     },
   }
-  return user ? jwt.sign(payload, key, { expiresIn: '1h' }) : null
-  // return user ? jwt.sign(payload, key) : null
+  return jwt.sign(payload, key, { expiresIn: '1h' })
 }
 
 export function verifyToken(token) {

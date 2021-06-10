@@ -10,6 +10,7 @@ export const users = {
       name: 'name A',
       birthday: new Date('1996-06-10'),
       status: 'status A',
+      image: 'image A',
     },
   },
   userB: {
