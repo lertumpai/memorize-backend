@@ -2,7 +2,11 @@ import bcrypt from 'bcrypt'
 
 import { DUPLICATED_VALUE_ERROR, LOGIN_FAIL_ERROR, REGISTER_FAIL_ERROR, NOT_FOUND_ERROR } from '../error'
 
-export async function register({ username, password }, { User, date }) {
+import {
+  User,
+} from '../database/mongo'
+
+export async function register({ username, password }, { date }) {
   const checks = []
   if (!username) checks.push('username')
   if (!password) checks.push('password')
@@ -18,7 +22,7 @@ export async function register({ username, password }, { User, date }) {
   return User.create({ username, password: hash, active: true, date })
 }
 
-export async function login({ username, password }, { User }) {
+export async function login({ username, password }) {
   const checks = []
   if (!username) checks.push('username')
   if (!password) checks.push('password')

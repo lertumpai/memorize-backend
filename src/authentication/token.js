@@ -1,11 +1,14 @@
 import jwt from 'jsonwebtoken'
 
 import { getImageUrl } from '../domain/upload/utils/upload'
+import {
+  UploadProfile,
+} from '../database/mongo'
 
 const key = process.env.PRIVATE_KEY
 
 // payload = { userId, username, profile }
-export async function token(user, { UploadProfile }) {
+export async function token(user) {
   const { id, username, profile } = user
 
   let urlImage

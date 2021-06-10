@@ -13,12 +13,12 @@ module.exports = {
       return id ? User.findById(id) : User.findByUsername(username)
     },
     login(_, { username, password }) {
-      return Authentication.login({ username, password }, { User })
+      return Authentication.login({ username, password })
     },
   },
   Mutation: {
     user(_, { username, password }, { date }) {
-      return Authentication.register({ username, password }, { User, date })
+      return Authentication.register({ username, password }, { date })
     },
     async profile(_, { id, input }, { date, user }) {
       const { name, status, birthday, image } = input
@@ -42,8 +42,8 @@ module.exports = {
     },
   },
   User: {
-    token(user, args, { UploadProfile, user: currentUser }) {
-      return !currentUser || currentUser.id.toString() === user.id.toString() ? token(user, { UploadProfile }) : null
+    token(user, args, { user: currentUser }) {
+      return !currentUser || currentUser.id.toString() === user.id.toString() ? token(user) : null
     },
   },
   ProfileUser: {
