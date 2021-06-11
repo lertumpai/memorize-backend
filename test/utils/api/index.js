@@ -5,6 +5,7 @@ dayjs.extend(utc)
 import * as mongo from './mongo'
 import * as users from './users'
 import * as articles from './articles'
+import * as comments from './comments'
 
 function randomString(n) {
   let result = ''
@@ -24,6 +25,7 @@ export const utils = {
   mongo,
   users,
   articles,
+  comments,
   now,
   randomString,
 }

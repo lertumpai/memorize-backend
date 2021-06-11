@@ -42,7 +42,8 @@ describe('src/database/mongo/user/User.js', () => {
     it('should update article when article exists', async () => {
       const content = 'update content'
       const imageId = utils.mongo.objectId()
-      const updatedArticle = await Article.update(article.id, { content, image: { id: imageId } })
+      await Article.update(article.id, { content, image: { id: imageId } })
+      const updatedArticle = await Article.findById(article.id)
       expect(updatedArticle.content).equal(content)
       expect(updatedArticle.image.toString()).equal(imageId.toString())
     })

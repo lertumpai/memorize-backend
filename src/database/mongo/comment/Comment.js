@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 import Dao from '../dao'
+import { NOT_FOUND_ERROR } from '../../../error'
 
 const CommentSchema = new mongoose.Schema({
   articleId: { type: mongoose.Types.ObjectId, ref: 'Article' },
@@ -33,7 +34,7 @@ export default class CommentClass extends Dao {
     } : null
   }
 
-  create({ author, articleId, content, date }) {
+  create({ author, articleId, content, date = new Date() }) {
     return Comment.create({ author, articleId, content, createdAt: date, updatedAt: date }).then(this.serializer)
   }
 
@@ -57,13 +58,22 @@ export default class CommentClass extends Dao {
     return Comment.countDocuments(filter)
   }
 
-  async update(id, { content, date }) {
+  async update(id, { content, date = new Date() }) {
+    const comment = await Comment.findById(id)
+
+    if (!comment) {
+      throw new NOT_FOUND_ERROR('comment')
+    }
+
+    comment.content = content || comment.content
+    comment.updatedAt = date
+
     await this.clear(id)
-    return Comment.findOneAndUpdate({ _id: id }, { content, updatedAt: date }, { new: true }).then(this.serializer)
+    return comment.save().then(this.serializer)
   }
 
   async deleteByArticle(articleId) {
     const deletedComments = await Comment.updateMany({ articleId }, { active: false }, { new: true })
-    return deletedComments.map(this.serializer())
+    return deletedComments
   }
 }
