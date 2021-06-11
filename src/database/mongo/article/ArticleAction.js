@@ -41,13 +41,8 @@ export default class ArticleActionClass extends Dao {
     return ArticleAction.findOneAndUpdate(filter, update, { upsert: true, new: true }).then(this.serializer)
   }
 
-  count({ authorId, articleId }) {
+  count({ articleId }) {
     let filter = { articleId }
-
-    if (authorId) {
-      filter = { ...filter, authorId }
-    }
-
     return ArticleAction.countDocuments(filter)
   }
 }

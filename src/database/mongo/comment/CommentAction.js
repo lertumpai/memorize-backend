@@ -41,13 +41,8 @@ export default class CommentActionClass extends Dao {
     return CommentAction.findOneAndUpdate(filter, update, { upsert: true, new: true }).then(this.serializer)
   }
 
-  count({ authorId, commentId }) {
+  count({ commentId }) {
     let filter = { commentId }
-
-    if (authorId) {
-      filter = { ...filter, authorId }
-    }
-
     return CommentAction.countDocuments(filter)
   }
 }
