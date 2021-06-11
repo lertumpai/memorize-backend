@@ -4,6 +4,7 @@
      "src/**/*.js"
    ],
    "exclude": [
-     "src/scripts/**"
+     "src/scripts/**",
+     "src/database/mongo/*.js"
    ]
 }

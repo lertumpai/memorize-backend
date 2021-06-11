@@ -1,3 +1,4 @@
+import mongoose from 'mongoose'
 import {
   register,
 } from '../../../src/authentication'
@@ -10,7 +11,7 @@ export const users = {
       name: 'name A',
       birthday: new Date('1996-06-10'),
       status: 'status A',
-      image: 'image A',
+      image: { id: mongoose.Types.ObjectId() },
     },
   },
   userB: {

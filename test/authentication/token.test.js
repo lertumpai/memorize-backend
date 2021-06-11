@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+import { expect, assert } from 'chai'
 import sinon from 'sinon'
 
 import {
@@ -8,7 +8,7 @@ import * as upload from '../../src/domain/upload/utils/upload'
 import { token, verifyToken } from '../../src/authentication/token'
 import { utils } from '../utils/api'
 
-describe('authentication/token.js', () => {
+describe('src/authentication/token.js', () => {
   beforeEach(() => {
     sinon.stub(UploadProfile, 'findById').returns({ fileName: null, destination: null })
     sinon.stub(upload, 'getImageUrl').returns('urlImage')
@@ -21,7 +21,7 @@ describe('authentication/token.js', () => {
   describe('token', () => {
     it('should return token when have image profile', async () => {
       const result = await token(utils.users.users.userA)
-      expect(typeof result).equal('string')
+      assert.isString(result)
     })
 
     it('should return token when not have image profile', async () => {

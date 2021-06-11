@@ -3,7 +3,7 @@ import { expect } from 'chai'
 import { register, login } from '../../src/authentication'
 import { utils } from '../utils/api'
 
-describe('authentication/index.js', () => {
+describe('src/authentication/index.js', () => {
   beforeEach(async () => {
     await utils.mongo.clearAll()
   })
