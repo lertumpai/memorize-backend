@@ -10,6 +10,13 @@ describe('src/database/mongo/article/Article.js', () => {
     await utils.mongo.clearAll()
   })
 
+  describe('serializer', () => {
+    it('should return null when data = null', () => {
+      const result = Article.serializer(null)
+      assert.isNull(result, 'result')
+    })
+  })
+
   describe('create', () => {
     let user
     beforeEach(async () => {

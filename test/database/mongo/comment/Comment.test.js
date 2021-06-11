@@ -14,6 +14,13 @@ describe('src/database/mongo/comment/Comment.js', () => {
     article = await utils.articles.createArticle({ author: userA.id })
   })
 
+  describe('serializer', () => {
+    it('should return null when data = null', () => {
+      const result = Comment.serializer(null)
+      assert.isNull(result, 'result')
+    })
+  })
+
   describe('create', () => {
     it('should create new comment', async () => {
       const content = 'content'
