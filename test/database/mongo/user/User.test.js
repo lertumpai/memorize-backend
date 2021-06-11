@@ -1,5 +1,4 @@
 import { expect, assert } from 'chai'
-import mongoose from 'mongoose'
 
 import {
   User,
@@ -68,7 +67,7 @@ describe('src/database/mongo/user/User.js', () => {
 
     it('should throw NOT_FOUND_ERROR when user not exists', async () => {
       try {
-        await User.updateProfile(mongoose.Types.ObjectId(), utils.users.users.userA.profile)
+        await User.updateProfile(utils.mongo.objectId(), utils.users.users.userA.profile)
       } catch(e) {
         expect(e.name).equal('NOT_FOUND_ERROR')
         expect(e.message.user).equal('user is not found')

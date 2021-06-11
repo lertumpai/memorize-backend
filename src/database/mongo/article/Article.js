@@ -1,6 +1,8 @@
 import mongoose from 'mongoose'
 import Dao from '../dao'
 
+import { NOT_FOUND_ERROR } from '../../../error'
+
 const ArticleSchema = new mongoose.Schema({
   author: { type: mongoose.Types.ObjectId, ref: 'User', require: true },
   content: { type: String, require: true },
@@ -34,7 +36,7 @@ export default class ArticleClass extends Dao {
     } : null
   }
 
-  create({ author, content, image, date }) {
+  create({ author, content, image, date = new Date() }) {
     return Article.create({ author, content, image, createdAt: date, updatedAt: date }).then(this.serializer)
   }
 
@@ -48,8 +50,12 @@ export default class ArticleClass extends Dao {
     return this.queryAfterBeforeLimit(filter, { after, before, limit, sortBy: 'createdAt' })
   }
 
-  async update(id, { content, image, date }) {
+  async update(id, { content, image, date = new Date() }) {
     const article = await Article.findById(id)
+
+    if (!article) {
+      throw new NOT_FOUND_ERROR('article')
+    }
 
     article.content = content || article.content
     article.image = image ? image.id : article.image
