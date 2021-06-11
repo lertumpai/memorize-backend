@@ -12,6 +12,13 @@ describe('src/database/mongo/upload/UploadArticle.js', () => {
     userA = await utils.users.createUserA()
   })
 
+  describe('serializer', () => {
+    it('should return null when data = null', () => {
+      const result = UploadArticle.serializer(null)
+      assert.isNull(result, 'result')
+    })
+  })
+
   describe('create', () => {
     it('should create new uploadArticle', async () => {
       const fileName = 'fileName'

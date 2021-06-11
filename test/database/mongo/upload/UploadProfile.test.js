@@ -12,6 +12,13 @@ describe('src/database/mongo/upload/UploadProfile.js', () => {
     userA = await utils.users.createUserA()
   })
 
+  describe('serializer', () => {
+    it('should return null when data = null', () => {
+      const result = UploadProfile.serializer(null)
+      assert.isNull(result, 'result')
+    })
+  })
+
   describe('create', () => {
     it('should create new uploadProfile', async () => {
       const fileName = 'fileName'
