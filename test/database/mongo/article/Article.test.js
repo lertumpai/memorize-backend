@@ -5,7 +5,7 @@ import {
 } from '../../../../src/database/mongo'
 import { utils } from '../../../utils/api'
 
-describe('src/database/mongo/user/User.js', () => {
+describe('src/database/mongo/article/Article.js', () => {
   beforeEach(async () => {
     await utils.mongo.clearAll()
   })

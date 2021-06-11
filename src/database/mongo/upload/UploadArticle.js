@@ -30,7 +30,7 @@ export default class UploadArticleClass extends Dao {
     } : null
   }
 
-  create({ author, date, fileName, destination }) {
+  create({ author, fileName, destination, date = new Date() }) {
     return UploadArticle.create({
       author,
       fileName,
