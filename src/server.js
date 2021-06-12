@@ -17,7 +17,7 @@ import { prepareResolver } from './prepareResolver'
 import { ConnectMongo } from './database/mongo/connection'
 ConnectMongo()
 
-import context from './context'
+import { context } from './context'
 
 const serverGraphql = new ApolloServer({
   typeDefs: rootTypeDefs,

@@ -52,6 +52,11 @@ module.exports = {
         return null
       }
       const profileImage = await UploadProfile.findById(image)
+
+      if (!profileImage) {
+        return null
+      }
+
       const { fileName, destination } = profileImage
       return getImageUrl(fileName, destination)
     },

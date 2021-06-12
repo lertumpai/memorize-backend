@@ -10,10 +10,8 @@ export async function context({ req }) {
   await Promise.all(Object.values(models).map(model => model.clearAll()))
 
   return {
-    user: verifyToken(req.headers.authorization, date),
+    user: verifyToken(req.headers.authorization),
     date,
     io: req.io,
   }
 }
-
-module.exports = context
