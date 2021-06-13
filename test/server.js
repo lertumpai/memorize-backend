@@ -3,12 +3,12 @@ import rootTypeDefs from '../src/typedefs'
 import { prepareResolver } from '../src/prepareResolver'
 import rootPermission from '../src/permission'
 import rootResolvers from '../src/resolvers'
-import { context } from '../src/context'
+import rootPostResolvers from '../src/postResolvers'
 
 const serverGraphql = new ApolloServer({
   typeDefs: rootTypeDefs,
-  resolvers: prepareResolver(rootPermission, rootResolvers),
-  context,
+  resolvers: prepareResolver(rootPermission, rootResolvers, rootPostResolvers),
+  context: () => ({ user: null }),
 })
 
 export function request({ query, variables }) {

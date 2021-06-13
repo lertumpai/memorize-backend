@@ -32,7 +32,7 @@ describe('src/domain/user/resolvers.js', () => {
           password: utils.randomString(5),
         }
         const res = await request({ query: REGISTER, variables })
-        console.log(res)
+        // console.log(res)
       })
     })
   })
