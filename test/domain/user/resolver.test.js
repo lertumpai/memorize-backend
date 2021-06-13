@@ -2,7 +2,7 @@ import sinon from 'sinon'
 import { expect } from 'chai'
 import { gql } from 'apollo-server-express'
 
-import { request } from '../../server'
+import { requestMutation } from '../../server'
 import { UserFragment } from '../../utils/gql/user'
 import { utils } from '../../utils/api'
 
@@ -31,8 +31,8 @@ describe('src/domain/user/resolvers.js', () => {
           username: utils.randomString(5),
           password: utils.randomString(5),
         }
-        const res = await request({ query: REGISTER, variables })
-        // console.log(res)
+        const res = await requestMutation({ schema: REGISTER, variables }, {})
+        console.log(res)
       })
     })
   })

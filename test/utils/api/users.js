@@ -25,16 +25,34 @@ export const users = {
   },
 }
 
-export function createUserA() {
-  return register({
+function getContext(user) {
+  return {
+    user,
+    date: new Date(),
+    io: {
+      emit: () => null,
+    },
+  }
+}
+
+export async function createUserA() {
+  const user = await register({
     username: users.userA.username,
     password: users.userA.password,
   }, { date: new Date() })
+  return {
+    ...user,
+    context: getContext(user),
+  }
 }
 
-export function createUserB() {
-  return register({
+export async function createUserB() {
+  const user = await register({
     username: users.userB.username,
     password: users.userB.password,
   }, { date: new Date() })
+  return {
+    ...user,
+    context: getContext(user),
+  }
 }
