@@ -217,7 +217,17 @@ describe('src/database/mongo/comment/Comment.js', () => {
       sinon.restore()
     })
 
-    it('should return and sort by createdAt', async () => {
+    it('should return all comment and sort by createdAt', async () => {
+      const comments = await Comment.findAll({}, {})
+      expect(comments.data).to.have.length(commentSize * 2)
+      for (let i = 1; i < comments.data.length; i++) {
+        const prev = comments.data[i - 1]
+        const cur = comments.data[i]
+        expect(new Date(prev.createdAt).valueOf()).to.be.greaterThan(new Date(cur.createdAt).valueOf())
+      }
+    })
+
+    it('should return and sort by createdAt and articleId', async () => {
       const comments = await Comment.findAll({ articleId: article.id }, {})
       expect(comments.data).to.have.length(commentSize * 2)
       for (let i = 1; i < comments.data.length; i++) {

@@ -5,6 +5,8 @@
    ],
    "exclude": [
      "src/scripts/**",
-     "src/database/mongo/*.js"
+     "src/database/mongo/*.js",
+     "src/context.js",
+     "src/server.js"
    ]
 }
