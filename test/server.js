@@ -19,7 +19,7 @@ export async function requestQuery({ schema, variables }, { context }) {
   const res = await query({ query: schema, variables })
 
   if (res.errors) {
-    throw res.errors
+    throw res.errors[0]
   }
 
   return res.data
@@ -37,7 +37,7 @@ export async function requestMutation({ schema, variables }, { context }) {
   const res = await mutate({ mutation: schema, variables })
 
   if (res.errors) {
-    throw res.errors
+    throw res.errors[0]
   }
 
   return res.data
