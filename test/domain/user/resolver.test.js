@@ -16,8 +16,10 @@ describe('src/domain/user/resolvers.js', () => {
   describe('query', () => {
     describe('user', () => {
       let userA
+      let userB
       beforeEach(async () => {
         userA = await utils.users.createUserA()
+        userB = await utils.users.createUserB()
       })
 
       const USER = gql`
@@ -41,6 +43,15 @@ describe('src/domain/user/resolvers.js', () => {
         assert.isString(user.id, 'user.id')
         assert.isString(user.token, 'user.token')
         assert.isObject(user.profile, 'user.profile')
+      })
+
+      describe('query other', () => {
+        it('should return user by id but token must equal null', async () => {
+          const { user } = await requestQuery({ schema: USER, variables: { id: userB.id } }, { context: userA.context })
+          assert.isString(user.id, 'user.id')
+          assert.isNull(user.token, 'user.token')
+          assert.isObject(user.profile, 'user.profile')
+        })
       })
     })
 
