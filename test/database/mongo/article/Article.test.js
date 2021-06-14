@@ -1,3 +1,4 @@
+import sinon from 'sinon'
 import { expect, assert } from 'chai'
 
 import {
@@ -72,26 +73,45 @@ describe('src/database/mongo/article/Article.js', () => {
     })
   })
 
-  // TODO: fix findAll to use ID instead of createdAt and use createdAt to sort only
-  // describe('findAll', () => {
-  //   let userA
-  //   let userB
-  //   const articleSize = 5
-  //   beforeEach(async () => {
-  //     userA = await utils.users.createUserA()
-  //     userB = await utils.users.createUserB()
-  //     await Promise.all([
-  //       utils.articles.createArticles({ author: userA.id }, { size: articleSize }),
-  //       utils.articles.createArticles({ author: userB.id }, { size: articleSize }),
-  //     ])
-  //   })
-  //
-  //   it('should return articles by author', async () => {
-  //     const articles = await Article.findAll({ author: userA.id }, {})
-  //     expect(articles.data).to.have.length(articleSize)
-  //     articles.data.forEach(article => expect(article.author.toString()).equal(userA.id.toString()))
-  //   })
-  // })
+  describe('findAll', () => {
+    let userA
+    let userB
+    const articleSize = 5
+    beforeEach(async () => {
+      const faketime = sinon.useFakeTimers(new Date())
+      userA = await utils.users.createUserA()
+      for (let i = 0; i < articleSize; i++) {
+        await utils.articles.createArticle({ author: userA.id })
+        faketime.tick(1000)
+      }
+
+      userB = await utils.users.createUserB()
+      for (let i = 0; i < articleSize; i++) {
+        await utils.articles.createArticle({ author: userB.id })
+        faketime.tick(1000)
+      }
+    })
+
+    afterEach(() => {
+      sinon.restore()
+    })
+
+    it('should return articles by author', async () => {
+      const articles = await Article.findAll({ author: userA.id }, {})
+      expect(articles.data).to.have.length(articleSize)
+      articles.data.forEach(article => expect(article.author.toString()).equal(userA.id.toString()))
+    })
+
+    it('should return and sort by createdAt', async () => {
+      const articles = await Article.findAll({}, {})
+      expect(articles.data).to.have.length(articleSize * 2)
+      for (let i = 1; i < articles.data.length; i++) {
+        const prev = articles.data[i - 1]
+        const cur = articles.data[i]
+        expect(new Date(prev.createdAt).valueOf()).to.be.greaterThan(new Date(cur.createdAt).valueOf())
+      }
+    })
+  })
 })
 
 
