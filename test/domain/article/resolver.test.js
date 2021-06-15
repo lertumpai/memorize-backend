@@ -1,5 +1,5 @@
 import sinon from 'sinon'
-import { assert, expect, use } from 'chai'
+import { assert, expect } from 'chai'
 import { gql } from 'apollo-server-express'
 
 import { requestMutation, requestQuery } from '../../server'
