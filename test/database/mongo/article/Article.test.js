@@ -26,12 +26,12 @@ describe('src/database/mongo/article/Article.js', () => {
 
     it('should create new article', async () => {
       const content = 'content'
-      const image = utils.mongo.objectId()
+      const image = { id: utils.mongo.objectId() }
       const article = await Article.create({ author: user.id, content, image })
       assert.isString(article.id, 'article.id')
       expect(article.author.toString()).equal(user.id.toString())
       expect(article.content).equal(content)
-      expect(article.image.toString()).equal(image.toString())
+      expect(article.image.toString()).equal(image.id.toString())
       assert.isNotNull(article.createdAt, 'article.createdAt')
       assert.isNotNull(article.updatedAt, 'article.updatedAt')
       assert.isUndefined(article.deletedAt, 'article.deletedAt')
@@ -44,7 +44,7 @@ describe('src/database/mongo/article/Article.js', () => {
     let article
     beforeEach(async () => {
       user = await utils.users.createUserA()
-      article = await utils.articles.createArticle({ author: user.id, image: utils.mongo.objectId() })
+      article = await utils.articles.createArticle({ author: user.id, image: { id: utils.mongo.objectId() } })
     })
 
     it('should update article when article exists', async () => {
