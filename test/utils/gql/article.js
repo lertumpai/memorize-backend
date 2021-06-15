@@ -10,8 +10,11 @@ export const ArticleFragment = gql`
     image
     active
     userAction {
-      action
-      authorId
+      ... on ArticleAction {
+        articleId
+        authorId
+        action
+      }
     }
     action
     comment
