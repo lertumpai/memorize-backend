@@ -43,4 +43,9 @@ module.exports = {
       return CommentAction.findOneByCommentAuthor({ commentId: id, authorId: user.id })
     },
   },
+  FeedComment: {
+    hasMore({ hasMore }) {
+      return hasMore || false
+    },
+  },
 }
