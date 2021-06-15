@@ -216,14 +216,17 @@ describe('src/domain/article/resolvers.js', () => {
           }
         })
 
-        it('should throw INTERNAL_SERVER_ERROR when article not found', async () => {
+        it('should throw NOT_FOUND_ERROR when article not found', async () => {
           const variables = {
             id: utils.mongo.objectId(),
+            ArticleInput: {
+              content: 'update article',
+            },
           }
           try {
             await requestQuery({ schema: ARTICLE, variables }, { context: userA.context })
           } catch(e) {
-            expect(e.extensions.exception.name).equal('INTERNAL_SERVER_ERROR')
+            expect(e.extensions.exception.name).equal('NOT_FOUND_ERROR')
           }
         })
       })
