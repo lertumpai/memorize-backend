@@ -23,7 +23,6 @@ const typeDefs = gql`
     action: String!
     comment: String!
     canMutate: Boolean!
-    hasMore: Boolean!
     createdAt: Date
     updatedAt: Date
     deletedAt: Date

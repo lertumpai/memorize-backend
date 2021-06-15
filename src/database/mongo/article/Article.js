@@ -37,7 +37,13 @@ export default class ArticleClass extends Dao {
   }
 
   create({ author, content, image, date = new Date() }) {
-    return Article.create({ author, content, image, createdAt: date, updatedAt: date }).then(this.serializer)
+    return Article.create({
+      author,
+      content,
+      image: image ? image.id : null,
+      createdAt: date,
+      updatedAt: date,
+    }).then(this.serializer)
   }
 
   findAll({ author, active = true }, { after, before, limit = 10 }) {

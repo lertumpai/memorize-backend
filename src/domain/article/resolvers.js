@@ -66,4 +66,9 @@ module.exports = {
       return getImageUrl(fileName, destination)
     },
   },
+  FeedArticle: {
+    hasMore({ hasMore }) {
+      return hasMore || false
+    },
+  },
 }
